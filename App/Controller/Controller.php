@@ -18,6 +18,10 @@ class Controller
                         $controller = new PageController();
                         $controller->route();
                         break;
+                    case 'review':
+                        $controller = new ReviewController();
+                        $controller->route();
+                        break;
                     default:
                         throw new \Exception("Le controller n'existe pas");
                         break;

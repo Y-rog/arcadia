@@ -62,8 +62,54 @@
             <p>Engagé également pour la protection de l’environnement, notre zoo est autosuffisant en énergies.</p>
         </div>
     </div>
-
-
+    <hr class="featurette-divider">
+    <div class="text-center row justify-content-center reviews">
+        <h3 class="pb-2">Nos visiteurs témoignent!</h3>
+        <div class="pb-3">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addReview">
+                Ajouter un avis
+            </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="addReview" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title text-center fs-5" id="addReviews">Ajouter un avis</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST">
+                            <div class=" mb-3">
+                                <div class=" mb-3 text-start">
+                                    <label for="user_name" class="form-label">Pseudo</label>
+                                    <input type="user_name" class="form-control" id="user_name" name="user_name">
+                                </div>
+                                <div class="mb-3 text-start ">
+                                    <label for="content" class="form-label">Avis</label>
+                                    <textarea class="form-control" id="content" name="content"></textarea>
+                                </div>
+                                <div>
+                                    <input type="hidden" name="is_validated" value="0">
+                                </div>
+                                <div class="row d-flex justify-content-center pt-2">
+                                    <input type="submit" name="addReview" class="btn btn-primary" value="Envoyer">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php foreach ($reviews as $review) { ?>
+            <div class="border rounded pt-2 mb-3 fst-italic col-10">
+                <p><?= $review->getContent() ?></p>
+                <div class="blockquote-footer"><?= $review->getUsername(); ?>, le <?= ($review->getCreatedAt())->format('d/m/Y'); ?></div>
+            </div>
+        <?php } ?>
+        <a href="index.php?controller=review&action=list&page=1">Voir plus</a>
+    </div>
 
 </main>
 
