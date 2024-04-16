@@ -30,8 +30,11 @@ use App\Security\Security; ?>
                         <a class="nav-link" href="#">Contact</a>
                     </div>
                     <div class="navbar-nav col-lg-6 justify-content-end">
-                        <a class=" nav-link" href="#">Déconnexion</a>
-                        <a class="nav-link" href="#">Espace administration <i class="bi bi-person-fill-lock"></i></a>
+                        <?php if (Security::isLogged()) { ?>
+                            <a class=" nav-link" href=" /index.php?controller=auth&action=logout">Déconnexion</a>
+                        <?php } else { ?>
+                            <a class="nav-link" href="/index.php?controller=auth&action=login">Espace administration <i class="bi bi-person-fill-lock"></i></a>
+                        <?php } ?>
                     </div>
                 </div>
 

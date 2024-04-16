@@ -10,6 +10,10 @@ class Controller
             //on verrifie si le controller est défini dans l'url
             if (isset($_GET['controller'])) {
                 switch ($_GET['controller']) {
+                    case 'auth':
+                        $controller = new AuthController();
+                        $controller->route();
+                        break;
                     case 'page':
                         $controller = new PageController();
                         $controller->route();
