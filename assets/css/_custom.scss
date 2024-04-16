@@ -1,0 +1,44 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+    --primary: #4CAF7A;
+    --secondary: #9c624ac9;
+    --dark: #392C1E;
+    --black: #292222;
+    --white: #fff;
+    --font-family-sans-serif: "Montserrat", sans-serif;
+    --font-family-serif: "Montserrat", serif;
+
+    --bs--primary: var(--primary);
+
+    --bs-heading-color: var(--primary);
+
+
+    --bs-link-color: var(--primary);
+    --bs-pagination-active-bg: var(--primary);
+    --bs-pagination-active-color: var(--white);
+    --bs-pagination-active-border-color: var(--primary);
+    --bs-pagination-hover-color: var(--primary);
+    --bs-pagination-focus-color: var(--primary);
+}
+
+.nav-link {
+    color: var(--primary);
+
+    &:hover {
+        color: var(--white);
+        background: var(--primary);
+        border-radius: 5px;
+    }
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    z-index: 5;
+
+    &:hover {
+        color: var(--secondary);
+    }
+}

@@ -1,0 +1,50 @@
+@import "custom.scss";
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    padding-bottom: 150px;
+}
+
+footer {
+    bottom: 0;
+    position: absolute;
+}
+
+textarea {
+    resize: none;
+}
+
+
+
+.home-big-title {
+    position: relative;
+
+    img {
+        z-index: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    h1 {
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.horaries,
+.value {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary {
+    width: 100px;
+}
