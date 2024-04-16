@@ -3,24 +3,33 @@
 namespace App\Repository;
 
 use App\Entity\Review;
+use App\Security\Security;
 
 class ReviewRepository extends Repository
 {
 
     public function count()
     {
-        $query = $this->pdo->query('SELECT COUNT(id) FROM review');
-        return (int)$query->fetch($this->pdo::FETCH_NUM)[0];
+        // On compte le nombre d'articles
+        if (Security::isAdmin() | Security::isEmployee()) {
+            $query = $this->pdo->query('SELECT COUNT(id) FROM review');
+            return (int)$query->fetch($this->pdo::FETCH_NUM)[0];
+        } else {
+            $query = $this->pdo->query('SELECT COUNT(id) FROM review WHERE is_validated = 1');
+            return (int)$query->fetch($this->pdo::FETCH_NUM)[0];
+        }
     }
 
     public function showPageReviews($currentPage, $perPage)
     {
-
-        /* OFFSET: On calcule les articles à afficher ex:page 1 => artciles de 0 à 10 page 2 => articles de 10 à 20*/
-
-        // On récupère les articles par pages
-        $reviews = $this->pdo->query('SELECT * FROM review ORDER BY created_at DESC LIMIT ' . $perPage . ' OFFSET ' . ($currentPage - 1) * $perPage)->fetchAll($this->pdo::FETCH_ASSOC);
-
+        if (Security::isAdmin() | Security::isEmployee()) {
+            /* OFFSET: On calcule les articles à afficher ex:page 1 => artciles de 0 à 10 page 2 => articles de 10 à 20*/
+            // On récupère les articles par pages
+            $query = $this->pdo->query('SELECT * FROM review ORDER BY created_at DESC LIMIT ' . $perPage . ' OFFSET ' . ($currentPage - 1) * $perPage);
+        } else {
+            $query = $this->pdo->query('SELECT * FROM review WHERE is_validated = 1 ORDER BY created_at DESC LIMIT ' . $perPage . ' OFFSET ' . ($currentPage - 1) * $perPage);
+        }
+        $reviews = $query->fetchAll($this->pdo::FETCH_ASSOC);
         //On hydrate les articles
         $reviewEntities = [];
         if ($reviews) {
@@ -30,7 +39,6 @@ class ReviewRepository extends Repository
         }
         return $reviewEntities;
     }
-
 
     public function insert(Review $review)
     {
