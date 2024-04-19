@@ -4,6 +4,7 @@ use App\Security\Security;
 
 require_once _ROOTPATH_ . '/templates/header.php'; ?>
 
+
 <main class="container pt-1 pb-5">
     <div class="justify-content-center text-center pb-3">
         <h1 class="pb-3">Liste des avis</h1>

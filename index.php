@@ -1,6 +1,8 @@
 <?php
 require_once 'vendor/autoload.php';
 
+use APP\Db\Mysql;
+
 //Sécurise le cookie de session
 session_set_cookie_params([
     'lifetime' => 3600,
@@ -19,3 +21,5 @@ use App\Controller\Controller;
 
 $controller = new Controller();
 $controller->route();
+
+var_dump($_SESSION);
