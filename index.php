@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use APP\Db\Mysql;
+use App\Controller\Controller;
 
 //Sécurise le cookie de session
 session_set_cookie_params([
@@ -17,9 +17,6 @@ define('_TEMPLATESPATH_', _ROOTPATH_ . '/templates');
 
 
 //on appelle le controller pour router
-use App\Controller\Controller;
 
 $controller = new Controller();
 $controller->route();
-
-var_dump($_SESSION);

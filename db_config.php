@@ -1,8 +1,17 @@
 <?php
+require_once 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+if (file_exists(__DIR__ . '/.env')) {
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+}
+
 return [
-    'db_name' => 'lkzh4ikd69snza2f',
-    'db_user' => 'hdfqb71qk7iw9krn',
-    'db_password' => 'z6fv4vntk00gkhmn',
-    'db_port' => '3306',
-    'db_host' => 'f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+    'db_name' => getenv('DB_NAME'),
+    'db_user' => getenv('DB_USER'),
+    'db_password' => getenv('DB_PASSWORD'),
+    'db_port' => getenv('DB_PORT'),
+    'db_host' => getenv('DB_HOST')
 ];
