@@ -1,15 +1,15 @@
 //verifier champs requis
-
 const inputUsername = document.getElementById('user_name');
 const inputContent = document.getElementById('content');
+const inputSubmit = document.getElementById('addReview');
 
 inputUsername.addEventListener('keyup', validateForm);
 inputContent.addEventListener('keyup', validateForm);
 
 
 function validateForm() {
-    validateRequired(inputUsername);
-    validateRequired(inputContent);
+validateRequired(inputUsername);
+ validateRequired(inputContent);
 }
 
 function validateRequired(input) {
@@ -23,4 +23,4 @@ function validateRequired(input) {
         return false;
     }
 }
- 
+

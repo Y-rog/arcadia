@@ -1,5 +1,4 @@
 <?php require_once _ROOTPATH_ . '/templates/header.php' ?>
-
 <script src="/assets/js/home/review.js" defer></script>
 
 <main class="container">
@@ -14,8 +13,8 @@
     <hr class="featurette-divider">
     <div class="row featurette">
         <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">Vivez une experience inoubliable! <span class="text-body-secondary">Au coeur d'une naturé préservée.</span></h2>
-            <p class="lead">Situé en Bretagne proche de la forêt de Brocéliande, nous sommes heureux de vous accueillir
+            <h3 class="featurette-heading fw-normal lh-1">Vivez une experience inoubliable! <span class="text-body-secondary">Au coeur d'une naturé préservée.</span></h3>
+            <p>Situé en Bretagne proche de la forêt de Brocéliande, nous sommes heureux de vous accueillir
                 depuis 1960.</p>
         </div>
         <div class="col-md-5">
@@ -25,8 +24,8 @@
     <hr class="featurette-divider">
     <div class="row featurette reverse">
         <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading fw-normal lh-1">Partez à l'aventure! <span class="text-body-secondary">Découvrez plus de 50 espèces d’animaux.</span></h2>
-            <p class="lead">Notre zoo est divisé en plusieurs habitats: la savane, la jungle et le marais. </p>
+            <h3 class="featurette-heading fw-normal lh-1">Partez à l'aventure! <span class="text-body-secondary">Découvrez plus de 50 espèces d’animaux.</span></h3>
+            <p>Notre zoo est divisé en plusieurs habitats: la savane, la jungle et le marais. </p>
         </div>
         <div class="col-md-5 order-md-1">
             <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto rounded" src="../../assets/img/tiger-home.png" widht="500" height="500" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -35,8 +34,8 @@
     <hr class="featurette-divider">
     <div class="row featurette">
         <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">Partez serain!<span class="text-body-secondary"> Nous avons pensé à tout.</span></h2>
-            <p class="lead">Le parc vous propose plusieurs services pour agrémenter votre visite.</p>
+            <h3 class="featurette-heading fw-normal lh-1">Partez serain!<span class="text-body-secondary"> Nous avons pensé à tout.</span></h3>
+            <p>Le parc vous propose plusieurs services pour agrémenter votre visite.</p>
         </div>
         <div class="col-md-5">
             <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto rounded" src="../../assets/img/visite-guide.jpg" widht="500" height="500" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -95,7 +94,7 @@
                                     <input type="hidden" name="is_validated" value="0">
                                 </div>
                                 <div class="row d-flex justify-content-center pt-2">
-                                    <input type="submit" name="addReview" class="btn btn-primary" value="Envoyer">
+                                    <input type="submit" name="addReview" id="addReview" class="btn btn-primary" value="Envoyer">
                                 </div>
                             </div>
                         </form>

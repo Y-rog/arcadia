@@ -43,7 +43,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                                 </button>
                             </div>
                             <div class="modal fade" id="deleteReview" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-body">
                                             <p>Etes-vous sûr de vouloir supprimer cet avis?</p>

@@ -14,6 +14,10 @@ class Controller
                         $controller = new AuthController();
                         $controller->route();
                         break;
+                    case 'habitat':
+                        $controller = new HabitatController();
+                        $controller->route();
+                        break;
                     case 'page':
                         $controller = new PageController();
                         $controller->route();

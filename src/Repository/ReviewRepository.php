@@ -73,7 +73,7 @@ class ReviewRepository extends Repository
         return $reviewEntities;
     }
 
-    public function validate(Review $review)
+    public function validateReview(Review $review)
     {
         $query = $this->pdo->prepare('UPDATE review SET is_validated = 1 WHERE id = :id');
         $query->bindValue(':id', $review->getId(), $this->pdo::PARAM_INT);

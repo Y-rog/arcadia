@@ -24,8 +24,8 @@ use App\Security\Security; ?>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav col-lg-6 justify-content-lg-center">
-                        <a class="nav-link" href=" index.php?controller=page&action=home">Accueil</a>
-                        <a class="nav-link" href="#">Habitats</a>
+                        <a class="nav-link" href="index.php?controller=page&action=home">Accueil</a>
+                        <a class="nav-link" href="index.php?controller=habitat&action=list">Habitats</a>
                         <a class="nav-link" href="#">Services</a>
                         <a class="nav-link" href="#">Contact</a>
                     </div>

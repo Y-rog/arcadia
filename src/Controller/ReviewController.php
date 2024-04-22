@@ -69,23 +69,6 @@ class ReviewController extends Controller
         }
     }
 
-    protected function listValidated()
-    {
-        try {
-            $reviewRepository = new ReviewRepository();
-            $reviews = $reviewRepository->findValidatedReviews();
-            $this->render('review/list', [
-                'reviews' => $reviews,
-                'pageTitle' => 'Liste des avis validés',
-            ]);
-        } catch (\Exception $e) {
-            $this->render('errors/default', [
-                'error' => $e->getMessage(),
-                'pageTitle' => 'Erreur',
-            ]);
-        }
-    }
-
     protected function isValidated()
     {
         //on vérifie si le bouton valider a été cliqué
@@ -95,7 +78,7 @@ class ReviewController extends Controller
             //on récupère l'avis par son id
             $review = $reviewRepository->findOneById($_POST['id']);
             //on valide l'avis
-            $reviewRepository->validate($review);
+            $reviewRepository->validateReview($review);
             //on redirige vers la page list
             $currentPage = (int) $_GET['page'];
             header("'location: index.php?controller=review&action=list&page='$currentPage");

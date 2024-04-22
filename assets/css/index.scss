@@ -48,3 +48,23 @@ textarea {
 .btn-primary {
     width: 100px;
 }
+
+.habitat {
+    position: relative;
+
+    img {
+        z-index: 0;
+    }
+
+    h2 {
+        position: absolute;
+        background-color: adjust-color($color: transparent, $alpha: 0.4);
+        padding: 0px 5px 2px 5px;
+        color: white;
+        z-index: 1;
+        border-radius: 5px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

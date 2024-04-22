@@ -8,7 +8,7 @@ use App\Entity\Review;
 class ReviewValidator extends Security
 {
 
-    public function validate(Review $review): array
+    public function validateReview(Review $review): array
     {
         $errors = [];
         if (empty($review->getUserName())) {

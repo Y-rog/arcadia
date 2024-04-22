@@ -62,7 +62,7 @@ class PageController extends Controller
             if (isset($_POST['addReview'])) {
                 $review->hydrate($_POST);
                 $reviewValidator = new ReviewValidator();
-                $errors = $reviewValidator->validate($review);
+                $errors = $reviewValidator->validateReview($review);
                 if (empty($errors)) {
                     $reviewRepository = new ReviewRepository();
                     $reviewRepository->insert($review);
