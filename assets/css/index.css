@@ -13514,4 +13514,12 @@ textarea {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+
+.card-animal-list {
+  width: 18rem;
+}
+
+.card-animal-show {
+  width: 30rem;
 }/*# sourceMappingURL=index.css.map */

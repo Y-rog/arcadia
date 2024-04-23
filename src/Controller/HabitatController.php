@@ -59,10 +59,12 @@ class HabitatController extends Controller
                 //Charger l'habitat par un appel au repository
                 $habitatRepository = new HabitatRepository();
                 $habitat = $habitatRepository->findOneById($id);
-
+                $animalRepository = new AnimalRepository();
+                $animals = $animalRepository->findAllByHabitat($id);
                 $this->render('habitat/show', [
                     'pageTitle' => 'Habitat ' . $habitat->getName(),
-                    'habitat' => $habitat
+                    'habitat' => $habitat,
+                    'animals' => $animals,
                 ]);
             } else {
                 throw new \Exception("L'id est manquant en paramètre d'url");
