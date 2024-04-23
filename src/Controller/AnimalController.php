@@ -6,6 +6,7 @@ use App\Entity\Animal;
 use App\Entity\Habitat;
 use App\Entity\ReviewVeterinary;
 use App\Security\AnimalValidator;
+use App\Repository\UserRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use App\Security\ReviewVeterinaryValidator;
@@ -22,8 +23,8 @@ class AnimalController extends Controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
                     case 'show':
-                        $this->show();
                         $this->addVeterinaryReview();
+                        $this->show();
                         break;
                     case 'add':
                         $this->add();
@@ -173,8 +174,9 @@ class AnimalController extends Controller
                 if (empty($errors)) {
                     $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
                     $reviewVeterinaryRepository->insert($reviewVeterinary);
-                    header('Location: index.php?controller=animal&action=show&id=' . $animal->getId());
-                }
+                    header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
+                    exit();
+                } else throw new \Exception("Le formulaire contient des erreurs");
             }
 
             $this->render('animal/show', [

@@ -1,6 +1,7 @@
 <?php require_once _ROOTPATH_ . '/templates/header.php';
 
 use App\Security\Security; ?>
+<script src="/assets/js/animal/reviewVeterinary.js" defer></script>
 
 <main class="container">
     <h1 class="text-center p-2"><?= ucwords($animal->getFirstname()) ?></h1>
@@ -32,9 +33,9 @@ use App\Security\Security; ?>
                                     <div class=" mb-3 text-start">
                                         <label for="health_status" class="form-label">Etat</label>
                                         <select class="form-select" id="health_status" name="health_status">
-                                            <option value="1">Bon</option>
-                                            <option value="2">Moyen</option>
-                                            <option value="3">Mauvais</option>
+                                            <option value="Bon">Bon</option>
+                                            <option value="Moyen">Moyen</option>
+                                            <option value="Mauvais">Mauvais</option>
                                         </select>
                                     </div>
                                     <div class="mb-3 text-start ">
@@ -59,7 +60,7 @@ use App\Security\Security; ?>
                                     </div>
                                     <div class="mb-3 text-start ">
                                         <label for="userId" class="form-label"></label>
-                                        <input type="hidden" class="form-control" id="userId" name="userId" value="<?= $user->getId(); ?>">
+                                        <input type="hidden" class="form-control" id="userId" name="userId" value="<?= $_SESSION['user']['id']; ?>">
                                     </div>
                                     <div class="row d-flex justify-content-center pt-2">
                                         <input type="submit" name="addReviewVeterinary" id="addReviewVeterinary" class="btn btn-primary" value="Envoyer">

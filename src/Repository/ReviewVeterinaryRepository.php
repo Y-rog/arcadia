@@ -2,12 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Review;
 use App\Entity\ReviewVeterinary;
 use App\Security\Security;
 
 class ReviewVeterinaryRepository extends Repository
 {
-    public function insert()
+    public function insert(ReviewVeterinary $reviewVeterinary)
     {
         $query = $this->pdo->prepare('INSERT INTO review_veterinary (health_status, food, food_quantity, health_status_details, animal_id, user_id) VALUES (:health_status, :food, :food_quantity, :health_status_details, :animal_id, :user_id)');
         $query->bindValue(':health_status', $reviewVeterinary->getHealthStatus(), $this->pdo::PARAM_STR);
