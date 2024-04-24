@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Animal;
+use App\Entity\Review;
+use App\Entity\ReviewVeterinary;
 
 class AnimalRepository extends Repository
 {
@@ -46,6 +48,7 @@ class AnimalRepository extends Repository
         }
         return $animalEntities;
     }
+
 
     public function insert(Animal $animal)
     {

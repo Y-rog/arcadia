@@ -7,6 +7,7 @@ use APP\Security\Security;
 use App\Security\HabitatValidator;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
+use App\Repository\ReviewVeterinaryRepository;
 
 class HabitatController extends Controller
 {
@@ -22,7 +23,6 @@ class HabitatController extends Controller
                         break;
                     case 'show':
                         //on appelle la méthode show
-                        $this->delete();
                         $this->show();
                         break;
                     case 'list':
@@ -61,6 +61,14 @@ class HabitatController extends Controller
                 $habitat = $habitatRepository->findOneById($id);
                 $animalRepository = new AnimalRepository();
                 $animals = $animalRepository->findAllByHabitat($id);
+                //Si le formulaire de suppression est soumis
+                if (isset($_POST['deleteHabitat'])) {
+                    $habitatRepository = new HabitatRepository();
+                    $habitat = $habitatRepository->findOneById($_POST['id']);
+                    $habitatRepository->delete($habitat);
+                    header('Location: index.php?controller=habitat&action=list');
+                }
+                //Afficher la vue show
                 $this->render('habitat/show', [
                     'pageTitle' => 'Habitat ' . $habitat->getName(),
                     'habitat' => $habitat,
@@ -123,16 +131,6 @@ class HabitatController extends Controller
                 'error' => $e->getMessage(),
                 'pageTitle' => 'Erreur',
             ]);
-        }
-    }
-
-    protected function delete(): void
-    {
-        if (isset($_POST['deleteHabitat'])) {
-            $habitatRepository = new HabitatRepository();
-            $habitat = $habitatRepository->findOneById($_POST['id']);
-            $habitatRepository->delete($habitat);
-            header('Location: index.php?controller=habitat&action=list');
         }
     }
 

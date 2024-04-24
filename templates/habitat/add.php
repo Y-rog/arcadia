@@ -1,5 +1,5 @@
 <?php require_once _ROOTPATH_ . '/templates/header.php'; ?>
-<script src="../../assets/js/habitat/form.js" defer></script>
+<script src="/assets/js/habitat/form.js" defer></script>
 <main class="container">
     <div class="text-center pb-3">
         <h1>Ajouter un Habitat</h1>

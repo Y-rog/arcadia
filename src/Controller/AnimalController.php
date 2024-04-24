@@ -23,7 +23,6 @@ class AnimalController extends Controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
                     case 'show':
-                        $this->addVeterinaryReview();
                         $this->show();
                         break;
                     case 'add':
@@ -42,24 +41,6 @@ class AnimalController extends Controller
             } else {
                 throw new \Exception("Aucune action détectée");
             }
-        } catch (\Exception $e) {
-            $this->render('errors/default', [
-                'error' => $e->getMessage(),
-                'pageTitle' => 'Erreur',
-            ]);
-        }
-    }
-
-    protected function show()
-    {
-        try {
-            $animalRepository = new AnimalRepository();
-            $animal = $animalRepository->findOneById($_GET['id']);
-            $this->render('animal/show', [
-                'animal' => $animal,
-                'pageTitle' => 'Détail de l\'animal',
-                'habitat' => (new HabitatRepository())->findOneById($animal->getHabitatId())->getName(),
-            ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
                 'error' => $e->getMessage(),
@@ -158,14 +139,19 @@ class AnimalController extends Controller
         }
     }
 
-    protected function addVeterinaryReview()
+    protected function show()
     {
         try {
             $errors = [];
+            // On récupère l'animal
             $animalRepository = new AnimalRepository();
             $animal = $animalRepository->findOneById($_GET['id']);
-
+            // On récupère le dernier avis vétérinaire de l'animal
+            $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
+            $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getId());
+            // On peux ajouter un avis vétérinaire
             if (isset($_POST['addReviewVeterinary'])) {
+                // On hydrate l'objet
                 $reviewVeterinary = new ReviewVeterinary();
                 $reviewVeterinary->hydrate($_POST);
 
@@ -183,6 +169,7 @@ class AnimalController extends Controller
                 'animal' => $animal,
                 'pageTitle' => 'Détail de l\'animal',
                 'habitat' => (new HabitatRepository())->findOneById($animal->getHabitatId())->getName(),
+                'reviewVeterinary' => $reviewVeterinary,
                 'errors' => $errors,
             ]);
         } catch (\Exception $e) {

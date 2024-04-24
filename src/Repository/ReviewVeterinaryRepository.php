@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Animal;
 use App\Entity\Review;
-use App\Entity\ReviewVeterinary;
 use App\Security\Security;
+use App\Entity\ReviewVeterinary;
 
 class ReviewVeterinaryRepository extends Repository
 {
@@ -18,5 +19,17 @@ class ReviewVeterinaryRepository extends Repository
         $query->bindValue(':animal_id', $reviewVeterinary->getAnimalId(), $this->pdo::PARAM_INT);
         $query->bindValue(':user_id', $reviewVeterinary->getUserId(), $this->pdo::PARAM_INT);
         $query->execute();
+    }
+
+    public function findLastReviewVeterinaryByAnimal(int $animalId)
+    {
+        $query = $this->pdo->prepare('SELECT * FROM review_veterinary WHERE animal_id = :animal_id ORDER BY created_at DESC LIMIT 1');
+        $query->bindValue(':animal_id', $animalId, $this->pdo::PARAM_INT);
+        $query->execute();
+        $reviewVeterinary = $query->fetch($this->pdo::FETCH_ASSOC);
+        if ($reviewVeterinary) {
+            return ReviewVeterinary::createAndHydrate($reviewVeterinary);
+        }
+        return null;
     }
 }

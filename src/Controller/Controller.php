@@ -65,7 +65,6 @@ class Controller
                 'error' => $e->getMessage(),
                 'pageTitle' => 'Erreur',
             ]);
-            echo $e->getMessage();
         }
     }
 }

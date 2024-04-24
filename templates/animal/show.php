@@ -3,14 +3,24 @@
 use App\Security\Security; ?>
 <script src="/assets/js/animal/reviewVeterinary.js" defer></script>
 
+
 <main class="container">
-    <h1 class="text-center p-2"><?= ucwords($animal->getFirstname()) ?></h1>
+    <h1 class="text-center p-2"><?= $pageTitle ?></h1>
     <div class="d-flex justify-content-center pb-3">
         <div class="card h-100 card-animal-show">
             <img class="rounded-top" src=<?= $animal->getImagePath() ?> alt="<?= $animal->getFirstName() ?>, <?= $animal->getRace() ?> ">
             <ul class="list-group list-group">
+                <li class="list-group-item">Race: <?= ucfirst($animal->getFirstName()) ?></li>
                 <li class="list-group-item">Race: <?= $animal->getRace() ?></li>
                 <li class="list-group-item">Habitat: <?= $habitat ?></li>
+                <?php if ($reviewVeterinary) { ?>
+                    <li class=" list-group-item">Etat: <?= $reviewVeterinary->getHealthStatus() ?></li>
+                    <li class="list-group-item">Nourriture proposée: <?= $reviewVeterinary->getFood() ?></li>
+                    <li class="list-group-item">Quantité: <?= $reviewVeterinary->getFoodQuantity() ?></li>
+                    <li class="list-group-item">Date de passage: <?= $reviewVeterinary->getCreatedAt()->format('d/m/Y') ?></li>
+                    <li class="list-group-item">Détail de l'état de l'animal: <?= $reviewVeterinary->getHealthStatusDetails() ?></li>
+                <?php } ?>
+
             </ul>
         </div>
     </div>
