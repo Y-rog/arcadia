@@ -14,9 +14,6 @@ use App\Security\Security; ?>
                         <input type="hidden" class='form-control' id="id" name="id" value="<?= $animal->getId() ?>" required>
                     </div>
                     <div class="mb-3 text-start">
-                        <input type="hidden" class='form-control' id="id" name="id" value="<?= $_SESSION['user']['id'] ?>" required>
-                    </div>
-                    <div class="mb-3 text-start">
                         <label for="first_name">Prénom de l'animal</label>
                         <input type="text" class='form-control' id="first_name" name="first_name" value="<?= $animal->getFirstName() ?>" required>
                     </div>

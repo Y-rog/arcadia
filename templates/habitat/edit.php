@@ -7,7 +7,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
 <main class="container">
     <?php if (Security::isAdmin()) { ?>
         <div class="text-center pb-3">
-            <h1> <?= $pageTitle ?>: <?= ucfirst($habitat->getName()) ?></h1>
+            <h1> <?= $pageTitle ?>: <? ucfirst($habitat->getName()) ?></h1>
         </div>
         <div class="row justify-content-center">
             <div class="col-8 ">

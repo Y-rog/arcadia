@@ -10,7 +10,7 @@ class ReviewRepository extends Repository
 
     public function count()
     {
-        // On compte le nombre d'articles
+        // On compte le nombre d'avis
         if (Security::isAdmin() | Security::isEmployee()) {
             $query = $this->pdo->query('SELECT COUNT(id) FROM review');
             return (int)$query->fetch($this->pdo::FETCH_NUM)[0];

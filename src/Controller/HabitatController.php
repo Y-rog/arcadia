@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Habitat;
 use APP\Security\Security;
+use App\Entity\ReviewVeterinary;
 use App\Security\HabitatValidator;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
@@ -61,9 +62,18 @@ class HabitatController extends Controller
                 if (!$habitat) {
                     throw new \Exception("Cet habitat n'existe pas");
                 }
+                //Charger les animaux par habitat par un appel au repository
                 $animalRepository = new AnimalRepository();
                 $animals = $animalRepository->findAllByHabitat($id);
-
+                //Charger le dernier avis vétérinaire par animal par un appel au repository
+                foreach ($animals as $animal) {
+                    $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
+                    $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getId());
+                    //Si pas d'avis vétérinaire, on crée un avis vide
+                    if (!$reviewVeterinary) {
+                        $reviewVeterinary = new ReviewVeterinary();
+                    }
+                }
                 //Si le formulaire de suppression est soumis
                 if (isset($_POST['deleteHabitat'])) {
                     $habitatRepository = new HabitatRepository();
@@ -79,6 +89,7 @@ class HabitatController extends Controller
                 'pageTitle' => 'Habitat ' . $habitat->getName(),
                 'habitat' => $habitat,
                 'animals' => $animals,
+                'reviewVeterinary' => $reviewVeterinary
 
             ]);
         } catch (\Exception $e) {
@@ -113,11 +124,12 @@ class HabitatController extends Controller
         try {
             $errors = [];
             $habitat = new Habitat();
-
+            //Si le formulaire est soumis on ajoute un habitat
             if (isset($_POST['saveHabitat'])) {
                 $habitat->hydrate($_POST);
                 $habitatValidator = new HabitatValidator();
                 $errors = $habitatValidator->validateHabitat($habitat);
+                //Si le formulaire est valide on ajoute l'habitat
                 if (empty($errors)) {
                     $habitatRepository = new HabitatRepository();
                     $habitatRepository->insert($habitat);
@@ -144,11 +156,12 @@ class HabitatController extends Controller
             $errors = [];
             $habitatRepository = new HabitatRepository();
             $habitat = $habitatRepository->findOneById($_GET['id']);
-
+            //Si le formulaire est soumis on modifie l'habitat
             if (isset($_POST['saveHabitat'])) {
                 $habitat->hydrate($_POST);
                 $habitatValidator = new HabitatValidator();
                 $errors = $habitatValidator->validateHabitat($habitat);
+                //Si le formulaire est valide on modifie l'habitat
                 if (empty($errors)) {
                     $habitatRepository->edit($habitat);
                     header('Location: index.php?controller=habitat&action=list');

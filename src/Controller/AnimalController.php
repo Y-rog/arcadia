@@ -29,7 +29,6 @@ class AnimalController extends Controller
                     case 'edit':
                         $this->edit();
                         break;
-                        break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
                         break;
@@ -50,14 +49,14 @@ class AnimalController extends Controller
         try {
             $errors = [];
             $animal = new Animal();
-
+            // On récupère les habitats
             $habitatRepository = new HabitatRepository();
             $habitats = $habitatRepository->findAll();
-
+            // Si le formulaire est soumis on ajoute l'animal
             if (isset($_POST['saveAnimal'])) {
                 $animal->hydrate($_POST);
                 $errors = (new AnimalValidator())->validateAnimal($animal);
-
+                // Si le formulaire est valide on ajoute l'animal
                 if (empty($errors)) {
                     $animalRepository = new AnimalRepository();
                     $animalRepository->insert($animal);
@@ -84,20 +83,20 @@ class AnimalController extends Controller
     {
         try {
             $errors = [];
+            // On récupère l'animal
             $animalRepository = new AnimalRepository();
             $animal = $animalRepository->findOneById($_GET['id']);
+            // On récupère les habitats
             $habitatRepository = new HabitatRepository();
             $habitats = $habitatRepository->findAll();
-            $habitat = $habitatRepository->findOneById($animal->getHabitatId());
-
+            // Si le formulaire est soumis on modifie l'animal
             if (isset($_POST['saveAnimal'])) {
-
                 $animal->hydrate($_POST);
                 $errors = (new AnimalValidator())->validateAnimal($animal);
-
+                // Si le formulaire est valide on modifie l'animal
                 if (empty($errors)) {
                     $animalRepository->insert($animal);
-                    header('Location: index.php?controller=habitat&action=show&id=' . $habitat->getId());
+                    header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 } else {
                     throw new \Exception("Le formulaire contient des erreurs");
                 }
@@ -107,8 +106,6 @@ class AnimalController extends Controller
                 'errors' => $errors,
                 'pageTitle' => 'Modifier un animal',
                 'habitats' => $habitats,
-
-
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
@@ -147,14 +144,12 @@ class AnimalController extends Controller
                     exit();
                 } else throw new \Exception("Le formulaire contient des erreurs");
             }
-
             //Si le formualire de suppression est soumis on supprime l'animal
             if (isset($_POST['deleteAnimal'])) {
                 $animalRepository->delete($animal);
                 header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 exit();
             }
-
             $this->render('animal/show', [
                 'animal' => $animal,
                 'pageTitle' => 'Détail de l\'animal',
