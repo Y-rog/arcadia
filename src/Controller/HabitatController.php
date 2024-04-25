@@ -53,14 +53,17 @@ class HabitatController extends Controller
     {
         try {
             if (isset($_GET['id'])) {
-
                 //Récupérer l'id de l'habitat
                 $id = (int)$_GET['id'];
                 //Charger l'habitat par un appel au repository
                 $habitatRepository = new HabitatRepository();
                 $habitat = $habitatRepository->findOneById($id);
+                if (!$habitat) {
+                    throw new \Exception("Cet habitat n'existe pas");
+                }
                 $animalRepository = new AnimalRepository();
                 $animals = $animalRepository->findAllByHabitat($id);
+
                 //Si le formulaire de suppression est soumis
                 if (isset($_POST['deleteHabitat'])) {
                     $habitatRepository = new HabitatRepository();
@@ -68,15 +71,16 @@ class HabitatController extends Controller
                     $habitatRepository->delete($habitat);
                     header('Location: index.php?controller=habitat&action=list');
                 }
-                //Afficher la vue show
-                $this->render('habitat/show', [
-                    'pageTitle' => 'Habitat ' . $habitat->getName(),
-                    'habitat' => $habitat,
-                    'animals' => $animals,
-                ]);
             } else {
-                throw new \Exception("L'id est manquant en paramètre d'url");
+                throw new \Exception("Cet habitat n'existe pas");
             }
+            //Afficher la vue show
+            $this->render('habitat/show', [
+                'pageTitle' => 'Habitat ' . $habitat->getName(),
+                'habitat' => $habitat,
+                'animals' => $animals,
+
+            ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
                 'error' => $e->getMessage(),
@@ -146,7 +150,7 @@ class HabitatController extends Controller
                 $habitatValidator = new HabitatValidator();
                 $errors = $habitatValidator->validateHabitat($habitat);
                 if (empty($errors)) {
-                    $habitatRepository->update($habitat);
+                    $habitatRepository->edit($habitat);
                     header('Location: index.php?controller=habitat&action=list');
                 } else throw new \Exception("Le formulaire contient des erreurs");
             } else {

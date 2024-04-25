@@ -72,10 +72,10 @@ class AnimalRepository extends Repository
         }
     }
 
-    public function delete(int $id)
+    public function delete(Animal $animal)
     {
         $query = $this->pdo->prepare('DELETE FROM animal WHERE id = :id');
-        $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        $query->bindValue(':id', $animal->getId(), \PDO::PARAM_INT);
         $query->execute();
     }
 }

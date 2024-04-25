@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\ReviewVeterinary;
 use App\Security\Security;
 
 require_once _ROOTPATH_ . '/templates/header.php'; ?>
@@ -48,7 +49,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                             <li class="list-group-item">Prénom: <?= ucwords($animal->getFirstname()) ?></li>
                             <li class="list-group-item">Race: <?= $animal->getRace() ?></li>
                             <li class="list-group-item">Habitat: <?= $habitat->getName() ?></li>
-                            <li class="list-group-item">Etat: #</li>
+                            <li class="list-group-item">Etat: </li>
                         </ul>
                     </div>
                 </a>

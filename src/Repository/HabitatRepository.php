@@ -54,7 +54,7 @@ class HabitatRepository extends Repository
         $query->execute();
     }
 
-    public function update(Habitat $habitat)
+    public function edit(Habitat $habitat)
     {
         $query = $this->pdo->prepare('UPDATE habitat SET name = :name, description = :description, image = :image WHERE id = :id');
         $query->bindValue(':name', $habitat->getName(), \PDO::PARAM_STR);

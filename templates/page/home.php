@@ -94,7 +94,7 @@
                                     <input type="hidden" name="is_validated" value="0">
                                 </div>
                                 <div class="row d-flex justify-content-center pt-2">
-                                    <input type="submit" name="addReview" id="addReview" class="btn btn-primary" value="Envoyer">
+                                    <input type="submit" name="addReview" id="addReview" class="btn btn-success" value="Envoyer">
                                 </div>
                             </div>
                         </form>

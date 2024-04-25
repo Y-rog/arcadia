@@ -11,9 +11,7 @@ use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use App\Security\ReviewVeterinaryValidator;
 use App\Repository\ReviewVeterinaryRepository;
-
-
-
+use Throwable;
 
 class AnimalController extends Controller
 {
@@ -31,8 +29,6 @@ class AnimalController extends Controller
                     case 'edit':
                         $this->edit();
                         break;
-                    case 'delete':
-                        $this->delete();
                         break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
@@ -55,25 +51,26 @@ class AnimalController extends Controller
             $errors = [];
             $animal = new Animal();
 
+            $habitatRepository = new HabitatRepository();
+            $habitats = $habitatRepository->findAll();
+
             if (isset($_POST['saveAnimal'])) {
-
                 $animal->hydrate($_POST);
-
                 $errors = (new AnimalValidator())->validateAnimal($animal);
 
                 if (empty($errors)) {
                     $animalRepository = new AnimalRepository();
-
                     $animalRepository->insert($animal);
-                    header('Location: index.php?controller=animal&action=add');
+                    header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
+                } else {
+                    throw new \Exception("Le formulaire contient des erreurs");
                 }
             }
-
             $this->render('animal/add', [
                 'animal' => $animal,
                 'errors' => $errors,
                 'pageTitle' => 'Ajouter un animal',
-                'habitats' => (new HabitatRepository())->findAll(),
+                'habitats' => $habitats,
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
@@ -89,47 +86,29 @@ class AnimalController extends Controller
             $errors = [];
             $animalRepository = new AnimalRepository();
             $animal = $animalRepository->findOneById($_GET['id']);
+            $habitatRepository = new HabitatRepository();
+            $habitats = $habitatRepository->findAll();
+            $habitat = $habitatRepository->findOneById($animal->getHabitatId());
 
             if (isset($_POST['saveAnimal'])) {
 
                 $animal->hydrate($_POST);
-
                 $errors = (new AnimalValidator())->validateAnimal($animal);
 
                 if (empty($errors)) {
                     $animalRepository->insert($animal);
-                    header('Location: index.php?controller=habitat&action=edit&id=' . $animal->getId());
+                    header('Location: index.php?controller=habitat&action=show&id=' . $habitat->getId());
+                } else {
+                    throw new \Exception("Le formulaire contient des erreurs");
                 }
             }
-
             $this->render('animal/edit', [
                 'animal' => $animal,
                 'errors' => $errors,
                 'pageTitle' => 'Modifier un animal',
-                'habitats' => (new HabitatRepository())->findAll(),
-            ]);
-        } catch (\Exception $e) {
-            $this->render('errors/default', [
-                'error' => $e->getMessage(),
-                'pageTitle' => 'Erreur',
-            ]);
-        }
-    }
+                'habitats' => $habitats,
 
-    protected function delete(): void
-    {
-        try {
-            $errors = [];
-            $animalRepository = new AnimalRepository();
-            $animal = $animalRepository->findOneById($_GET['id']);
 
-            if (isset($_POST['delete'])) {
-                $animalRepository->delete($animal->getId());
-                header('Location: index.php?controller=habitat&action=list');
-            }
-
-            $this->render('animal/delete', [
-                'habitatName' => (new HabitatRepository())->findOneById($animal->getHabitatId())->getName(),
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
@@ -146,10 +125,13 @@ class AnimalController extends Controller
             // On récupère l'animal
             $animalRepository = new AnimalRepository();
             $animal = $animalRepository->findOneById($_GET['id']);
+            if (!$animal) {
+                throw new \Exception("Cet animal n'existe pas");
+            }
             // On récupère le dernier avis vétérinaire de l'animal
             $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
             $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getId());
-            // On peux ajouter un avis vétérinaire
+            // Si le formulaire d'ajout est soumis on ajoute un avis vétérinaire
             if (isset($_POST['addReviewVeterinary'])) {
                 // On hydrate l'objet
                 $reviewVeterinary = new ReviewVeterinary();
@@ -160,9 +142,17 @@ class AnimalController extends Controller
                 if (empty($errors)) {
                     $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
                     $reviewVeterinaryRepository->insert($reviewVeterinary);
+                    var_dump($reviewVeterinary);
                     header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                     exit();
                 } else throw new \Exception("Le formulaire contient des erreurs");
+            }
+
+            //Si le formualire de suppression est soumis on supprime l'animal
+            if (isset($_POST['deleteAnimal'])) {
+                $animalRepository->delete($animal);
+                header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
+                exit();
             }
 
             $this->render('animal/show', [
@@ -171,6 +161,7 @@ class AnimalController extends Controller
                 'habitat' => (new HabitatRepository())->findOneById($animal->getHabitatId())->getName(),
                 'reviewVeterinary' => $reviewVeterinary,
                 'errors' => $errors,
+
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
