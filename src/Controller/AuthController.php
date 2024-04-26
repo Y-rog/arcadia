@@ -55,9 +55,7 @@ class AuthController extends Controller
                     'role' => $user->getRole(),
                 ];
                 header('location: index.php');
-            } else {
-                $errors[] = 'Email ou mot de passe incorrect';
-            }
+            } else throw new \Exception('Identifiants incorrects');
         }
 
         $this->render('auth/login', [

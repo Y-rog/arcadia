@@ -23,7 +23,7 @@
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="row justify-content-center pt-2">
-                        <input type="submit" id="loginUser" name="loginUser" class="btn btn-primary" value="Connexion">
+                        <input type="submit" id="loginUser" name="loginUser" class="btn btn-success" value="Connexion">
                     </div>
 
 

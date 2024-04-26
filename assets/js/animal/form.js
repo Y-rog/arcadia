@@ -1,29 +1,32 @@
-
-const inputName = document.getElementById('name');
-const inputDescription = document.getElementById('description');
+const inputFirstName = document.getElementById('first_name');
+const inputRace = document.getElementById('race');
 const inputImage = document.getElementById('image');
-const inputSubmit = document.getElementById('saveHabitat');
+const inputHabitat = document.getElementById('habitat_id');
+const inputSubmit = document.getElementById('saveAnimal');
 
-inputName.addEventListener('keyup', validateForm);
-inputDescription.addEventListener('keyup', validateForm);
+inputFirstName.addEventListener('keyup', validateForm);
+inputRace.addEventListener('keyup', validateForm);
+inputHabitat.addEventListener('change', validateForm);
 inputImage.addEventListener('change', validateForm);
 inputSubmit.addEventListener('click', validateForm);
 
-
+// On autorise l'envoi du formulaire si tous les champs obligatoires sont remplis
 function validateForm() {
-    const nameOK = validateRequired(inputName);
-    const descriptionOk = validateRequired(inputDescription);
+    const firstNameOK = validateRequired(inputFirstName);
+    const raceOk = validateRequired(inputRace);
     const imageOk = validateRequired(inputImage);
     const imageValid = validateImage(inputImage);
+    const inputHabitatOk = validateRequired(inputHabitat);
 
-    if (nameOK && descriptionOk && imageOk && imageValid) {
+    if (firstNameOK && raceOk && imageOk && imageValid && inputHabitatOk) {
         inputSubmit.disabled = false;
-    } else {
+    }
+    else {
         inputSubmit.disabled = true;
     }
-
 }
 
+// On vérifie que les champs obligatoires sont remplis
 function validateRequired(input) {
     if (input.value !== "") {
         input.classList.add('is-valid');
@@ -36,6 +39,7 @@ function validateRequired(input) {
     }
 }
 
+// On informe l'utilisateur que l'image doit être au format jpg, jpeg, png ou gif
 function validateImage(input) {
     const image = input.value;
     const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
@@ -49,3 +53,4 @@ function validateImage(input) {
         return false;
     }
 }
+

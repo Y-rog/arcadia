@@ -12,18 +12,18 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
         </div>
         <div class="row justify-content-center">
             <div class="col-8 ">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
-                        <label for="name" class="form-label">Nom de l'habitat</label>
-                        <input type="text" class='form-control' id="name" name="name" value="" required>
+                        <label for="name">Nom de l'habitat</label>
+                        <input type="text" class='form-control' id="name" name="name" value="">
                     </div>
                     <div class="mb-3 text-start">
-                        <label for="description" class="form-label">Description de l'habitat</label>
-                        <input type="text" class='form-control' id="description" name="description" value="" required>
+                        <label for="description">Description de l'habitat</label>
+                        <input type="text" class='form-control' id="description" name="description" value="">
                     </div>
                     <div class="mb-3 text-start">
-                        <label for="image" class="form-label">Image de l'habitat</label>
-                        <input type="file" class="form-control" id="image" name="image" value="" required>
+                        <label for="image">Image de l'habitat</label>
+                        <input type="file" class="form-control" id="image" name="image" value="">
                     </div>
                     <div class="row justify-content-center pt-2">
                         <input type="submit" id="saveHabitat" name="saveHabitat" class="btn btn-success" value="Ajouter">

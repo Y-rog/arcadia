@@ -17,6 +17,7 @@ define('_IMAGE_HABITAT_', '/uploads/habitats/');
 define('_IMAGE_ANIMAL_', '/uploads/animals/');
 
 
+
 //on appelle le controller pour router
 
 $controller = new Controller();

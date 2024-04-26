@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Habitat;
+use App\Tools\FileTools;
 use APP\Security\Security;
 use App\Entity\ReviewVeterinary;
 use App\Security\HabitatValidator;
@@ -126,6 +127,12 @@ class HabitatController extends Controller
             $habitat = new Habitat();
             //Si le formulaire est soumis on ajoute un habitat
             if (isset($_POST['saveHabitat'])) {
+                $file = $_FILES['image'];
+                // On vérifie si une image a été chargéee
+                if ($file['error'] === 0) {
+                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file);
+                    $habitat->setImage($file['fileName']);
+                } else throw new \Exception("Aucune image n'a été chargée");
                 $habitat->hydrate($_POST);
                 $habitatValidator = new HabitatValidator();
                 $errors = $habitatValidator->validateHabitat($habitat);
@@ -158,6 +165,12 @@ class HabitatController extends Controller
             $habitat = $habitatRepository->findOneById($_GET['id']);
             //Si le formulaire est soumis on modifie l'habitat
             if (isset($_POST['saveHabitat'])) {
+                $file = $_FILES['image'];
+                // On vérifie si une image a été chargéee
+                if ($file['error'] === 0) {
+                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file);
+                    $habitat->setImage($file['fileName']);
+                } else throw new \Exception("Aucune image n'a été chargée");
                 $habitat->hydrate($_POST);
                 $habitatValidator = new HabitatValidator();
                 $errors = $habitatValidator->validateHabitat($habitat);

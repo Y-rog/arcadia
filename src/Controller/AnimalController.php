@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use Throwable;
 use App\Entity\Animal;
 use App\Entity\Habitat;
+use App\Tools\FileTools;
 use App\Entity\ReviewVeterinary;
 use App\Security\AnimalValidator;
 use App\Repository\UserRepository;
@@ -11,7 +13,6 @@ use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use App\Security\ReviewVeterinaryValidator;
 use App\Repository\ReviewVeterinaryRepository;
-use Throwable;
 
 class AnimalController extends Controller
 {
@@ -54,6 +55,13 @@ class AnimalController extends Controller
             $habitats = $habitatRepository->findAll();
             // Si le formulaire est soumis on ajoute l'animal
             if (isset($_POST['saveAnimal'])) {
+                $file = $_FILES['image'];
+                // On vérifie si une image a été uploadée
+                if ($file['error'] === 0) {
+                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file);
+                    $animal->setImage($file['fileName']);
+                } else throw new \Exception("Aucune image n'a été uploadée");
+                // On hydrate l'objet
                 $animal->hydrate($_POST);
                 $errors = (new AnimalValidator())->validateAnimal($animal);
                 // Si le formulaire est valide on ajoute l'animal
@@ -70,6 +78,7 @@ class AnimalController extends Controller
                 'errors' => $errors,
                 'pageTitle' => 'Ajouter un animal',
                 'habitats' => $habitats,
+
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
@@ -91,6 +100,12 @@ class AnimalController extends Controller
             $habitats = $habitatRepository->findAll();
             // Si le formulaire est soumis on modifie l'animal
             if (isset($_POST['saveAnimal'])) {
+                $file = $_FILES['image'];
+                // On vérifie si une image a été chargéee
+                if ($file['error'] === 0) {
+                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file);
+                    $animal->setImage($file['fileName']);
+                } else throw new \Exception("Aucune image n'a été chargée");
                 $animal->hydrate($_POST);
                 $errors = (new AnimalValidator())->validateAnimal($animal);
                 // Si le formulaire est valide on modifie l'animal

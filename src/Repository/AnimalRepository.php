@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Animal;
-use App\Entity\Review;
-use App\Entity\ReviewVeterinary;
 
 class AnimalRepository extends Repository
 {
@@ -52,6 +50,7 @@ class AnimalRepository extends Repository
 
     public function insert(Animal $animal)
     {
+
         if ($animal->getId() === null) {
             $query = $this->pdo->prepare('INSERT INTO animal (first_name, race, image, habitat_id) VALUES (:first_name, :race, :image, :habitat_id)');
             $query->bindValue(':first_name', $animal->getFirstname(), \PDO::PARAM_STR);

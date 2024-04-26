@@ -9,7 +9,7 @@ use App\Security\Security; ?>
         </div>
         <div class="row justify-content-center">
             <div class="col-8 ">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
                         <input type="hidden" class='form-control' id="id" name="id" value="<?= $animal->getId() ?>" required>
                     </div>
