@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Repository\ReviewVeterinaryRepository;
+
 class Animal extends Entity
 {
     protected ?int $id = null;
@@ -113,5 +115,15 @@ class Animal extends Entity
     public function getImagePath()
     {
         return _IMAGE_ANIMAL_ . $this->getImage();
+    }
+
+    public function getHealthStatus()
+    {
+        $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
+        $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($this->getId());
+        if ($reviewVeterinary) {
+            return $reviewVeterinary->getHealthStatus();
+        }
+        return '';
     }
 }

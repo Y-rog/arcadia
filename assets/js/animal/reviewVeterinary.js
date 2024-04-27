@@ -1,26 +1,27 @@
 //verifier champs requis
 const inputFood = document.getElementById('food');
 const inputFoodQuantity = document.getElementById('food_quantity');
+const inputHealthStatus = document.getElementById('health_status');
+const inputSubmit = document.getElementById('addReviewVeterinary');
 
 inputFood.addEventListener('keyup', validateForm);
 inputFoodQuantity.addEventListener('keyup', validateForm);
-
+inputHealthStatus.addEventListener('keyup', validateForm);
 
 function validateForm() {
     const foodOk = validateRequired(inputFood);
     const foodQuantityOk = validateRequired(inputFoodQuantity);
+    const healthStatusOk = validateRequired(inputHealthStatus);
 
-    if (healthStatusOk && foodOk && foodQuantityOk) {
+    if (foodOk && foodQuantityOk && healthStatusOk) {
         inputSubmit.disabled = false;
-    }
-    else {
+    } else {
         inputSubmit.disabled = true;
     }
-
 }
 
 function validateRequired(input) {
-    if (input.value !== "") {
+    if (input.value.length > 0) {
         input.classList.add('is-valid');
         input.classList.remove('is-invalid');
         return true;

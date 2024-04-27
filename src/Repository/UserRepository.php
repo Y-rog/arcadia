@@ -56,11 +56,4 @@ class UserRepository extends Repository
             $query->execute();
         }
     }
-
-    public function delete(User $user)
-    {
-        $query = $this->pdo->prepare("DELETE FROM user WHERE id = :id");
-        $query->bindValue(':id', $user->getId(), $this->pdo::PARAM_INT);
-        $query->execute();
-    }
 }

@@ -67,12 +67,12 @@
         <h3 class="pb-2">Nos visiteurs témoignent!</h3>
         <div class="pb-3">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addReview">
+            <button type="button" id="btn-add-review" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalAddReview">
                 Ajouter un avis
             </button>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="addReview" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
+        <div class="modal fade" id="modalAddReview" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -94,7 +94,7 @@
                                     <input type="hidden" name="is_validated" value="0">
                                 </div>
                                 <div class="row d-flex justify-content-center pt-2">
-                                    <input type="submit" name="addReview" id="addReview" class="btn btn-success" value="Envoyer">
+                                    <input type="submit" name="addReview" id="addReview" class="btn btn-success" value="Envoyer" disabled>
                                 </div>
                             </div>
                         </form>

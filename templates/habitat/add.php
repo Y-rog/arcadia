@@ -4,6 +4,11 @@ use App\Security\Security;
 
 require_once _ROOTPATH_ . '/templates/header.php'; ?>
 <script src="/assets/js/habitat/form.js" defer></script>
+<?php foreach ($errors as $error) : ?>
+    <div class="alert alert-danger" role="alert">
+        <?= $error ?>
+    </div>
+<?php endforeach; ?>
 
 <main class="container">
     <?php if (Security::isAdmin()) { ?>
@@ -16,17 +21,26 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     <div class="mb-3 text-start">
                         <label for="name">Nom de l'habitat</label>
                         <input type="text" class='form-control' id="name" name="name" value="">
+                        <div class='invalid-feedback'>
+                            Le nom de l'habitat est requis.
+                        </div>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="description">Description de l'habitat</label>
                         <input type="text" class='form-control' id="description" name="description" value="">
+                        <div class='invalid-feedback'>
+                            La description de l'habitat est requise.
+                        </div>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="image">Image de l'habitat</label>
                         <input type="file" class="form-control" id="image" name="image" value="">
+                        <div class='invalid-feedback'>
+                            L'image de l'habitat est requise.
+                        </div>
                     </div>
                     <div class="row justify-content-center pt-2">
-                        <input type="submit" id="saveHabitat" name="saveHabitat" class="btn btn-success" value="Ajouter">
+                        <input type="submit" id="saveHabitat" name="saveHabitat" class="btn btn-success" value="Ajouter" disabled>
                     </div>
                 </form>
             </div>

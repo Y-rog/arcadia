@@ -18,6 +18,10 @@ class Controller
                         $controller = new AuthController();
                         $controller->route();
                         break;
+                    case 'dashboard':
+                        $controller = new DashboardController();
+                        $controller->route();
+                        break;
                     case 'habitat':
                         $controller = new HabitatController();
                         $controller->route();
@@ -28,6 +32,10 @@ class Controller
                         break;
                     case 'review':
                         $controller = new ReviewController();
+                        $controller->route();
+                        break;
+                    case 'user':
+                        $controller = new UserController();
                         $controller->route();
                         break;
                     default:

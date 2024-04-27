@@ -63,14 +63,20 @@ class AnimalController extends Controller
                 } else throw new \Exception("Aucune image n'a été uploadée");
                 // On hydrate l'objet
                 $animal->hydrate($_POST);
-                $errors = (new AnimalValidator())->validateAnimal($animal);
+                $animalValidator = new AnimalValidator();
+                $errors = $animalValidator->validateAnimal($animal);
                 // Si le formulaire est valide on ajoute l'animal
                 if (empty($errors)) {
                     $animalRepository = new AnimalRepository();
                     $animalRepository->insert($animal);
                     header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 } else {
-                    throw new \Exception("Le formulaire contient des erreurs");
+                    $this->render('animal/add', [
+                        'animal' => $animal,
+                        'errors' => $errors,
+                        'pageTitle' => 'Ajouter un animal',
+                        'habitats' => $habitats,
+                    ]);
                 }
             }
             $this->render('animal/add', [
@@ -113,7 +119,12 @@ class AnimalController extends Controller
                     $animalRepository->insert($animal);
                     header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 } else {
-                    throw new \Exception("Le formulaire contient des erreurs");
+                    $this->render('animal/edit', [
+                        'animal' => $animal,
+                        'errors' => $errors,
+                        'pageTitle' => 'Ajouter un animal',
+                        'habitats' => $habitats,
+                    ]);
                 }
             }
             $this->render('animal/edit', [
@@ -148,8 +159,8 @@ class AnimalController extends Controller
                 // On hydrate l'objet
                 $reviewVeterinary = new ReviewVeterinary();
                 $reviewVeterinary->hydrate($_POST);
-
-                $errors = (new ReviewVeterinaryValidator())->validateReviewVeterinary($reviewVeterinary);
+                $reviewVeterinaryValidator = new ReviewVeterinaryValidator();
+                $errors = $reviewVeterinaryValidator->validateReviewVeterinary($reviewVeterinary);
 
                 if (empty($errors)) {
                     $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
@@ -157,7 +168,9 @@ class AnimalController extends Controller
                     var_dump($reviewVeterinary);
                     header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                     exit();
-                } else throw new \Exception("Le formulaire contient des erreurs");
+                } else {
+                    throw new \Exception("Le formulaire contient des erreurs");
+                }
             }
             //Si le formualire de suppression est soumis on supprime l'animal
             if (isset($_POST['deleteAnimal'])) {

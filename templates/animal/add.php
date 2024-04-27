@@ -1,6 +1,11 @@
 <?php require_once _ROOTPATH_ . '/templates/header.php';
 
 use App\Security\Security; ?>
+<?php foreach ($errors as $error) : ?>
+    <div class="alert alert-danger" role="alert">
+        <?= $error ?>
+    </div>
+<?php endforeach; ?>
 <script src="/assets/js/animal//form.js" defer></script>
 <main class="container">
     <?php if (Security::isAdmin()) { ?>
@@ -12,11 +17,11 @@ use App\Security\Security; ?>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
                         <label for="first_name">Prénom de l'animal</label>
-                        <input type="text" class='form-control' id="first_name" name="first_name" value="" required>
+                        <input type="text" class='form-control' id="first_name" name="first_name" value="">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="race">Race de l'animal</label>
-                        <input type="text" class='form-control' id="race" name="race" value="" required>
+                        <input type="text" class='form-control' id="race" name="race" value="">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="image">Image de l'animal</label>
@@ -24,7 +29,7 @@ use App\Security\Security; ?>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="habitat_id">Habitat de l'animal</label>
-                        <select name="habitat_id" id="habitat_id" class="form-control" required>
+                        <select name="habitat_id" id="habitat_id" class="form-control">
                             <option value="">Choisir un habitat</option>
                             <?php foreach ($habitats as $habitat) : ?>
                                 <option value="<?= $habitat->getId() ?>"><?= $habitat->getName() ?></option>
@@ -32,7 +37,7 @@ use App\Security\Security; ?>
                         </select>
                     </div>
                     <div class="row justify-content-center pt-2">
-                        <input type="submit" id="saveAnimal" name="saveAnimal" class="btn btn-success" value="Ajouter">
+                        <input type="submit" id="saveAnimal" name="saveAnimal" class="btn btn-success" value="Ajouter" disabled>
                     </div>
                 </form>
             </div>

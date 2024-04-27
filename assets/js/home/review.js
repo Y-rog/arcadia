@@ -6,10 +6,16 @@ const inputSubmit = document.getElementById('addReview');
 inputUsername.addEventListener('keyup', validateForm);
 inputContent.addEventListener('keyup', validateForm);
 
-
 function validateForm() {
-validateRequired(inputUsername);
- validateRequired(inputContent);
+    const usernameOk = validateRequired(inputUsername);
+    const contentOk = validateRequired(inputContent);
+
+    if (usernameOk && contentOk) {
+        inputSubmit.disabled = false;
+    } else {
+        inputSubmit.disabled = true;
+    }
+
 }
 
 function validateRequired(input) {
@@ -23,6 +29,7 @@ function validateRequired(input) {
         return false;
     }
 }
+
 
 
 

@@ -2,6 +2,12 @@
 
 use App\Security\Security; ?>
 <script src="/assets/js/animal/reviewVeterinary.js" defer></script>
+<script src="/assets/js/animal/show.js" defer></script>
+<?php foreach ($errors as $error) : ?>
+    <div class="alert alert-danger" role="alert">
+        <?= $error ?>
+    </div>
+<?php endforeach; ?>
 
 
 <main class="container">
@@ -10,11 +16,11 @@ use App\Security\Security; ?>
         <div class="card h-100 card-animal-show">
             <img class="rounded-top" src=<?= $animal->getImagePath() ?> alt="<?= $animal->getFirstName() ?>, <?= $animal->getRace() ?> ">
             <ul class="list-group list-group">
-                <li class="list-group-item">Race: <?= ucfirst($animal->getFirstName()) ?></li>
+                <li class="list-group-item">Prénom: <?= ucfirst($animal->getFirstName()) ?></li>
                 <li class="list-group-item">Race: <?= $animal->getRace() ?></li>
                 <li class="list-group-item">Habitat: <?= $habitat ?></li>
                 <?php if ($reviewVeterinary) { ?>
-                    <li class=" list-group-item">Etat: <?= $reviewVeterinary->getHealthStatus() ?></li>
+                    <li id="healthStatus" class="list-group-item">Etat: <?= $reviewVeterinary->getHealthStatus() ?></li>
                     <li class="list-group-item">Nourriture proposée: <?= $reviewVeterinary->getFood() ?></li>
                     <li class="list-group-item">Quantité: <?= $reviewVeterinary->getFoodQuantity() ?></li>
                     <li class="list-group-item">Date de passage: <?= $reviewVeterinary->getCreatedAt()->format('d/m/Y') ?></li>
@@ -26,15 +32,15 @@ use App\Security\Security; ?>
     </div>
     <?php if (Security::isVeterinary()) { ?>
         <div class="d-flex justify-content-center">
-            <button data-bs-toggle="modal" href="#addReviewVeterinary" class="btn btn-outline-primary"><i class="bi bi-clipboard-check fs-3"></i> Ajouter un avis vétérinaire</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modalAddReviewVeterinary" class="btn btn-outline-primary"><i class="bi bi-clipboard-check fs-3"></i> Ajouter un avis vétérinaire</button>
         </div>
         <div>
             <!-- Modal -->
-            <div class="modal fade" id="addReviewVeterinary" tabindex="-1" aria-labelledby="addReviewVeterinaryLabel" aria-hidden="true">
+            <div class="modal fade" id="modalAddReviewVeterinary" tabindex="-1" aria-labelledby="addReviewVeterinaryLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title text-center fs-5" id="addReviewVeterinary">Ajouter un avis sur </h1>
+                            <h1 class="modal-title text-center fs-5" id="addReviewsVeterinary">Ajouter un avis vétérinaire ?</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -73,7 +79,7 @@ use App\Security\Security; ?>
                                         <input type="hidden" class="form-control" id="userId" name="userId" value="<?= $_SESSION['user']['id']; ?>">
                                     </div>
                                     <div class="row d-flex justify-content-center pt-2">
-                                        <input type="submit" name="addReviewVeterinary" id="addReviewVeterinary" class="btn btn-primary" value="Envoyer">
+                                        <input type="submit" name="addReviewVeterinary" id="addReviewVeterinary" class="btn btn-success" value="Ajouter" disabled>
                                     </div>
                                 </div>
                             </form>

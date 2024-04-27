@@ -1,6 +1,5 @@
 <?php
 
-use App\Entity\ReviewVeterinary;
 use App\Security\Security;
 
 require_once _ROOTPATH_ . '/templates/header.php'; ?>
@@ -46,10 +45,11 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     <div class="card card-animal-list">
                         <img class="rounded-top" src=<?= $animal->getImagePath() ?> alt="<?= $animal->getFirstName() ?>, <?= $animal->getRace() ?> ">
                         <ul class="list-group list-group">
+                            <li class="list-group-item" hidden>Id: <?= $animal->getId() ?></li>
                             <li class="list-group-item">Prénom: <?= ucwords($animal->getFirstname()) ?></li>
                             <li class="list-group-item">Race: <?= $animal->getRace() ?></li>
                             <li class="list-group-item">Habitat: <?= $habitat->getName() ?></li>
-                            <li class="list-group-item">Etat: <?= $reviewVeterinary->getHealthStatus() ?> </li>
+                            <li class=" list-group-item">Etat: <?= $animal->getHealthStatus() ?></li>
                         </ul>
                     </div>
                 </a>

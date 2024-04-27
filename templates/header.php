@@ -28,6 +28,9 @@ use App\Security\Security; ?>
                         <a class="nav-link" href="index.php?controller=habitat&action=list">Habitats</a>
                         <a class="nav-link" href="#">Services</a>
                         <a class="nav-link" href="#">Contact</a>
+                        <?php if (Security::isAdmin()) { ?>
+                            <a class="nav-link" href="index.php?controller=dashboard&action=admin"><i class="d-flex bi  bi-speedometer2 fs-4"></i></a>
+                        <?php } ?>
                     </div>
                     <div class="navbar-nav col-lg-6 justify-content-end">
                         <?php if (Security::isLogged()) { ?>

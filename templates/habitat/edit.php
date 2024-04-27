@@ -3,7 +3,12 @@
 use App\Security\Security;
 
 require_once _ROOTPATH_ . '/templates/header.php'; ?>
-<script src="../../assets/js/habitat/form.js" defer></script>
+<script src="/assets/js/habitat/form.js" defer></script>
+<?php foreach ($errors as $error) : ?>
+    <div class="alert alert-danger" role="alert">
+        <?= $error ?>
+    </div>
+<?php endforeach; ?>
 <main class="container">
     <?php if (Security::isAdmin()) { ?>
         <div class="text-center pb-3">
@@ -28,7 +33,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                         <input type="file" class="form-control" value="<?= $habitat->getImage(); ?>" id="image" name="image">
                     </div>
                     <div class="row justify-content-center pt-2">
-                        <input type="submit" id="saveHabitat" name="saveHabitat" class="btn btn-success" value="Modifier">
+                        <input type="submit" id="saveHabitat" name="saveHabitat" class="btn btn-success" value="Modifier" disabled>
                     </div>
                 </form>
             </div>

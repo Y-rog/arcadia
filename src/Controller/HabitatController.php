@@ -66,33 +66,15 @@ class HabitatController extends Controller
                 //Charger les animaux par habitat par un appel au repository
                 $animalRepository = new AnimalRepository();
                 $animals = $animalRepository->findAllByHabitat($id);
-                //Charger le dernier avis vétérinaire par animal par un appel au repository
-                foreach ($animals as $animal) {
-                    $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
-                    $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getId());
-                    //Si pas d'avis vétérinaire, on crée un avis vide
-                    if (!$reviewVeterinary) {
-                        $reviewVeterinary = new ReviewVeterinary();
-                    }
-                }
-                //Si le formulaire de suppression est soumis
-                if (isset($_POST['deleteHabitat'])) {
-                    $habitatRepository = new HabitatRepository();
-                    $habitat = $habitatRepository->findOneById($_POST['id']);
-                    $habitatRepository->delete($habitat);
-                    header('Location: index.php?controller=habitat&action=list');
-                }
+                $this->render('habitat/show', [
+                    'pageTitle' => 'Habitat ' . $habitat->getName(),
+                    'habitat' => $habitat,
+                    'animals' => $animals,
+
+                ]);
             } else {
                 throw new \Exception("Cet habitat n'existe pas");
             }
-            //Afficher la vue show
-            $this->render('habitat/show', [
-                'pageTitle' => 'Habitat ' . $habitat->getName(),
-                'habitat' => $habitat,
-                'animals' => $animals,
-                'reviewVeterinary' => $reviewVeterinary
-
-            ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
                 'error' => $e->getMessage(),
@@ -127,12 +109,6 @@ class HabitatController extends Controller
             $habitat = new Habitat();
             //Si le formulaire est soumis on ajoute un habitat
             if (isset($_POST['saveHabitat'])) {
-                $file = $_FILES['image'];
-                // On vérifie si une image a été chargéee
-                if ($file['error'] === 0) {
-                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file);
-                    $habitat->setImage($file['fileName']);
-                } else throw new \Exception("Aucune image n'a été chargée");
                 $habitat->hydrate($_POST);
                 $habitatValidator = new HabitatValidator();
                 $errors = $habitatValidator->validateHabitat($habitat);
@@ -168,7 +144,7 @@ class HabitatController extends Controller
                 $file = $_FILES['image'];
                 // On vérifie si une image a été chargéee
                 if ($file['error'] === 0) {
-                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file);
+                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file);
                     $habitat->setImage($file['fileName']);
                 } else throw new \Exception("Aucune image n'a été chargée");
                 $habitat->hydrate($_POST);
@@ -184,6 +160,7 @@ class HabitatController extends Controller
                     'pageTitle' => 'Modifier un habitat',
                     'habitat' => $habitat,
                     'errors' => $errors
+
                 ]);
             }
         } catch (\Exception $e) {
