@@ -3,6 +3,7 @@
 use App\Security\Security;
 
 require_once _ROOTPATH_ . '/templates/header.php'; ?>
+<script src="/assets/js/animal/show.js" defer></script>
 <main class="container">
     <h1 class="text-center"><?= ucfirst($habitat->getName()) ?></h1>
     <div class="row">
@@ -49,7 +50,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                             <li class="list-group-item">Prénom: <?= ucwords($animal->getFirstname()) ?></li>
                             <li class="list-group-item">Race: <?= $animal->getRace() ?></li>
                             <li class="list-group-item">Habitat: <?= $habitat->getName() ?></li>
-                            <li class=" list-group-item">Etat: <?= $animal->getHealthStatus() ?></li>
+                            <li class=" list-group-item" id="healthStatus">Etat: <?= $animal->getHealthStatus() ?></li>
                         </ul>
                     </div>
                 </a>
