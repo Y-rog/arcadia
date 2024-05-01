@@ -7,6 +7,7 @@ use App\Repository\ReviewVeterinaryRepository;
 class Animal extends Entity
 {
     protected ?int $id = null;
+    protected string $uuid = '';
     protected string $first_name = '';
     protected string $race = '';
     protected string $image = '';
@@ -31,6 +32,27 @@ class Animal extends Entity
 
         return $this;
     }
+
+    /**
+     * Get the value of uuid
+     */
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * Set the value of uuid
+     *
+     * @return  self
+     */
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
 
     /**
      * Get the value of firstname

@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use App\Security\ReviewVeterinaryValidator;
+use App\MongoRepository\AnimalMongoRepository;
 use App\Repository\ReviewVeterinaryRepository;
 
 class AnimalController extends Controller
@@ -67,8 +68,12 @@ class AnimalController extends Controller
                 $errors = $animalValidator->validateAnimal($animal);
                 // Si le formulaire est valide on ajoute l'animal
                 if (empty($errors)) {
+                    // On ajoute l'animal dans la base de données SQL
                     $animalRepository = new AnimalRepository();
                     $animalRepository->insert($animal);
+                    // On ajoute l'animal dans la base de données MongoDB
+                    $animalMongoRepository = new AnimalMongoRepository();
+                    $animalMongoRepository->insert($animal);
                     header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 } else {
                     $this->render('animal/add', [
@@ -116,7 +121,11 @@ class AnimalController extends Controller
                 $errors = (new AnimalValidator())->validateAnimal($animal);
                 // Si le formulaire est valide on modifie l'animal
                 if (empty($errors)) {
+                    // On modifie l'animal dans la base de données SQL
                     $animalRepository->insert($animal);
+                    // On modifie l'animal dans la base de données MongoDB
+                    $animalMongoRepository = new AnimalMongoRepository();
+                    $animalMongoRepository->update($animal);
                     header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 } else {
                     $this->render('animal/edit', [
@@ -174,7 +183,11 @@ class AnimalController extends Controller
             }
             //Si le formualire de suppression est soumis on supprime l'animal
             if (isset($_POST['deleteAnimal'])) {
+                // On supprime l'animal dans la base de données SQL
                 $animalRepository->delete($animal);
+                // On supprime l'animal dans la base de données MongoDB
+                $animalMongoRepository = new AnimalMongoRepository();
+                $animalMongoRepository->delete($animal);
                 header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 exit();
             }

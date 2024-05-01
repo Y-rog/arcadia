@@ -16,6 +16,9 @@ use App\Security\Security; ?>
             <div class="col-8 ">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
+                        <input type="hidden" name="uuid" value="<?= uniqid(more_entropy: true) ?>">
+                    </div>
+                    <div class="mb-3 text-start">
                         <label for="first_name">Prénom de l'animal</label>
                         <input type="text" class='form-control' id="first_name" name="first_name" value="">
                     </div>

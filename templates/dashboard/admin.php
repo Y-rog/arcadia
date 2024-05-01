@@ -10,5 +10,19 @@
             </div>
         </div>
     </div>
+    <div>
+        <table class="animals">
+            <?php foreach ($animals as $animal) : ?>
+                <tr>
+                    <td><?= $uuid ?></td>
+                    <td><?= $firstName ?></td>
+                    <td><?= $race ?></td>
+                    <td>
+                        <a href="index.php?controller=animal&action=show&uuid=<?= $uuid  ?>"><button class="btn btn-primary">Voir</button></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
 
     <?php require_once _ROOTPATH_ . '/templates/footer.php'; ?>

@@ -18,18 +18,13 @@ class AnimalRepository extends Repository
         return null;
     }
 
-    public function findAll()
+    public function findAllforMOngo()
     {
         $query = $this->pdo->prepare('SELECT * FROM animal');
         $query->execute();
         $animals = $query->fetchAll($this->pdo::FETCH_ASSOC);
-        $animalEntities = [];
-        if ($animals) {
-            foreach ($animals as $animal) {
-                $animalEntities[] = Animal::createAndHydrate($animal);
-            }
-        }
-        return $animalEntities;
+
+        return $animals;
     }
 
     public function findAllByHabitat(int $habitatId)
@@ -52,7 +47,8 @@ class AnimalRepository extends Repository
     {
 
         if ($animal->getId() === null) {
-            $query = $this->pdo->prepare('INSERT INTO animal (first_name, race, image, habitat_id) VALUES (:first_name, :race, :image, :habitat_id)');
+            $query = $this->pdo->prepare('INSERT INTO animal (uuid, first_name, race, image, habitat_id) VALUES (:uuid, :first_name, :race, :image, :habitat_id)');
+            $query->bindValue(':uuid', $animal->getUuid(), \PDO::PARAM_STR);
             $query->bindValue(':first_name', $animal->getFirstname(), \PDO::PARAM_STR);
             $query->bindValue(':race', $animal->getRace(), \PDO::PARAM_STR);
             $query->bindValue(':image', $animal->getImage(), \PDO::PARAM_STR);
@@ -60,8 +56,9 @@ class AnimalRepository extends Repository
             $query->execute();
             return $this->pdo->lastInsertId();
         } else {
-            $query = $this->pdo->prepare('UPDATE animal SET first_name = :first_name, race=:race, image=:image, habitat_id=:habitat_id WHERE id = :id');
+            $query = $this->pdo->prepare('UPDATE animal SET id=:id, uuid=:uuid, first_name = :first_name, race=:race, image=:image, habitat_id=:habitat_id WHERE uuid = :uuid');
             $query->bindValue(':id', $animal->getId(), \PDO::PARAM_INT);
+            $query->bindValue(':uuid', $animal->getUuid(), \PDO::PARAM_STR);
             $query->bindValue(':first_name', $animal->getFirstname(), \PDO::PARAM_STR);
             $query->bindValue(':race', $animal->getRace(), \PDO::PARAM_STR);
             $query->bindValue(':image', $animal->getImage(), \PDO::PARAM_STR);
@@ -73,8 +70,8 @@ class AnimalRepository extends Repository
 
     public function delete(Animal $animal)
     {
-        $query = $this->pdo->prepare('DELETE FROM animal WHERE id = :id');
-        $query->bindValue(':id', $animal->getId(), \PDO::PARAM_INT);
+        $query = $this->pdo->prepare('DELETE FROM animal WHERE uuid = :uuid');
+        $query->bindValue(':uuid', $animal->getId(), \PDO::PARAM_INT);
         $query->execute();
     }
 }
