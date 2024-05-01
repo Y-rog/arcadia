@@ -17,6 +17,7 @@
                     <td><?= $uuid ?></td>
                     <td><?= $firstName ?></td>
                     <td><?= $race ?></td>
+                    <td><?= $viewsCounter ?></td>
                     <td>
                         <a href="index.php?controller=animal&action=show&uuid=<?= $uuid  ?>"><button class="btn btn-primary">Voir</button></a>
                     </td>

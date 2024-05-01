@@ -18,6 +18,18 @@ class AnimalRepository extends Repository
         return null;
     }
 
+    public function findOneByUuid(string $uuid)
+    {
+        $query = $this->pdo->prepare('SELECT * FROM animal WHERE uuid = :uuid');
+        $query->bindValue(':uuid', $uuid, \PDO::PARAM_STR);
+        $query->execute();
+        $animal = $query->fetch($this->pdo::FETCH_ASSOC);
+        if ($animal) {
+            return Animal::createAndHydrate($animal);
+        }
+        return null;
+    }
+
     public function findAllforMOngo()
     {
         $query = $this->pdo->prepare('SELECT * FROM animal');

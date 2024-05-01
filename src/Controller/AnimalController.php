@@ -122,6 +122,7 @@ class AnimalController extends Controller
                 // Si le formulaire est valide on modifie l'animal
                 if (empty($errors)) {
                     // On modifie l'animal dans la base de données SQL
+                    $animalRepository = new AnimalRepository();
                     $animalRepository->insert($animal);
                     // On modifie l'animal dans la base de données MongoDB
                     $animalMongoRepository = new AnimalMongoRepository();
@@ -156,13 +157,17 @@ class AnimalController extends Controller
             $errors = [];
             // On récupère l'animal
             $animalRepository = new AnimalRepository();
-            $animal = $animalRepository->findOneById($_GET['id']);
+            $animal = $animalRepository->findOneByUuid($_GET['uuid']);
             if (!$animal) {
                 throw new \Exception("Cet animal n'existe pas");
             }
+            //On récupère le nom de l'habitat de l'animal
+            $habitatRepository = new HabitatRepository();
+            $habitat = $habitatRepository->findOneById($animal->getHabitatId());
+            $habitat = $habitat->getName();
             // On récupère le dernier avis vétérinaire de l'animal
             $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
-            $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getId());
+            $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getUuid());
             // Si le formulaire d'ajout est soumis on ajoute un avis vétérinaire
             if (isset($_POST['addReviewVeterinary'])) {
                 // On hydrate l'objet
@@ -191,10 +196,29 @@ class AnimalController extends Controller
                 header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 exit();
             }
+
+            //On incrémente le compteur de vues
+            $animalMongoRepository = new AnimalMongoRepository();
+            $datas = $animalMongoRepository->findAllAnimals();
+            $data = $animalMongoRepository->findOneAnimalByUuid($_GET['uuid']);
+            $data = json_decode(json_encode($animalMongoRepository), true);
+            foreach ($datas as $key => $data) {
+                $datas[$key]['_id'] = $data['_id'];
+                $datas[$key]['uuid'] = $data['uuid'];
+                $datas[$key]['first_name'] = $data['first_name'];
+                $datas[$key]['race'] = $data['race'];
+                $datas[$key]['habitat_id'] = $data['habitat_id'];
+                $datas[$key]['viewsCounter'] = $data['viewsCounter'];
+            }
+            $viewsCounter = $data['viewsCounter'];
+            $viewsCounter++;
+            $animalMongoRepository->updateViewsCounter($data);
+
+
             $this->render('animal/show', [
                 'animal' => $animal,
                 'pageTitle' => 'Détail de l\'animal',
-                'habitat' => (new HabitatRepository())->findOneById($animal->getHabitatId())->getName(),
+                'habitat' => $habitat,
                 'reviewVeterinary' => $reviewVeterinary,
                 'errors' => $errors,
 

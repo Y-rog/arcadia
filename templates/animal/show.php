@@ -72,7 +72,7 @@ use App\Security\Security; ?>
                                     </div>
                                     <div class="mb-3 text-start ">
                                         <label for="animalId" class="form-label"></label>
-                                        <input type="hidden" class="form-control" id="animalId" name="animalId" value="<?= $animal->getId(); ?>">
+                                        <input type="hidden" class="form-control" id="animalUuid" name="animalUuid" value="<?= $animal->getUuid(); ?>">
                                     </div>
                                     <div class="mb-3 text-start ">
                                         <label for="userId" class="form-label"></label>

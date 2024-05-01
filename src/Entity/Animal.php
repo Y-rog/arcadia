@@ -142,7 +142,7 @@ class Animal extends Entity
     public function getHealthStatus()
     {
         $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
-        $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($this->getId());
+        $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($this->getuuId());
         if ($reviewVeterinary) {
             return $reviewVeterinary->getHealthStatus();
         }

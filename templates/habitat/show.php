@@ -42,11 +42,11 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
     <div class="row justify-content-center">
         <?php foreach ($animals as $animal) : ?>
             <div class="col d-flex justify-content-center p-3">
-                <a href="index.php?controller=animal&action=show&id=<?= $animal->getId() ?>">
+                <a href="index.php?controller=animal&action=show&uuid=<?= $animal->getUuid() ?>">
                     <div class="card card-animal-list">
                         <img class="rounded-top" src=<?= $animal->getImagePath() ?> alt="<?= $animal->getFirstName() ?>, <?= $animal->getRace() ?> ">
                         <ul class="list-group list-group">
-                            <li class="list-group-item" hidden>Id: <?= $animal->getId() ?></li>
+                            <li class="list-group-item" hidden>Id: <?= $animal->getUuid() ?></li>
                             <li class="list-group-item">Prénom: <?= ucwords($animal->getFirstname()) ?></li>
                             <li class="list-group-item">Race: <?= $animal->getRace() ?></li>
                             <li class="list-group-item">Habitat: <?= $habitat->getName() ?></li>

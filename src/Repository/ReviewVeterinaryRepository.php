@@ -11,20 +11,20 @@ class ReviewVeterinaryRepository extends Repository
 {
     public function insert(ReviewVeterinary $reviewVeterinary)
     {
-        $query = $this->pdo->prepare('INSERT INTO review_veterinary (health_status, food, food_quantity, health_status_details, animal_id, user_id) VALUES (:health_status, :food, :food_quantity, :health_status_details, :animal_id, :user_id)');
+        $query = $this->pdo->prepare('INSERT INTO review_veterinary (health_status, food, food_quantity, health_status_details, animal_uuid, user_id) VALUES (:health_status, :food, :food_quantity, :health_status_details, :animal_uuid, :user_id)');
         $query->bindValue(':health_status', $reviewVeterinary->getHealthStatus(), $this->pdo::PARAM_STR);
         $query->bindValue(':food', $reviewVeterinary->getFood(), $this->pdo::PARAM_STR);
         $query->bindValue(':food_quantity', $reviewVeterinary->getFoodQuantity(), $this->pdo::PARAM_STR);
         $query->bindValue(':health_status_details', $reviewVeterinary->getHealthStatusDetails(), $this->pdo::PARAM_STR);
-        $query->bindValue(':animal_id', $reviewVeterinary->getAnimalId(), $this->pdo::PARAM_INT);
+        $query->bindValue(':animal_uuid', $reviewVeterinary->getAnimalId(), $this->pdo::PARAM_STR);
         $query->bindValue(':user_id', $reviewVeterinary->getUserId(), $this->pdo::PARAM_INT);
         $query->execute();
     }
 
-    public function findLastReviewVeterinaryByAnimal(int $animalId)
+    public function findLastReviewVeterinaryByAnimal(string $animalUuid)
     {
-        $query = $this->pdo->prepare('SELECT * FROM review_veterinary WHERE animal_id = :animal_id ORDER BY created_at DESC LIMIT 1');
-        $query->bindValue(':animal_id', $animalId, $this->pdo::PARAM_INT);
+        $query = $this->pdo->prepare('SELECT * FROM review_veterinary WHERE animal_uuid = :animal_uuid ORDER BY created_at DESC LIMIT 1');
+        $query->bindValue(':animal_uuid', $animalUuid, $this->pdo::PARAM_STR);
         $query->execute();
         $reviewVeterinary = $query->fetch($this->pdo::FETCH_ASSOC);
         if ($reviewVeterinary) {

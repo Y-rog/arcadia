@@ -6,7 +6,7 @@ use MongoDB\Model\BSONDocument;
 
 class AnimalMongoRepository extends MongoRepository
 {
-    public function findOneAnimalById(int $uuid): BSONDocument
+    public function findOneAnimalByUuid(string $uuid): BSONDocument
     {
         $client = $this->client;
         $collection = $client->arcadia->animal;
@@ -35,7 +35,9 @@ class AnimalMongoRepository extends MongoRepository
             'first_name' => $animal->getFirstname(),
             'race' => $animal->getRace(),
             'image' => $animal->getImage(),
-            'habitat_id' => $animal->getHabitatId()
+            'habitat_id' => $animal->getHabitatId(),
+            //On initialise le compteur de vues à 0
+            'viewsCounter' => 0
         ];
         $collection->insertOne($data);
         return $data;
@@ -55,6 +57,15 @@ class AnimalMongoRepository extends MongoRepository
         ];
         $collection->updateOne(['uuid' => $animal->getUuId()], ['$set' => $data]);
         return $data;
+    }
+
+    public function updateViewsCounter($data)
+    {
+        $client = $this->client;
+        $collection = $client->arcadia->animal;
+        $viewsCounter = $data['viewsCounter'];
+        $viewsCounter++;
+        $collection->updateOne(['uuid' => $data['uuid']], ['$set' => ['viewsCounter' => $viewsCounter]]);
     }
 
     public function delete($animal)

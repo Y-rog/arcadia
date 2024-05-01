@@ -42,26 +42,31 @@ class DashboardController extends Controller
         if (!Security::isAdmin()) {
             throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
         }
+        // On récupère les animaux de la base de données mongo
         $animalMongoRepository = new AnimalMongoRepository();
         $animals = $animalMongoRepository->findAllAnimals();
+        // On convertit le format Bson en tableau
         $animals = json_decode(json_encode($animals), true);
-        print_r($animals);
         foreach ($animals as $key => $animal) {
             $animals[$key]['_id'] = $animal['_id'];
             $animals[$key]['uuid'] = $animal['uuid'];
             $animals[$key]['first_name'] = $animal['first_name'];
             $animals[$key]['race'] = $animal['race'];
             $animals[$key]['habitat_id'] = $animal['habitat_id'];
+            $animals[$key]['viewsCounter'] = $animal['viewsCounter'];
         }
+        // On récupère la valeur du compteur de vues
+        $viewsCounter = $animal['viewsCounter'];
 
 
-
+        // On affiche la vue
         $this->render('dashboard/admin', [
             'pageTitle' => 'Administration',
             'animals' => $animals,
             'uuid' => $animal['uuid'],
             'firstName' => $animal['first_name'],
             'race' => $animal['race'],
+            'viewsCounter' => $viewsCounter,
         ]);
     }
 }
