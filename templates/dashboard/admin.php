@@ -3,27 +3,110 @@
     <div class="text-center pb-3">
         <h1>Tableau de bord</h1>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-2 ">
-            <div class="row justify-content-center">
-                <a href="index.php?controller=user&action=register" class="btn btn-outline-primary">Gestion des utilisateurs</a>
+    <div class="d-flex row justify-content-center flex-wrap">
+        <div class=" col justify-content-center border border-light-subtle rounded me-3 flex-wrap">
+            <h6 class="text-secondary">Gestion des utilisateurs</h6>
+            <div class=" pb-5 d-flex justify-content-center">
+                <a href="index.php?controller=user&action=register" class="btn btn-outline-primary">Ajouter un utilisateur</a>
+            </div>
+        </div>
+        <div class="col justify-content-center border border-light-subtle rounded ms-3 flex-wrap">
+            <h6 class="text-secondary">Gestion des horaires</h6>
+            <div class=" pb-5 d-flex justify-content-center">
+                <a href="index.php?controller=user&action=register" class="btn btn-outline-primary">Modifier les horaires</a>
             </div>
         </div>
     </div>
-    <div>
-        <table class="animals">
-            <?php foreach ($animals as $animal) : ?>
-                <tr>
-                    <td><?= $uuid ?></td>
-                    <td><?= $firstName ?></td>
-                    <td><?= $race ?></td>
-                    <td><?= $viewsCounter ?></td>
-                    <td>
-                        <a href="index.php?controller=animal&action=show&uuid=<?= $uuid  ?>"><button class="btn btn-primary">Voir</button></a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    </div>
 
-    <?php require_once _ROOTPATH_ . '/templates/footer.php'; ?>
+    <div class="row border border-light-subtle rounded mt-3">
+        <h6 class="text-secondary">Gestion des services</h6>
+        <div class=" pb-5 d-flex flex-wrap">
+            <div class="p-2"><a href="#" class="col btn btn-outline-primary">Ajouter un service</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-warning">Modifier un service</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-danger">Supprimer un service</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-secondary">Voir les services</a></div>
+        </div>
+    </div>
+    <div class="row justify-content-around border border-light-subtle rounded mt-3">
+        <h6 class="text-secondary">Gestion des habitats</h6>
+        <div class="pb-5 d-flex flex-wrap">
+            <div class="p-2"><a href="#" class="col btn btn-outline-primary">Ajouter un habitat</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-warning">Modifier un habitat</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-danger">Supprimer un habitat</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-secondary">Voir les habitats</a></div>
+        </div>
+    </div>
+    <div class="row justify-content-around border border-light-subtle rounded mt-3">
+        <h6 class="text-secondary">Gestion des animaux</h6>
+        <div class="pb-5 d-flex flex-wrap">
+            <div class="p-2"><a href="#" class="col btn btn-outline-primary">Ajouter un animal</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-warning">Modifier un animal</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-danger">Supprimer un animal</a></div>
+            <div class="p-2"><a href="#" class="col btn btn-outline-secondary">Voir les animaux</a></div>
+        </div>
+    </div>
+    <div class="row justify-content-around border border-light-subtle rounded mt-3">
+        <div class="text center">
+            <h6 class="text-secondary">Liste des animaux les plus vus</h6>
+        </div>
+        <div class="col-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Prénom</th>
+                        <th class="text-center" scope="col">Race</th>
+                        <th class="text-center" scope="col">Nombre de vues</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($animals as $key => $animal) : ?>
+                        <a href="index.php?controller=animal&action=show&uuid=<?= $animals[$key]['uuid']  ?>">
+                            <tr>
+                                <td class="text-center"><?= $animals[$key]['first_name']; ?> </td>
+                                <td class="text-center"><?= $animals[$key]['race'] ?></td>
+                                <td class="text-center"><?= $animals[$key]['viewsCounter'] ?></td>
+                            </tr>
+                        </a>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <!-- mettre graph ici !-->
+        </div>
+    </div>
+    <div class="row justify-content-around border border-light-subtle rounded mt-3">
+        <div class="text center table-responsive">
+            <h6 class="text-secondary">Liste des avis vétérinaires les plus récents</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center px-3" scope="col">Prénom de l'animal</th>
+                        <th class="text-center px-3" scope="col">Race</th>
+                        <th class="text-center px-3" scope="col">Status de santé</th>
+                        <th class="text-center px-3" scope="col">Nourriture proposée</th>
+                        <th class="text-center px-3" scope="col">Quantité</th>
+                        <th class="text-center px-3" scope="col">Détails</th>
+                        <th class="text-center px-3" scope="col">Vétérinaire</th>
+                        <th class="text-center px-3" scope="col">Date de l'avis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($reviewsVeterinary as $reviewVeterinary) : ?>
+                        <tr>
+                            <td class="text-center"><?= $animalSql->getFirstName(); ?></td>
+                            <td class="text-center"><?= $animalSql->getRace(); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getHealthStatus(); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getFood(); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getFoodQuantity(); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getHealthStatusDetails(); ?></td>
+                            <td class="text-center"><?= $user->getFirstname(); ?>, <?= $user->getLastName(); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getCreatedAt()->format('d/m/Y'); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+</main>
+
+<?php require_once _ROOTPATH_ . '/templates/footer.php'; ?>

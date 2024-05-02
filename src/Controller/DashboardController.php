@@ -8,7 +8,9 @@ use App\Security\Security;
 use App\Security\UserValidator;
 use App\Repository\UserRepository;
 use App\Repository\AnimalRepository;
+
 use App\MongoRepository\AnimalMongoRepository;
+use App\Repository\ReviewVeterinaryRepository;
 
 
 
@@ -42,31 +44,34 @@ class DashboardController extends Controller
         if (!Security::isAdmin()) {
             throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
         }
+        $animal = [];
         // On récupère les animaux de la base de données mongo
         $animalMongoRepository = new AnimalMongoRepository();
         $animals = $animalMongoRepository->findAllAnimals();
         // On convertit le format Bson en tableau
         $animals = json_decode(json_encode($animals), true);
-        foreach ($animals as $key => $animal) {
-            $animals[$key]['_id'] = $animal['_id'];
-            $animals[$key]['uuid'] = $animal['uuid'];
-            $animals[$key]['first_name'] = $animal['first_name'];
-            $animals[$key]['race'] = $animal['race'];
-            $animals[$key]['habitat_id'] = $animal['habitat_id'];
-            $animals[$key]['viewsCounter'] = $animal['viewsCounter'];
+        // On trie le tableau par nombre de vues
+        usort($animals, function ($a, $b) {
+            return $b['viewsCounter'] <=> $a['viewsCounter'];
+        });
+
+        // On récupère les avis vétérinaires de la base de données par date de création plus récente
+        $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
+        $reviewsVeterinary = $reviewVeterinaryRepository->findAll();
+        foreach ($reviewsVeterinary as $reviewVeterinary) {
+            $animalUuid = $reviewVeterinary->getAnimalUuid();
+            $animalRepository = new AnimalRepository();
+            $animalSql = $animalRepository->findOneByUuid($animalUuid);
+            $userId = $reviewVeterinary->getUserId();
+            $userRepository = new UserRepository();
+            $user = $userRepository->findOneById($userId);
         }
-        // On récupère la valeur du compteur de vues
-        $viewsCounter = $animal['viewsCounter'];
-
-
-        // On affiche la vue
         $this->render('dashboard/admin', [
             'pageTitle' => 'Administration',
             'animals' => $animals,
-            'uuid' => $animal['uuid'],
-            'firstName' => $animal['first_name'],
-            'race' => $animal['race'],
-            'viewsCounter' => $viewsCounter,
+            'reviewsVeterinary' => $reviewsVeterinary,
+            'animalSql' => $animalSql,
+            'user' => $user
         ]);
     }
 }

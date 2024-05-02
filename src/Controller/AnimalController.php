@@ -214,7 +214,6 @@ class AnimalController extends Controller
             $viewsCounter++;
             $animalMongoRepository->updateViewsCounter($data);
 
-
             $this->render('animal/show', [
                 'animal' => $animal,
                 'pageTitle' => 'Détail de l\'animal',

@@ -12,7 +12,7 @@ class ReviewVeterinary extends Entity
     protected string $food_quantity = '';
     protected DateTime $created_at;
     protected string $health_status_details = '';
-    protected string $animalId = '';
+    protected string $animalUuid = '';
     protected string $userId = '';
 
     public function getId(): ?int
@@ -75,13 +75,13 @@ class ReviewVeterinary extends Entity
         return $this;
     }
 
-    public function getAnimalId(): string
+    public function getAnimalUuid(): string
     {
-        return $this->animalId;
+        return $this->animalUuid;
     }
-    public function setAnimalId($animalId): self
+    public function setAnimalUuid($animalUuid): self
     {
-        $this->animalId = $animalId;
+        $this->animalUuid = $animalUuid;
         return $this;
     }
 

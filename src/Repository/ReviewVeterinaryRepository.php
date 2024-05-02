@@ -16,7 +16,7 @@ class ReviewVeterinaryRepository extends Repository
         $query->bindValue(':food', $reviewVeterinary->getFood(), $this->pdo::PARAM_STR);
         $query->bindValue(':food_quantity', $reviewVeterinary->getFoodQuantity(), $this->pdo::PARAM_STR);
         $query->bindValue(':health_status_details', $reviewVeterinary->getHealthStatusDetails(), $this->pdo::PARAM_STR);
-        $query->bindValue(':animal_uuid', $reviewVeterinary->getAnimalId(), $this->pdo::PARAM_STR);
+        $query->bindValue(':animal_uuid', $reviewVeterinary->getAnimalUuid(), $this->pdo::PARAM_STR);
         $query->bindValue(':user_id', $reviewVeterinary->getUserId(), $this->pdo::PARAM_INT);
         $query->execute();
     }
@@ -31,5 +31,27 @@ class ReviewVeterinaryRepository extends Repository
             return ReviewVeterinary::createAndHydrate($reviewVeterinary);
         }
         return null;
+    }
+
+    public function findOneById()
+    {
+        $query = $this->pdo->prepare('SELECT * FROM review_veterinary');
+        $query->execute();
+        $reviewsVeterinary = $query->fetchAll($this->pdo::FETCH_ASSOC);
+        $reviewsVeterinary = array_map(function ($reviewVeterinary) {
+            return ReviewVeterinary::createAndHydrate($reviewVeterinary);
+        }, $reviewsVeterinary);
+        return $reviewsVeterinary;
+    }
+
+    public function findAll()
+    {
+        $query = $this->pdo->prepare('SELECT * FROM review_veterinary ORDER BY created_at DESC');
+        $query->execute();
+        $reviewsVeterinary = $query->fetchAll($this->pdo::FETCH_ASSOC);
+        $reviewsVeterinary = array_map(function ($reviewVeterinary) {
+            return ReviewVeterinary::createAndHydrate($reviewVeterinary);
+        }, $reviewsVeterinary);
+        return $reviewsVeterinary;
     }
 }

@@ -71,7 +71,7 @@ use App\Security\Security; ?>
                                         <textarea class="form-control" id="health_status_details" name="health_status_details"></textarea>
                                     </div>
                                     <div class="mb-3 text-start ">
-                                        <label for="animalId" class="form-label"></label>
+                                        <label for="animalUuid" class="form-label"></label>
                                         <input type="hidden" class="form-control" id="animalUuid" name="animalUuid" value="<?= $animal->getUuid(); ?>">
                                     </div>
                                     <div class="mb-3 text-start ">
