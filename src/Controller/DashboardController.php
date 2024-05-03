@@ -44,7 +44,6 @@ class DashboardController extends Controller
         if (!Security::isAdmin()) {
             throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
         }
-        $animal = [];
         // On récupère les animaux de la base de données mongo
         $animalMongoRepository = new AnimalMongoRepository();
         $animals = $animalMongoRepository->findAllAnimals();
