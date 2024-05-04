@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use DateTime;
+use App\Repository\UserRepository;
+use App\Repository\AnimalRepository;
 
 class ReviewVeterinary extends Entity
 {
@@ -85,7 +87,7 @@ class ReviewVeterinary extends Entity
         return $this;
     }
 
-    public function getUserId(): string
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -93,5 +95,26 @@ class ReviewVeterinary extends Entity
     {
         $this->userId = $userId;
         return $this;
+    }
+
+    public function getAnimalFirstName(): string
+    {
+        $animalRepository = new AnimalRepository();
+        $animal = $animalRepository->findOneByUuid($this->animalUuid);
+        return $animal->getFirstName();
+    }
+
+    public function getUserFistName(): string
+    {
+        $userRepository = new UserRepository();
+        $user = $userRepository->findOneById($this->userId);
+        return $user->getFirstname();
+    }
+
+    public function getUserLastName(): string
+    {
+        $userRepository = new UserRepository();
+        $user = $userRepository->findOneById($this->userId);
+        return $user->getLastName();
     }
 }

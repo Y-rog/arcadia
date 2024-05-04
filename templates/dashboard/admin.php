@@ -1,7 +1,7 @@
 <?php require_once _ROOTPATH_ . '/templates/header.php'; ?>
-<script src="/assets/js/dashboard/reviewVeterinary.js" defer></script>
 <script src="/node_modules/chart.js/dist/chart.umd.js" defer></script>
 <script src="/assets/js/dashboard/animalViews.js" defer></script>
+<script src="/assets/js/dashboard/reviewVeterinary.js" defer></script>
 <main class="container">
     <div class="text-center pb-3">
         <h1>Tableau de bord</h1>
@@ -93,21 +93,19 @@
                 <tbody>
                     <?php foreach ($reviewsVeterinary as $reviewVeterinary) : ?>
                         <tr>
-                            <td class="text-center"><?= $animalSql->getFirstName(); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getAnimalFirstName() ?></td>
                             <td class="text-center"><?= $animalSql->getRace(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getHealthStatus(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getFood(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getFoodQuantity(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getHealthStatusDetails(); ?></td>
-                            <td class="text-center"><?= $user->getFirstname(); ?>, <?= $user->getLastName(); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getUserFistName(); ?>, <?= $reviewVeterinary->getUserLastName(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getCreatedAt()->format('d/m/Y'); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-    </div>
-    <div id="reviewVeterinaryTable2">
     </div>
 </main>
 
