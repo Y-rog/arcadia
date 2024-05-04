@@ -1,7 +1,7 @@
 <?php require_once _ROOTPATH_ . '/templates/header.php'; ?>
+<script src="/assets/js/dashboard/reviewVeterinary.js" defer></script>
 <script src="/node_modules/chart.js/dist/chart.umd.js" defer></script>
 <script src="/assets/js/dashboard/animalViews.js" defer></script>
-<script src="/assets/js/dashboard/reviewVeterinary.js" defer></script>
 <main class="container">
     <div class="text-center pb-3">
         <h1>Tableau de bord</h1>
@@ -80,14 +80,14 @@
             <table id="reviewVeterinaryTable" class="table">
                 <thead>
                     <tr>
-                        <th id="firstNameCaret" class="text-center px-3" scope="col">Prénom de l'animal <i class="bi bi-caret-up-fill"></i></th>
-                        <th id="raceCaret" class="text-center px-3" scope="col">Race <i class="bi bi-caret-up-fill"></i></th>
+                        <th class="text-center px-3" scope="col">Prénom de l'animal <i id="firstNameCaret" class="bi bi-caret-up-fill"></i></th>
+                        <th class="text-center px-3" scope="col">Race <i id="raceCaret" class="bi bi-caret-up-fill"></i></th>
                         <th class="text-center px-3" scope="col">Status de santé</th>
                         <th class="text-center px-3" scope="col">Nourriture proposée</th>
                         <th class="text-center px-3" scope="col">Quantité</th>
                         <th class="text-center px-3" scope="col">Détails</th>
                         <th class="text-center px-3" scope="col">Vétérinaire</th>
-                        <th id="dateCaret" class="text-center px-3" scope="col">Date de l'avis<i class="bi bi-caret-down-fill"></i></th>
+                        <th class="text-center px-3" scope="col">Date de l'avis<i id="dateCaret" class="bi bi-caret-up-fill"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,6 +106,9 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div id="reviewVeterinaryTable2">
+    </div>
 </main>
 
 <?php require_once _ROOTPATH_ . '/templates/footer.php'; ?>
