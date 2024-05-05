@@ -104,6 +104,13 @@ class ReviewVeterinary extends Entity
         return $animal->getFirstName();
     }
 
+    public function getAnimalRace(): string
+    {
+        $animalRepository = new AnimalRepository();
+        $animal = $animalRepository->findOneByUuid($this->animalUuid);
+        return $animal->getRace();
+    }
+
     public function getUserFistName(): string
     {
         $userRepository = new UserRepository();
