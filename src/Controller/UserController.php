@@ -18,9 +18,6 @@ class UserController extends Controller
                     case 'register':
                         $this->register();
                         break;
-                    case 'delete':
-                        $this->delete();
-                        break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
                         break;
@@ -49,7 +46,30 @@ class UserController extends Controller
                 if (empty($errors)) {
                     $userRepository = new UserRepository();
                     $userRepository->insert($user);
-                    header('Location: index.php?controller=user&action=register');
+                    //On envoie le pseudo par mail
+                    $to = $user->getEmail();
+                    $subject = 'Inscription';
+                    $headers = 'From:fulgueiras.gregory@gmail.com';
+                    $message = 'Bonjour ' . $user->getFirstName() . ',' . $user->getLastName() . ', 
+
+
+                    Votre inscription a bien été prise en compte.
+
+                             Votre pseudo est : ' . $user->getEmail() . '.
+
+                    Merci de vous rapprocher de la direction pour obtenir votre mot de passe.
+
+                        A bientôt!
+
+                   José, directeur d\'Arcadia';
+                    if (mail($to, $subject, $message, $headers)) {
+                        header('Location: index.php?controller=user&action=register');
+                    } else {
+                        $this->render('errors/default', [
+                            'error' => 'Erreur lors de l\'envoi du mail',
+                            'pageTitle' => 'Erreur'
+                        ]);
+                    }
                 } else { // si il y a des erreurs
                     $this->render('user/register', [
                         'errors' => $errors,
@@ -63,21 +83,6 @@ class UserController extends Controller
                 'user' => $user,
                 'pageTitle' => 'Inscription'
             ]);
-        } catch (\Exception $e) {
-            $this->render('errors/default', [
-                'error' => $e->getMessage(),
-                'pageTitle' => 'Erreur',
-            ]);
-        }
-    }
-
-    protected function delete(): void
-    {
-        try {
-            $userRepository = new UserRepository();
-            $userRepository->delete($_GET['id']);
-            header('Location: index.php?controller=user&action=login');
-            exit();
         } catch (\Exception $e) {
             $this->render('errors/default', [
                 'error' => $e->getMessage(),
