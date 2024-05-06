@@ -34,6 +34,10 @@ class Controller
                         $controller = new ReviewController();
                         $controller->route();
                         break;
+                    case 'service':
+                        $controller = new ServiceController();
+                        $controller->route();
+                        break;
                     case 'user':
                         $controller = new UserController();
                         $controller->route();

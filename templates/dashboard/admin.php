@@ -24,8 +24,8 @@
         <div class="col border border-light-subtle rounded mt-3 mx-3">
             <h6 class="text-secondary">Gestion des services</h6>
             <div class=" pb-5 d-flex flex-wrap">
-                <div class="p-2"><a href="#" class="col btn btn-outline-primary">Ajouter un service</a></div>
-                <div class="p-2"><a href="#" class="col btn btn-outline-secondary">Voir les services</a></div>
+                <div class="p-2"><a href="index.php?controller=service&action=add" class="col btn btn-outline-primary">Ajouter un service</a></div>
+                <div class="p-2"><a href="index.php?controller=service&action=list" class="col btn btn-outline-secondary">Voir les services</a></div>
             </div>
         </div>
         <div class="col  border border-light-subtle rounded mt-3 mx-3">

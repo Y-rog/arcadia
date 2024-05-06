@@ -7,14 +7,14 @@
         <h1 class="bg-white rounded">Bienvenue à Arcadia</h1>
     </div>
     <div class=" container-fluid horaries text-center rounded pt-3 pb-3">
-        <span> Ouvert du Mardi au Dimanche de 9h à 18h</span>
+        <span class="lead"> Ouvert du Mardi au Dimanche de 9h à 18h</span>
     </div>
 
     <hr class="featurette-divider">
     <div class="row featurette">
         <div class="col-md-7">
             <h3 class="featurette-heading fw-normal lh-1">Vivez une experience inoubliable! <span class="text-body-secondary">Au coeur d'une naturé préservée.</span></h3>
-            <p>Situé en Bretagne proche de la forêt de Brocéliande, nous sommes heureux de vous accueillir
+            <p class="lead">Situé en Bretagne proche de la forêt de Brocéliande, nous sommes heureux de vous accueillir
                 depuis 1960.</p>
         </div>
         <div class="col-md-5">
@@ -25,7 +25,7 @@
     <div class="row featurette reverse">
         <div class="col-md-7 order-md-2">
             <h3 class="featurette-heading fw-normal lh-1">Partez à l'aventure! <span class="text-body-secondary">Découvrez plus de 50 espèces d’animaux.</span></h3>
-            <p>Notre zoo est divisé en plusieurs habitats: la savane, la jungle et le marais. </p>
+            <p class="lead">Notre zoo est divisé en plusieurs habitats: la savane, la jungle et le marais. </p>
         </div>
         <div class="col-md-5 order-md-1">
             <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto rounded" src="../../assets/img/tiger-home.png" widht="500" height="500" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -35,7 +35,7 @@
     <div class="row featurette">
         <div class="col-md-7">
             <h3 class="featurette-heading fw-normal lh-1">Partez serain!<span class="text-body-secondary"> Nous avons pensé à tout.</span></h3>
-            <p>Le parc vous propose plusieurs services pour agrémenter votre visite.</p>
+            <p class="lead">Le parc vous propose plusieurs services pour agrémenter votre visite.</p>
         </div>
         <div class="col-md-5">
             <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto rounded" src="../../assets/img/visite-guide.jpg" widht="500" height="500" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -43,7 +43,7 @@
     </div>
     <hr class="featurette-divider">
     <div class=" container-fluid value text-center rounded pt-3 pb-3">
-        <span> Le respect de nos valeurs et de nos animaux est très important! </span>
+        <span class="lead"> Le respect de nos valeurs et de nos animaux est très important! </span>
     </div>
     <div class="row text-center pt-3">
         <div class="col-lg-4">

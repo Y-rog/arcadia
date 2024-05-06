@@ -26,7 +26,7 @@ use App\Security\Security; ?>
                     <div class="navbar-nav col-lg-6 justify-content-lg-center">
                         <a class="nav-link" href="index.php?controller=page&action=home">Accueil</a>
                         <a class="nav-link" href="index.php?controller=habitat&action=list">Habitats</a>
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="index.php?controller=service&action=list">Services</a>
                         <a class="nav-link" href="#">Contact</a>
                         <?php if (Security::isAdmin()) { ?>
                             <a class="nav-link" href="index.php?controller=dashboard&action=admin"><i class="d-flex bi  bi-speedometer2 fs-4"></i></a>
