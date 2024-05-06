@@ -16,7 +16,7 @@
         <div class="col  border border-light-subtle rounded mx-3 flex-wrap">
             <h6 class="text-secondary">Gestion des horaires</h6>
             <div class="pb-5 d-flex flex-wrap">
-                <a href="index.php?controller=user&action=register" class="btn btn-outline-primary">Modifier les horaires</a>
+                <a href="#" class="btn btn-outline-primary">Modifier les horaires</a>
             </div>
         </div>
     </div>
@@ -31,14 +31,14 @@
         <div class="col  border border-light-subtle rounded mt-3 mx-3">
             <h6 class="text-secondary">Gestion des habitats</h6>
             <div class="pb-5 d-flex flex-wrap">
-                <div class="p-2"><a href="#" class="col btn btn-outline-primary">Ajouter un habitat</a></div>
-                <div class="p-2"><a href="#" class="col btn btn-outline-secondary">Voir les habitats</a></div>
+                <div class="p-2"><a href="index.php?controller=habitat&action=add" class="col btn btn-outline-primary">Ajouter un habitat</a></div>
+                <div class="p-2"><a href="index.php?controller=habitat&action=list" class="col btn btn-outline-secondary">Voir les habitats</a></div>
             </div>
         </div>
         <div class="col  border border-light-subtle rounded mt-3 mx-3">
             <h6 class="text-secondary">Gestion des animaux</h6>
             <div class="pb-5 d-flex flex-wrap">
-                <div class="p-2"><a href="#" class="col btn btn-outline-primary">Ajouter un animal</a></div>
+                <div class="p-2"><a href="index.php?controller=animal&action=add" class="col btn btn-outline-primary">Ajouter un animal</a></div>
             </div>
         </div>
     </div>

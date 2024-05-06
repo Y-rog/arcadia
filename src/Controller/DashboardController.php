@@ -66,6 +66,7 @@ class DashboardController extends Controller
             $user = $userRepository->findOneById($userId);
         }
 
+
         $this->render('dashboard/admin', [
             'pageTitle' => 'Administration',
             'animals' => $animals,

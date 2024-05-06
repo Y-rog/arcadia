@@ -7,6 +7,7 @@ let quantity = [];
 let healthStatusDetails = [];
 let name = [];
 let date = [];
+let nbRows = 0;
 const firstNameCaret = document.getElementById('firstNameCaret');
 const dateCaret = document.getElementById('dateCaret');
 const raceCaret = document.getElementById('raceCaret'); 
@@ -30,9 +31,9 @@ getValues();
 
 
 //On crée un tableau data avec les valeurs de chaque colonne pour chaque ligne du tableau
-function getData() {
+function getData(nbRows = 50) {
 let data = [];
-for (let i = 0; i < firstName.length && i < 10; i++) {
+for (let i = 0; i < firstName.length && i < nbRows; i++) {
     //Pour chaque ligne du tableau, on crée un objet data avec les valeurs de chaque colonne
     data.push({firstName:firstName[i], race:race[i], healthStatus:healthStatus[i], food:food[i], quantity:quantity[i], healthStatusDetails:healthStatusDetails[i], name:name[i], date:date[i]});
        
