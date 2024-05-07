@@ -23,7 +23,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                         <label for="title">Titre du service</label>
                         <input type="text" class='form-control' id="title" name="title" value="">
                         <div class='invalid-feedback'>
-                            Le titre du serice est requis.
+                            Le titre du service est requis.
                         </div>
                     </div>
                     <div class="mb-3 text-start">

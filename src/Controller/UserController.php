@@ -49,7 +49,7 @@ class UserController extends Controller
                     //On envoie le pseudo par mail
                     $to = $user->getEmail();
                     $subject = 'Inscription';
-                    $headers = 'From:fulgueiras.gregory@gmail.com';
+                    $headers = 'From:jose.arcadia2024@gmail.com';
                     $message = 'Bonjour ' . $user->getFirstName() . ',' . $user->getLastName() . ', 
 
 

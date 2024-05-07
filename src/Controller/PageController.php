@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\Repository\ReviewRepository;
 use App\Entity\Review;
 use App\Security\ReviewValidator;
+use App\Security\ContactValidator;
+use App\Repository\ReviewRepository;
 
 class PageController extends Controller
 {
@@ -16,6 +17,9 @@ class PageController extends Controller
                 switch ($_GET['action']) {
                     case 'home':
                         $this->home();
+                        break;
+                    case 'contact':
+                        $this->contact();
                         break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
@@ -62,5 +66,44 @@ class PageController extends Controller
                 'pageTitle' => 'Erreur',
             ]);
         }
+    }
+
+    protected function contact(): void
+    {
+        $errors = [];
+        $contact = [];
+        if (isset($_POST['sendMail'])) {
+            $contact = $_POST;
+            $contactValidator = new ContactValidator();
+            $errors = $contactValidator->validateContact($contact);
+            if (empty($errors)) {
+                $to = 'jose.arcadia2024@gmail.com';
+                $subject = $contact['title'];
+                $headers = 'From: ' . $contact['email'];
+                $headers .= 'MIME-Version: 1.0' . "\r\n";
+                $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+                $headers .= 'Reply-To: ' . $contact['email'] . "\r\n";
+                $message = '<h1>Message envoyé depuis la page Contact d\'Arcadia</h1>' .
+
+                    '<p>Email de l\'expéditeur : ' . $contact['email'] . '</p>' .
+
+                    '<p>Titre du message : ' . $contact['title'] . '</p>' .
+
+                    '<p>Message : ' . $contact['message'] . '</p>';
+
+                if (mail($to, $subject, $message, $headers)) {
+                    header('Location: index.php?controller=page&action=home');
+                } else throw new \Exception("L'envoi du mail a échoué");
+            } else $this->render('page/contact', [
+                'errors' => $errors,
+                'contact' => $contact,
+                'pageTitle' => 'Contact',
+            ]);
+        }
+        $this->render('page/contact', [
+            'errors' => $errors,
+            'contact' => $contact,
+            'pageTitle' => 'Contact',
+        ]);
     }
 }
