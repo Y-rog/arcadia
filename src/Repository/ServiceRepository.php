@@ -35,9 +35,10 @@ class ServiceRepository extends Repository
     public function register(Service $service)
     {
         if ($service->getId() === null) {
-            $query = $this->pdo->prepare('INSERT INTO service (title, description) VALUES (:title, :description)');
+            $query = $this->pdo->prepare('INSERT INTO service (title, description, user_id) VALUES (:title, :description, :user_id)');
             $query->bindValue(':title', $service->getTitle(), \PDO::PARAM_STR);
             $query->bindValue(':description', $service->getDescription(), \PDO::PARAM_STR);
+            $query->bindValue(':user_id', Security::getCurrentUserId(), \PDO::PARAM_INT);
             $query->execute();
             return $this->pdo->lastInsertId();
         } else {

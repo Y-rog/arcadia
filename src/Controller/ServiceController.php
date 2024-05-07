@@ -77,6 +77,9 @@ class ServiceController extends Controller
             if (!Security::isAdmin()) {
                 throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
             } else {
+                //On récupère l'id de l'utilisateur connecté
+                $service = new Service();
+                $service->setUserId(Security::getCurrentUserId());
                 //on vérifie si le formulaire a été soumis
                 if (isset($_POST['saveService'])) {
                     //on instancie la classe Service
@@ -100,14 +103,16 @@ class ServiceController extends Controller
                         //on affiche la vue
                         $this->render('service/add', [
                             'errors' => $errors,
-                            'pageTitle' => 'Ajouter un service'
+                            'pageTitle' => 'Ajouter un service',
+                            'service' => $service
                         ]);
                     }
                 } else {
                     //on affiche la vue
                     $this->render('service/add', [
                         'pageTitle' => 'Ajouter un service',
-                        'errors' => $errors
+                        'errors' => $errors,
+                        'service' => $service
                     ]);
                 }
             }
@@ -123,9 +128,7 @@ class ServiceController extends Controller
     protected function edit()
     {
         try {
-            if (!Security::isAdmin()) {
-                throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
-            } else {
+            if (Security::isAdmin()  || Security::isEmployee()) {
                 $errors = [];
                 //on instancie la classe Service
                 $service = new Service();
@@ -168,6 +171,8 @@ class ServiceController extends Controller
                         'errors' => $errors,
                     ]);
                 }
+            } else {
+                throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
             }
         }
         //on attrape les exceptions

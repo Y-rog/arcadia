@@ -10,7 +10,6 @@ class Service extends Entity
     protected ?int $id = null;
     protected string $title = '';
     protected string $description = '';
-    protected DateTime $updated_at;
     protected ?int $user_id = null;
 
     /**
@@ -64,24 +63,6 @@ class Service extends Entity
     public function setDescription($description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-    /**
-     * Get the value of updated_at
-     */
-    public function getUpdatedAt(): DateTime
-    {
-        return $this->updated_at;
-    }
-    /**
-     * Set the value of updated_at
-     *
-     * @return  self
-     */
-    public function setUpdatedAt(DateTime $updated_at): self
-    {
-        $this->updated_at = $updated_at;
 
         return $this;
     }
