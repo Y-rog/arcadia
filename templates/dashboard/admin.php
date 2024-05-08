@@ -98,6 +98,9 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="text-center pb-3">
+                <a href="index.php?controller=dashboard&action=commentHabitatList" class="btn btn-outline-primary">Voir tous les commentaires</a>
+            </div>
         </div>
     </div>
     <div class="row justify-content-around border border-light-subtle rounded mt-3 mx-1">
@@ -131,6 +134,9 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="text-center pb-3">
+                <a href="index.php?controller=dashboard&action=reviewVeterinaryList" class="btn btn-outline-primary">Voir tous les avis</a>
+            </div>
         </div>
     </div>
 </main>
