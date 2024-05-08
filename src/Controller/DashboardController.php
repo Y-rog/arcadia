@@ -26,6 +26,12 @@ class DashboardController extends Controller
                     case 'admin':
                         $this->admin();
                         break;
+                    case 'commentHabitatList':
+                        $this->commentHabitatList();
+                        break;
+                    case 'reviewVeterinaryList':
+                        $this->reviewVeterinaryList();
+                        break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
                         break;
@@ -58,7 +64,7 @@ class DashboardController extends Controller
 
         //On récupère les commmentaires vétérinaires par habitat
         $commentHabitatRepository = new CommentHabitatRepository();
-        $commentsHabitat = $commentHabitatRepository->findAll();
+        $commentsHabitat = $commentHabitatRepository->findLastCommentsHabitat();
         foreach ($commentsHabitat as $commentHabitat) {
             $habitatId = $commentHabitat->getHabitatId();
             $habitatRepository = new HabitatRepository();
@@ -69,7 +75,7 @@ class DashboardController extends Controller
         }
         // On récupère les avis vétérinaires de la base de données par date de création plus récente
         $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
-        $reviewsVeterinary = $reviewVeterinaryRepository->findAll();
+        $reviewsVeterinary = $reviewVeterinaryRepository->findLastReviewsVeterinary();
         foreach ($reviewsVeterinary as $reviewVeterinary) {
             $animalUuid = $reviewVeterinary->getAnimalUuid();
             $animalRepository = new AnimalRepository();
@@ -86,6 +92,54 @@ class DashboardController extends Controller
             'user' => $user,
             'commentsHabitat' => $commentsHabitat,
             'habitat' => $habitat
+        ]);
+    }
+
+    protected function reviewVeterinaryList(): void
+    {
+        if (!Security::isAdmin()) {
+            throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
+        }
+
+        $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
+        $reviewsVeterinary = $reviewVeterinaryRepository->findAll();
+        foreach ($reviewsVeterinary as $reviewVeterinary) {
+            $animalUuid = $reviewVeterinary->getAnimalUuid();
+            $animalRepository = new AnimalRepository();
+            $animalSql = $animalRepository->findOneByUuid($animalUuid);
+            $userId = $reviewVeterinary->getUserId();
+            $userRepository = new UserRepository();
+            $user = $userRepository->findOneById($userId);
+        }
+        $this->render('dashboard/reviewVeterinaryList', [
+            'pageTitle' => 'Liste des avis vétérinaires',
+            'reviewsVeterinary' => $reviewsVeterinary,
+            'animalSql' => $animalSql,
+            'user' => $user
+        ]);
+    }
+
+    protected function  commentHabitatList(): void
+    {
+        if (!Security::isAdmin()) {
+            throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
+        }
+
+        $commentHabitatRepository = new CommentHabitatRepository();
+        $commentsHabitat = $commentHabitatRepository->findAll();
+        foreach ($commentsHabitat as $commentHabitat) {
+            $habitatId = $commentHabitat->getHabitatId();
+            $habitatRepository = new HabitatRepository();
+            $habitat = $habitatRepository->findOneById($habitatId);
+            $userId = $commentHabitat->getUserId();
+            $userRepository = new UserRepository();
+            $user = $userRepository->findOneById($userId);
+        }
+        $this->render('dashboard/commentHabitatList', [
+            'pageTitle' => 'Liste des commentaires vétérinaires par habitat',
+            'commentsHabitat' => $commentsHabitat,
+            'habitat' => $habitat,
+            'user' => $user
         ]);
     }
 }

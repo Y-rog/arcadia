@@ -38,4 +38,16 @@ class CommentHabitatRepository extends Repository
         }, $commentHabitats);
         return $commentHabitats;
     }
+
+    //voir les 10 derniers commentaires
+    public function findLastCommentsHabitat()
+    {
+        $query = $this->pdo->prepare('SELECT * FROM comment_habitat ORDER BY created_at DESC LIMIT 10');
+        $query->execute();
+        $commentHabitats = $query->fetchAll();
+        $commentHabitats = array_map(function ($commentHabitat) {
+            return CommentHabitat::createAndHydrate($commentHabitat);
+        }, $commentHabitats);
+        return $commentHabitats;
+    }
 }

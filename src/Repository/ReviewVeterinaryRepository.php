@@ -54,4 +54,16 @@ class ReviewVeterinaryRepository extends Repository
         }, $reviewsVeterinary);
         return $reviewsVeterinary;
     }
+
+    //voir les 50 derniers avis vétérinaires
+    public function findLastReviewsVeterinary()
+    {
+        $query = $this->pdo->prepare('SELECT * FROM review_veterinary ORDER BY created_at DESC LIMIT 50');
+        $query->execute();
+        $reviewsVeterinary = $query->fetchAll($this->pdo::FETCH_ASSOC);
+        $reviewsVeterinary = array_map(function ($reviewVeterinary) {
+            return ReviewVeterinary::createAndHydrate($reviewVeterinary);
+        }, $reviewsVeterinary);
+        return $reviewsVeterinary;
+    }
 }
