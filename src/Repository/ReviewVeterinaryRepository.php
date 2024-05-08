@@ -46,7 +46,7 @@ class ReviewVeterinaryRepository extends Repository
 
     public function findAll()
     {
-        $query = $this->pdo->prepare('SELECT * FROM review_veterinary ');
+        $query = $this->pdo->prepare('SELECT * FROM review_veterinary ORDER BY created_at DESC');
         $query->execute();
         $reviewsVeterinary = $query->fetchAll($this->pdo::FETCH_ASSOC);
         $reviewsVeterinary = array_map(function ($reviewVeterinary) {

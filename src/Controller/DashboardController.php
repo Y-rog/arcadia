@@ -9,6 +9,8 @@ use App\Security\UserValidator;
 use App\Repository\UserRepository;
 use App\Repository\AnimalRepository;
 
+use App\Repository\HabitatRepository;
+use App\Repository\CommentHabitatRepository;
 use App\MongoRepository\AnimalMongoRepository;
 use App\Repository\ReviewVeterinaryRepository;
 
@@ -54,6 +56,17 @@ class DashboardController extends Controller
             return $b['viewsCounter'] <=> $a['viewsCounter'];
         });
 
+        //On récupère les commmentaires vétérinaires par habitat
+        $commentHabitatRepository = new CommentHabitatRepository();
+        $commentsHabitat = $commentHabitatRepository->findAll();
+        foreach ($commentsHabitat as $commentHabitat) {
+            $habitatId = $commentHabitat->getHabitatId();
+            $habitatRepository = new HabitatRepository();
+            $habitat = $habitatRepository->findOneById($habitatId);
+            $userId = $commentHabitat->getUserId();
+            $userRepository = new UserRepository();
+            $user = $userRepository->findOneById($userId);
+        }
         // On récupère les avis vétérinaires de la base de données par date de création plus récente
         $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
         $reviewsVeterinary = $reviewVeterinaryRepository->findAll();
@@ -65,14 +78,14 @@ class DashboardController extends Controller
             $userRepository = new UserRepository();
             $user = $userRepository->findOneById($userId);
         }
-
-
         $this->render('dashboard/admin', [
             'pageTitle' => 'Administration',
             'animals' => $animals,
             'reviewsVeterinary' => $reviewsVeterinary,
             'animalSql' => $animalSql,
-            'user' => $user
+            'user' => $user,
+            'commentsHabitat' => $commentsHabitat,
+            'habitat' => $habitat
         ]);
     }
 }

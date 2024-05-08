@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Habitat;
 use App\Tools\FileTools;
 use APP\Security\Security;
+use App\Entity\CommentHabitat;
 use App\Entity\ReviewVeterinary;
 use App\Security\HabitatValidator;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
+use App\Security\CommentHabitatValidator;
+use App\Repository\CommentHabitatRepository;
 use App\Repository\ReviewVeterinaryRepository;
 
 class HabitatController extends Controller
@@ -54,6 +57,7 @@ class HabitatController extends Controller
     protected function show(): void
     {
         try {
+            $errors = [];
             if (isset($_GET['id'])) {
                 //Récupérer l'id de l'habitat
                 $id = (int)$_GET['id'];
@@ -66,15 +70,31 @@ class HabitatController extends Controller
                 //Charger les animaux par habitat par un appel au repository
                 $animalRepository = new AnimalRepository();
                 $animals = $animalRepository->findAllByHabitat($id);
-                $this->render('habitat/show', [
-                    'pageTitle' => 'Habitat ' . $habitat->getName(),
-                    'habitat' => $habitat,
-                    'animals' => $animals,
-
-                ]);
             } else {
                 throw new \Exception("Cet habitat n'existe pas");
             }
+            if (isset($_POST['saveCommentHabitat'])) {
+                $commentHabitat = new CommentHabitat();
+                $commentHabitat->hydrate($_POST);
+                $commentHabitatValidator = new CommentHabitatValidator();
+                $errors = $commentHabitatValidator->validateCommentHabitat($commentHabitat);
+                if (empty($errors)) {
+                    $commentHabitatRepository = new CommentHabitatRepository();
+                    $commentHabitatRepository->insert($commentHabitat);
+                    header('Location: index.php?controller=habitat&action=show&id=' . $habitat->getId());
+                } else throw new \Exception("Le formulaire contient des erreurs");
+            }
+            if (isset($_POST['deleteHabitat'])) {
+                $habitatRepository = new HabitatRepository();
+                $habitatRepository->delete($habitat);
+                header('Location: index.php?controller=habitat&action=list');
+            }
+            $this->render('habitat/show', [
+                'pageTitle' => 'Habitat ' . $habitat->getName(),
+                'habitat' => $habitat,
+                'animals' => $animals,
+
+            ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
                 'error' => $e->getMessage(),

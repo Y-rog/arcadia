@@ -75,8 +75,34 @@
         </div>
     </div>
     <div class="row justify-content-around border border-light-subtle rounded mt-3 mx-1">
-        <div class="text center table-responsive">
-            <h6 class="text-secondary">Liste des avis vétérinaires les plus récents</h6>
+        <div class=" table-responsive">
+            <h6 class="text-secondary">Liste des commentaires vétérinaires par habitat</h6>
+            <table id="commentHabitatTable" class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center px-3" scope="col">Date du commentaire</th>
+                        <th class="text-center px-3" scope="col">Nom de l'habitat</th>
+                        <th class=" col-6 text-center px-3" scope="col">Commentaire</th>
+                        <th class="text-center px-3" scope="col">Vétérinaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($commentsHabitat as $commentHabitat) : ?>
+                        <tr>
+                            <td class="text-center"><?= $commentHabitat->getCreatedAt()->format('d/m/Y'); ?></td>
+                            <td class="text-center"><?= $commentHabitat->getHabitatName() ?></td>
+                            <td class="text-center"><?= $commentHabitat->getContent(); ?></td>
+                            <td class="text-center"> <?= $commentHabitat->getUserLastName() . ' ' .
+                                                            $commentHabitat->getUserFistName() ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row justify-content-around border border-light-subtle rounded mt-3 mx-1">
+        <div class=" table-responsive">
+            <h6 class="text-secondary">Liste des avis vétérinaires par animal</h6>
             <table id="reviewVeterinaryTable" class="table">
                 <thead>
                     <tr>
@@ -99,8 +125,7 @@
                             <td class="text-center"><?= $reviewVeterinary->getHealthStatus(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getFood(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getFoodQuantity(); ?></td>
-                            <td class="text-center"> <?= $reviewVeterinary->getUserLastName();
-                                                        $reviewVeterinary->getUserFistName() ?></td>
+                            <td class="text-center"> <?= $reviewVeterinary->getUserLastName() . ' ' . $reviewVeterinary->getUserFistName() ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getHealthStatusDetails(); ?></td>
                         </tr>
                     <?php endforeach; ?>
