@@ -6,12 +6,15 @@ use Throwable;
 use App\Entity\Animal;
 use App\Entity\Habitat;
 use App\Tools\FileTools;
+use App\Entity\FoodConsumption;
 use App\Entity\ReviewVeterinary;
 use App\Security\AnimalValidator;
 use App\Repository\UserRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
+use App\Security\FoodConsumptionValidator;
 use App\Security\ReviewVeterinaryValidator;
+use App\Repository\FoodConsumptionRepository;
 use App\MongoRepository\AnimalMongoRepository;
 use App\Repository\ReviewVeterinaryRepository;
 
@@ -30,6 +33,9 @@ class AnimalController extends Controller
                         break;
                     case 'edit':
                         $this->edit();
+                        break;
+                    case 'foodConsumptionList':
+                        $this->foodConsumptionList();
                         break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
@@ -168,7 +174,10 @@ class AnimalController extends Controller
             // On récupère le dernier avis vétérinaire de l'animal
             $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
             $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getUuid());
-            // Si le formulaire d'ajout est soumis on ajoute un avis vétérinaire
+            // On récupère les 10derniéres consommations de nourriture de l'animal
+            $foodConsumptionRepository = new FoodConsumptionRepository();
+            $foodConsumption = $foodConsumptionRepository->findLastFoodConsumptionByAnimal($animal->getUuid());
+            // Si le formulaire d'ajout d'avis vétérinaire est soumis on ajoute un avis vétérinaire
             if (isset($_POST['addReviewVeterinary'])) {
                 // On hydrate l'objet
                 $reviewVeterinary = new ReviewVeterinary();
@@ -179,8 +188,22 @@ class AnimalController extends Controller
                 if (empty($errors)) {
                     $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
                     $reviewVeterinaryRepository->insert($reviewVeterinary);
-                    var_dump($reviewVeterinary);
                     header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
+                    exit();
+                } else {
+                    throw new \Exception("Le formulaire contient des erreurs");
+                }
+            }
+            // Si le formulaire de consommation de nourriture est soumis on ajoute une consommation de nourriture
+            if (isset($_POST['saveFoodConsumption'])) {
+                $foodConsumption = new FoodConsumption();
+                $foodConsumption->hydrate($_POST);
+                $foodConsumptionValidator = new FoodConsumptionValidator();
+                $errors = $foodConsumptionValidator->validateFoodConsumption($foodConsumption);
+                if (empty($errors)) {
+                    $foodConsumptionRepository = new FoodConsumptionRepository();
+                    $foodConsumptionRepository->insert($foodConsumption);
+                    header('Location: index.php?controller=animal&action=show&uuid=' . $animal->getUuid());
                     exit();
                 } else {
                     throw new \Exception("Le formulaire contient des erreurs");
@@ -220,7 +243,35 @@ class AnimalController extends Controller
                 'habitat' => $habitat,
                 'reviewVeterinary' => $reviewVeterinary,
                 'errors' => $errors,
+                'foodConsumption' => $foodConsumption,
 
+            ]);
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+                'pageTitle' => 'Erreur',
+            ]);
+        }
+    }
+
+    protected function foodConsumptionList()
+    {
+        try {
+            $errors = [];
+            // On récupère l'animal
+            $animalRepository = new AnimalRepository();
+            $animal = $animalRepository->findOneByUuid($_GET['uuid']);
+            if (!$animal) {
+                throw new \Exception("Cet animal n'existe pas");
+            }
+            // On récupère les consommations de nourriture de l'animal
+            $foodConsumptionRepository = new FoodConsumptionRepository();
+            $foodConsumptions = $foodConsumptionRepository->findAllByAnimal($animal->getUuid());
+            $this->render('animal/foodConsumptionList', [
+                'animal' => $animal,
+                'pageTitle' => 'Historique des consommations de nourriture',
+                'foodConsumptions' => $foodConsumptions,
+                'errors' => $errors,
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [

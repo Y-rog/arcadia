@@ -3,7 +3,7 @@
 
 :root {
     --primary: #4CAF7A;
-    --secondary: #9c624ac9;
+    --secondary: #585B5E;
     --tertiary: #DEE2E6;
     --black: #292222;
     --white: #fff;
@@ -54,8 +54,9 @@
 
 }
 
-
-
+.nav-link.active {
+    --bs-navbar-active-color: var(--secondary);
+}
 
 .btn-outline-primary {
     --bs-btn-color: var(--primary);
@@ -94,7 +95,9 @@ a {
     &:hover {
         color: var(--secondary);
     }
+
 }
+
 
 .bi-star-fill,
 .bi-star {

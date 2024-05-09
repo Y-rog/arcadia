@@ -20,6 +20,9 @@ class ReviewVeterinaryValidator extends Security
         if (empty($reviewVeterinary->getFoodQuantity())) {
             $errors['food_quantity'] = 'La quantité de nourriture est obligatoire';
         }
+        if (empty($reviewVeterinary->getPassingDate())) {
+            $errors['passing_date'] = 'La date de passage est obligatoire';
+        }
         return $errors;
     }
 }

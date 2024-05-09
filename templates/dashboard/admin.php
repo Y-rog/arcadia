@@ -122,7 +122,7 @@
                 <tbody id="reviewVeterinaryTableBody">
                     <?php foreach ($reviewsVeterinary as $reviewVeterinary) : ?>
                         <tr>
-                            <td class="text-center"><?= $reviewVeterinary->getCreatedAt()->format('d/m/Y'); ?></td>
+                            <td class="text-center"><?= $reviewVeterinary->getPassingDate()->format('d/m/Y'); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getAnimalFirstName() ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getAnimalRace(); ?></td>
                             <td class="text-center"><?= $reviewVeterinary->getHealthStatus(); ?></td>

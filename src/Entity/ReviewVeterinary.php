@@ -12,10 +12,10 @@ class ReviewVeterinary extends Entity
     protected string $health_status = '';
     protected string $food = '';
     protected string $food_quantity = '';
-    protected DateTime $created_at;
+    protected DateTime $passing_date;
     protected string $health_status_details = '';
     protected string $animalUuid = '';
-    protected string $userId = '';
+    protected int $userId = 0;
 
     public function getId(): ?int
     {
@@ -57,13 +57,13 @@ class ReviewVeterinary extends Entity
         return $this;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getPassingDate(): DateTime
     {
-        return $this->created_at;
+        return $this->passing_date;
     }
-    public function setCreatedAt(DateTime $created_at): self
+    public function setPassingDate(DateTime $passing_date): self
     {
-        $this->created_at = $created_at;
+        $this->passing_date = $passing_date;
         return $this;
     }
 

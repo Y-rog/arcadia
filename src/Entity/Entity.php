@@ -28,6 +28,10 @@ class Entity
                         $value = new \DateTime($value);
                     } else if ($key == 'updated_at') {
                         $value = new \DateTime($value);
+                    } else if ($key == 'passing_date') {
+                        $value = new \DateTime($value);
+                    } else if ($key == 'give_at') {
+                        $value = new \DateTime($value);
                     }
                     $this->{$methodName}($value);
                 }

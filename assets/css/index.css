@@ -13347,7 +13347,7 @@ textarea.form-control-lg {
 }
 :root {
   --primary: #4CAF7A;
-  --secondary: #9c624ac9;
+  --secondary: #585B5E;
   --tertiary: #DEE2E6;
   --black: #292222;
   --white: #fff;
@@ -13390,6 +13390,10 @@ textarea.form-control-lg {
 .page-link {
   --bs-pagination-color: var(--primary);
   --bs-page-link-color: var(--primary);
+}
+
+.nav-link.active {
+  --bs-navbar-active-color: var(--secondary);
 }
 
 .btn-outline-primary {

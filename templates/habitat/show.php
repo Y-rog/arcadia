@@ -33,7 +33,6 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                                     </div>
                                     <input type="hidden" class="form-control" id="created_at" name="created_at">
                                     <input type="hidden" class="form-control" id="habitat_id" name="habitat_id" value="<?= $habitat->getId(); ?>">
-                                    <label for="user_id" class="form-label"></label>
                                     <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <div class="row d-flex justify-content-center pt-2">
                                         <input type="submit" name="saveCommentHabitat" id="saveCommentHabitat" class="btn btn-success" value="Ajouter" disabled>
