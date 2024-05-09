@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Zoo;
 use App\Entity\Review;
+use App\Repository\ZooRepository;
 use App\Security\ReviewValidator;
 use App\Security\ContactValidator;
 use App\Repository\ReviewRepository;
@@ -44,7 +46,9 @@ class PageController extends Controller
             $reviewRepository = new ReviewRepository();
             $reviews = $reviewRepository->findReviewHomePage();
             $review = new Review();
-
+            $zoo = new Zoo();
+            $zooRepository = new ZooRepository();
+            $zoo = $zooRepository->findZoo();
             if (isset($_POST['addReview'])) {
                 $review->hydrate($_POST);
                 $reviewValidator = new ReviewValidator();
@@ -59,6 +63,7 @@ class PageController extends Controller
                 'reviews' => $reviews,
                 'review' => $review,
                 'pageTitle' => 'Accueil',
+                'zoo' => $zoo,
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [

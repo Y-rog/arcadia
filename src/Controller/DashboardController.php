@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Zoo;
 use MongoDB\Client;
 use App\Entity\User;
 use App\Security\Security;
+use App\Security\ZooValidator;
 use App\Security\UserValidator;
+
+use App\Repository\ZooRepository;
 use App\Repository\UserRepository;
 use App\Repository\AnimalRepository;
-
 use App\Repository\HabitatRepository;
 use App\Repository\CommentHabitatRepository;
 use App\MongoRepository\AnimalMongoRepository;
@@ -61,6 +64,29 @@ class DashboardController extends Controller
         usort($animals, function ($a, $b) {
             return $b['viewsCounter'] <=> $a['viewsCounter'];
         });
+        // On récupère les horaires du zoo
+        $zooRepository = new ZooRepository();
+        $zoo = $zooRepository->findZoo();
+
+        // On met à jour les horaires du zoo
+        try {
+            if (isset($_POST['editSchedules'])) {
+                $zoo = new Zoo();
+                $zoo->hydrate($_POST);
+                $zooRepository = new ZooRepository();
+                $zooValidator = new ZooValidator();
+                $errors = $zooValidator->validateZoo($zoo);
+                if (empty($errors)) {
+                    $zooRepository->updateSchedules($zoo);
+                    header('Location: index.php?controller=page&action=home');
+                } else throw new \Exception('Les horaires sont obligatoires');
+            }
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+                'pageTitle' => 'Erreur'
+            ]);
+        }
 
         //On récupère les commmentaires vétérinaires par habitat
         $commentHabitatRepository = new CommentHabitatRepository();
@@ -91,7 +117,8 @@ class DashboardController extends Controller
             'animalSql' => $animalSql,
             'user' => $user,
             'commentsHabitat' => $commentsHabitat,
-            'habitat' => $habitat
+            'habitat' => $habitat,
+            'zoo' => $zoo
         ]);
     }
 

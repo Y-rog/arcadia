@@ -6,15 +6,15 @@
         <img class="rounded " src="/assets/img/home-elephant.jpg" alt="image elephant" aria-hidden="true" lt="image elephants">
         <h1 class="bg-white rounded">Bienvenue à Arcadia</h1>
     </div>
-    <div class=" container-fluid horaries text-center rounded pt-3 pb-3">
-        <span class="lead"> Ouvert du Mardi au Dimanche de 9h à 18h</span>
+    <div class="container schedules text-center rounded pt-2 pb-2">
+        <span class="lead"> <?= $zoo->getSchedules(); ?> </span>
     </div>
 
     <hr class="featurette-divider">
     <div class="row featurette">
         <div class="col-md-7">
             <h3 class="featurette-heading fw-normal lh-1">Vivez une experience inoubliable! <span class="text-body-secondary">Au coeur d'une naturé préservée.</span></h3>
-            <p class="lead">Situé en Bretagne proche de la forêt de Brocéliande, nous sommes heureux de vous accueillir
+            <p class="lead m-auto">Situé en Bretagne proche de la forêt de Brocéliande, nous sommes heureux de vous accueillir
                 depuis 1960.</p>
         </div>
         <div class="col-md-5">
@@ -42,11 +42,11 @@
         </div>
     </div>
     <hr class="featurette-divider">
-    <div class=" container-fluid value text-center rounded pt-3 pb-3">
+    <div class=" container-fluid value text-center rounded pt-2 pb-2">
         <span class="lead"> Le respect de nos valeurs et de nos animaux est très important! </span>
     </div>
     <div class="row text-center pt-3">
-        <div class="col-lg-4">alt="image panda"
+        <div class="col-lg-4">
             <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="/assets/img/panda.jpg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false" alt="image panda">
             <h2 class="fw-normal">Bien être</h2>
             <p>Soucieux du bien être de nos animaux, nous avons reproduits leurs habitats naturels.</p>
