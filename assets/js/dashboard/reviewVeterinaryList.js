@@ -11,6 +11,11 @@ let nbRows = 0;
 const firstNameCaret = document.getElementById('firstNameCaret');
 const dateCaret = document.getElementById('dateCaret');
 const raceCaret = document.getElementById('raceCaret'); 
+const inputAnimalFirstName = document.getElementById('animalFirstName');
+const inputFirstDate = document.getElementById('firstDate');
+const inputLastDate = document.getElementById('lastDate');
+const searchButton = document.getElementById('search');
+const resetButton = document.getElementById('reset');
 
 //On récupère les valeurs de chaque colonne pour chaque ligne du tableau
 function getValues() {
@@ -31,7 +36,7 @@ getValues();
 
 
 //On crée un tableau data avec les valeurs de chaque colonne pour chaque ligne du tableau
-function getData(nbRows = 50) {
+function getData(nbRows = reviewVeterinaryTable.rows.length) {
 let data = [];
 for (let i = 0; i < firstName.length && i < nbRows; i++) {
     //Pour chaque ligne du tableau, on crée un objet data avec les valeurs de chaque colonne
@@ -40,7 +45,6 @@ for (let i = 0; i < firstName.length && i < nbRows; i++) {
 }
 return data;
 }
-data = getData();
 
 //On crée les lignes du tableau
 function pushRows(data) {
@@ -57,7 +61,6 @@ for (let i = 0; i < data.length; i++) {
 </tr>`);
 }
 }
-pushRows(data);
 
 //On ajoute les lignes dans le tableau html
 function showHtml(rows) {
@@ -68,7 +71,52 @@ ${rows.join('')}
 </tbody>`;
 };
 
-showHtml(rows);
+
+/* les fonctions de filtre*/
+
+//Fonction pour filtrer les données par prénom de l'animal
+function filterFirstName() {
+    let data = getData();
+    let filter = inputAnimalFirstName.value.toUpperCase();
+    data = data.filter((item) => item.firstName.toUpperCase().includes(filter));
+    return data;
+}
+
+//Fonction pour filtrer les données par date de l'avis
+function filterDate() {
+    let data = getData();
+    let firstDate = new Date(inputFirstDate.value);
+    let lastDate = new Date(inputLastDate.value);
+    data = data.filter((item) => new Date(item.date) >= firstDate && new Date(item.date) <= lastDate);
+    return data;
+}
+
+//Fonction pour filtrer les données par prénom de l'animal et date de l'avis
+function filterFirstNameAndDate() {
+    let data = getData();
+    let filter = inputAnimalFirstName.value.toUpperCase();
+    let firstDate = new Date(inputFirstDate.value);
+    let lastDate = new Date(inputLastDate.value);
+    data = data.filter((item) => item.firstName.toUpperCase().includes(filter) && new Date(item.date) >= firstDate && new Date(item.date) <= lastDate);
+    return data;
+}
+
+//Fonction pour afficher les données filtrées
+function showFilteredData() {
+    let data = [];
+    if (inputAnimalFirstName.value !== "" && inputFirstDate.value !== "" && inputLastDate.value !== "") {
+        data = filterFirstNameAndDate();
+    } else if (inputAnimalFirstName.value !== "") {
+        data = filterFirstName();
+    } else if (inputFirstDate.value !== "" && inputLastDate.value !== "") {
+        data = filterDate();
+    } else {
+        data = getData();
+    }
+    rows = [];
+    pushRows(data);
+    showHtml(rows);
+}
 
 /*Les fonctions de tries
 
@@ -79,8 +127,6 @@ function dataDateAsc() {
     return data;  
      
 }
-
-
 
 //Fonction pour trier les données par date de l'avis dans l'ordre décroissant
 function dataDateDesc() {
@@ -168,3 +214,25 @@ raceCaret.addEventListener('click', function() {
         raceCaret.className = 'bi bi-caret-down-fill';
     }
 });
+
+
+//Afficher les donéées apèr filtre et tri
+function showFilteredAndSortedData() {
+    showFilteredData();
+    showHtml(rows);
+}
+
+//On affiche les données filtrées et triées au clic sur le bouton "Filtrer"
+searchButton.addEventListener('click', showFilteredAndSortedData);
+
+//On réaffiche les données initiales au clic sur le bouton "Réinitialiser"
+resetButton.addEventListener('click', function() {
+    window.location.reload();
+});
+
+
+
+
+
+
+
