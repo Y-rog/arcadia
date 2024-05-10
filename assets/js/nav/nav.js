@@ -2,6 +2,7 @@ const homelinkHome = document.getElementById('home');
 const homelinkAbout = document.getElementById('habitat');
 const homelinkServices = document.getElementById('service');
 const homelinkContact = document.getElementById('contact');
+const homelinkDashboard = document.getElementById('dashboard');
 const homelinkGallery = document.getElementById('login');
 
 
@@ -15,6 +16,9 @@ else if (window.location.href.indexOf('service') > -1) {
 }
 else if (window.location.href.indexOf('contact') > -1) {
     homelinkContact.classList.add('active');
+}
+else if (window.location.href.indexOf('dashboard') > -1) {
+    homelinkDashboard.classList.add('active');
 }
 else if (window.location.href.indexOf('login') > -1) {
     homelinkGallery.classList.add('active');

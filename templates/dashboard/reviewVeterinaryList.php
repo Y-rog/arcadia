@@ -12,7 +12,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                 <form id="reviewVeterinaryForm" class="form-inline justify-content-center row">
                     <div class="form-group mb-3 col-8">
                         <label for="animalFirstName" class="sr-only">Prénom de l'animal</label>
-                        <input type="text" class="form-control" id="animalFirstName" placeholder="Prénom de l'animal">
+                        <input type="text" class="form-control" id="animalFirstName">
                     </div>
                     <div class=" form-group mb-3 col-md-6">
                         <label for="firstDate" class="sr-only">Date de début</label>
