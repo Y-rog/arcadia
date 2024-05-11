@@ -10,10 +10,10 @@ use App\Repository\HabitatRepository;
 class CommentHabitat extends Entity
 {
     protected ?int $id = null;
-    protected string $content = '';
-    protected DateTime $created_at;
-    protected string $habitatId = '';
-    protected string $userId = '';
+    protected ?string $content = '';
+    protected ?DateTime $passing_date = null;
+    protected ?int $habitatId = 0;
+    protected ?int $userId = 0;
 
 
     /**
@@ -55,24 +55,14 @@ class CommentHabitat extends Entity
 
         return $this;
     }
-
-    /**
-     * Get the value of created_at
-     */
-    public function getCreatedAt()
+    public function getPassingDate()
     {
-        return $this->created_at;
+        return $this->passing_date;
     }
 
-    /**
-     * Set the value of created_at
-     *
-     * @return  self
-     */
-    public function setCreatedAt($created_at)
+    public function setPassingDate(DateTime $passing_date): self
     {
-        $this->created_at = $created_at;
-
+        $this->passing_date = $passing_date;
         return $this;
     }
 

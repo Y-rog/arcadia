@@ -9,11 +9,11 @@ use App\Repository\AnimalRepository;
 class FoodConsumption extends Entity
 {
     protected ?int $id = null;
-    protected string $food_given = '';
-    protected string $food_quantity = '';
-    protected DateTime $give_at;
-    protected string $animal_uuid = '';
-    protected string $user_id = '';
+    protected ?string $food_given = '';
+    protected ?string $food_quantity = '';
+    protected ?DateTime $give_at = null;
+    protected ?string $animal_uuid = '';
+    protected ?string $user_id = '';
 
     /**
      * Get the value of id
@@ -72,7 +72,7 @@ class FoodConsumption extends Entity
     /**
      * Get the value of food_date
      */
-    public function getGiveAt(): DateTime
+    public function getGiveAt()
     {
         return $this->give_at;
     }

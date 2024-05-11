@@ -8,9 +8,9 @@ class CommentHabitatRepository extends Repository
 {
     public function insert(CommentHabitat $commentHabitat)
     {
-        $query = $this->pdo->prepare('INSERT INTO comment_habitat (content, created_at, habitat_id, user_id) VALUES (:content, :created_at, :habitat_id, :user_id)');
+        $query = $this->pdo->prepare('INSERT INTO comment_habitat (content, passing_date, habitat_id, user_id) VALUES (:content, :passing_date, :habitat_id, :user_id)');
         $query->bindValue(':content', $commentHabitat->getContent(), \PDO::PARAM_STR);
-        $query->bindValue(':created_at', $commentHabitat->getCreatedAt()->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
+        $query->bindValue(':passing_date', $commentHabitat->getPassingDate()->format('Y-m-d'), \PDO::PARAM_STR);
         $query->bindValue(':habitat_id', $commentHabitat->getHabitatId(), \PDO::PARAM_INT);
         $query->bindValue(':user_id', $commentHabitat->getUserId(), \PDO::PARAM_INT);
         $query->execute();
@@ -30,7 +30,7 @@ class CommentHabitatRepository extends Repository
 
     public function findAll(): array
     {
-        $query = $this->pdo->prepare('SELECT * FROM comment_habitat ORDER BY created_at DESC');
+        $query = $this->pdo->prepare('SELECT * FROM comment_habitat ORDER BY passing_date DESC');
         $query->execute();
         $commentHabitats = $query->fetchAll();
         $commentHabitats = array_map(function ($commentHabitat) {
@@ -42,7 +42,7 @@ class CommentHabitatRepository extends Repository
     //voir les 10 derniers commentaires
     public function findLastCommentsHabitat()
     {
-        $query = $this->pdo->prepare('SELECT * FROM comment_habitat ORDER BY created_at DESC LIMIT 10');
+        $query = $this->pdo->prepare('SELECT * FROM comment_habitat ORDER BY passing_date DESC LIMIT 10');
         $query->execute();
         $commentHabitats = $query->fetchAll();
         $commentHabitats = array_map(function ($commentHabitat) {

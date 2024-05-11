@@ -9,13 +9,13 @@ use App\Repository\AnimalRepository;
 class ReviewVeterinary extends Entity
 {
     protected ?int $id = null;
-    protected string $health_status = '';
-    protected string $food = '';
-    protected string $food_quantity = '';
-    protected DateTime $passing_date;
-    protected string $health_status_details = '';
-    protected string $animalUuid = '';
-    protected int $userId = 0;
+    protected ?string $health_status = '';
+    protected ?string $food = '';
+    protected ?string $food_quantity = '';
+    protected ?DateTime $passing_date = null;
+    protected ?string $health_status_details = '';
+    protected ?string $animalUuid = '';
+    protected ?int $userId = 0;
 
     public function getId(): ?int
     {
@@ -57,7 +57,7 @@ class ReviewVeterinary extends Entity
         return $this;
     }
 
-    public function getPassingDate(): DateTime
+    public function getPassingDate()
     {
         return $this->passing_date;
     }

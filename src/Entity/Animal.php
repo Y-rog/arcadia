@@ -7,11 +7,11 @@ use App\Repository\ReviewVeterinaryRepository;
 class Animal extends Entity
 {
     protected ?int $id = null;
-    protected string $uuid = '';
-    protected string $first_name = '';
-    protected string $race = '';
-    protected string $image = '';
-    protected string $habitatId = '';
+    protected ?string $uuid = '';
+    protected ?string $first_name = '';
+    protected ?string $race = '';
+    protected ?string $image = '';
+    protected ?int $habitatId = 0;
 
     /**
      * Get the value of id
@@ -77,7 +77,7 @@ class Animal extends Entity
     /**
      * Get the value of race
      */
-    public function getRace()
+    public function getRace(): ?string
     {
         return $this->race;
     }
@@ -87,7 +87,7 @@ class Animal extends Entity
      *
      * @return  self
      */
-    public function setRace($race)
+    public function setRace($race): self
     {
         $this->race = $race;
 
@@ -134,15 +134,15 @@ class Animal extends Entity
         return $this;
     }
 
-    public function getImagePath()
+    public function getImagePath(): string
     {
         return _IMAGE_ANIMAL_ . $this->getImage();
     }
 
-    public function getHealthStatus()
+    public function getHealthStatus(): string
     {
         $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
-        $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($this->getuuId());
+        $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($this->getUuId());
         if ($reviewVeterinary) {
             return $reviewVeterinary->getHealthStatus();
         }

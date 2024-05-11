@@ -10,7 +10,7 @@ class Review extends Entity
     protected ?int $id = null;
     protected ?string $user_name = '';
     protected ?string $content = '';
-    protected DateTime $created_at;
+    protected ?DateTime $created_at = null;
     protected ?bool $is_validated = false;
     protected ?bool $on_home_page = false;
 
@@ -77,7 +77,7 @@ class Review extends Entity
     /**
      * Get the value of created_at
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt()
     {
         return $this->created_at;
     }

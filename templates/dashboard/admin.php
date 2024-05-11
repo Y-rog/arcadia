@@ -110,7 +110,7 @@
                     <tbody>
                         <?php foreach ($commentsHabitat as $commentHabitat) : ?>
                             <tr>
-                                <td class="text-center"><?= $commentHabitat->getCreatedAt()->format('d/m/Y'); ?></td>
+                                <td class="text-center"><?= $commentHabitat->getPassingDate()->format('d/m/Y'); ?></td>
                                 <td class="text-center"><?= $commentHabitat->getHabitatName() ?></td>
                                 <td class="text-center"><?= $commentHabitat->getContent(); ?></td>
                                 <td class="text-center"> <?= $commentHabitat->getUserLastName() . ' ' .

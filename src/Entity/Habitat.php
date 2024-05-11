@@ -5,9 +5,9 @@ namespace App\Entity;
 class Habitat extends Entity
 {
     protected ?int $id = null;
-    protected string $name = '';
-    protected string $description = '';
-    protected string $image = '';
+    protected ?string $name = '';
+    protected ?string $description = '';
+    protected ?string $image = '';
 
     /**
      * Get the value of id
