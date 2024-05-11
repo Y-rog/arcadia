@@ -2,7 +2,7 @@ const inputSchedules = document.getElementById('schedules');
 const inputSubmitSchedules = document.getElementById('editSchedules');
 
 inputSchedules.addEventListener('keyup', validateForm);
-inputSubmit.addEventListener('click', validateForm);
+inputSubmitSchedules.addEventListener('click', validateForm);
 
 // On autorise l'envoi du formulaire si tous les champs obligatoires sont remplis
 function validateForm() {

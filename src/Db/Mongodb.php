@@ -13,7 +13,8 @@ class MongoDB
 
     private function __construct()
     {
-        $this->uri = 'mongodb://localhost:27017';
+        $conf = require_once _ROOTPATH_ . '/mongodb_config.php';
+        $this->uri = $conf['mongodb_uri'];
     }
 
     public static function getInstance(): self
