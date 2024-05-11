@@ -27,7 +27,7 @@ use App\Security\Security; ?>
                 <?php if ($reviewVeterinary) { ?>
                     <li id="healthStatus" class="list-group-item">Etat: <?= $reviewVeterinary->getHealthStatus() ?></li>
                     <li class="list-group-item">Nourriture proposée: <?= $reviewVeterinary->getFood() ?></li>
-                    <li class="list-group-item">Quantité: <?= $reviewVeterinary->getFoodQuantity() ?></li>
+                    <li class="list-group-item">Quantité: <?= $reviewVeterinary->getFoodQuantity() ?>gr</li>
                     <li class="list-group-item">Date de passage: <?= $reviewVeterinary->getPassingDate()->format('d-m-Y') ?></li>
                     <li class="list-group-item">Détail de l'état de l'animal: <?= $reviewVeterinary->getHealthStatusDetails() ?></li>
                 <?php } ?>
@@ -35,7 +35,7 @@ use App\Security\Security; ?>
                     if ($foodConsumption) {
                 ?>
                         <li class="list-group-item">Nourriture donnée: <?= $foodConsumption->getFoodGiven() ?></li>
-                        <li class="list-group-item">Quantité donnée: <?= $foodConsumption->getFoodQuantity() ?></li>
+                        <li class="list-group-item">Quantité donnée: <?= $foodConsumption->getFoodQuantity() ?>gr</li>
                         <li class="list-group-item">Dernière distribution: <?= $foodConsumption->getGiveAt()->format('d-m-Y H:i') ?></li>
                         <li class="list-group-item">Distribué par: <?= $foodConsumption->getUserLastName() . ' ' .  $foodConsumption->getUserFirstName() ?> </li>
                         <li class="list-group-item text-center"><a href="index.php?controller=animal&action=foodConsumptionList&uuid=<?= $animal->getUuid() ?>">Historique des distributions</a></li>
@@ -54,7 +54,7 @@ use App\Security\Security; ?>
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title text-center fs-5" id="addReviewsVeterinary">Ajouter un avis vétérinaire ?</h1>
+                            <h1 class="modal-title text-center fs-5" id="addReviewsVeterinary">Ajouter un avis vétérinaire sur <?= $animal->getFirstName() . ' ,' . $animal->getRace() ?>?</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -72,7 +72,7 @@ use App\Security\Security; ?>
                                     <input type="text" class="form-control" id="food" name="food">
                                 </div>
                                 <div class="mb-3 text-start ">
-                                    <label for="food_quantity" class="form-label">Quantité</label>
+                                    <label for="food_quantity" class="form-label">Quantité (en gr)</label>
                                     <input type="text" class="form-control" id="food_quantity" name="food_quantity">
                                 </div>
                                 <div class="mb-3 text-start">
@@ -117,7 +117,7 @@ use App\Security\Security; ?>
                                     <input type="text" class="form-control" id="food_given" name="food_given">
                                 </div>
                                 <div class="mb-3 text-start">
-                                    <label for="food_quantity" class="form-label">Quantité</label>
+                                    <label for="food_quantity" class="form-label">Quantité (en gr)</label>
                                     <input type="text" class="form-control" id="food_quantity" name="food_quantity">
                                 </div>
                                 <div class="mb-3 text-start">

@@ -65,7 +65,7 @@ class AnimalController extends Controller
                 $file = $_FILES['image'];
                 // On vérifie si une image a été uploadée
                 if ($file['error'] === 0) {
-                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file);
+                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file, null);
                     $animal->setImage($file['fileName']);
                 } else throw new \Exception("Aucune image n'a été uploadée");
                 // On hydrate l'objet
@@ -115,13 +115,20 @@ class AnimalController extends Controller
             // On récupère les habitats
             $habitatRepository = new HabitatRepository();
             $habitats = $habitatRepository->findAll();
+            // On récupère l'ancien nom de l'image
+            $oldFileName = $animal->getImage();
             // Si le formulaire est soumis on modifie l'animal
             if (isset($_POST['saveAnimal'])) {
                 $file = $_FILES['image'];
                 // On vérifie si une image a été chargéee
                 if ($file['error'] === 0) {
-                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file);
+                    // On upload l'image
+                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file, $oldFileName);
                     $animal->setImage($file['fileName']);
+                    // On supprime l'ancienne image
+                    if ($oldFileName) {
+                        FileTools::deleteImage(_IMAGE_ANIMAL_, $oldFileName);
+                    }
                 } else throw new \Exception("Aucune image n'a été chargée");
                 $animal->hydrate($_POST);
                 $errors = (new AnimalValidator())->validateAnimal($animal);
@@ -211,7 +218,10 @@ class AnimalController extends Controller
             }
             //Si le formualire de suppression est soumis on supprime l'animal
             if (isset($_POST['deleteAnimal'])) {
+                //On supprime l'image de l'animal
+                FileTools::deleteImage(_IMAGE_ANIMAL_, $animal->getImage());
                 // On supprime l'animal dans la base de données SQL
+                $animalRepository = new AnimalRepository();
                 $animalRepository->delete($animal);
                 // On supprime l'animal dans la base de données MongoDB
                 $animalMongoRepository = new AnimalMongoRepository();

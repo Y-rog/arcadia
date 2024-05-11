@@ -4,7 +4,7 @@ namespace App\Tools;
 
 class FileTools
 {
-    public static function uploadImage($destinationPath, $file, $oldFileName = null)
+    public static function uploadImage($destinationPath, $file, $oldFileName)
     {
         $errors = [];
         $fileName = null;
@@ -20,13 +20,27 @@ class FileTools
                 $fileName = uniqid() . '-' . $fileName;
                 // On déplace le fichier
                 if (move_uploaded_file($file["tmp_name"], _ROOTPATH_ . $destinationPath . $fileName)) {
-                    // On supprime l'ancienne image si elle existe
-                    if ($oldFileName) {
-                        unlink($destinationPath . $oldFileName);
+                    if (move_uploaded_file($file["tmp_name"], _ROOTPATH_ . $destinationPath . $fileName)) {
+                        if ($oldFileName) {
+                            unlink(_ROOTPATH_ . $destinationPath . $oldFileName);
+                        }
+                    } else {
+                        $errors[] = "Une erreur est survenue lors de l'upload de l'image";
                     }
-                } else throw new \Exception('Erreur lors du chargement du fichier');
-            } else throw new \Exception('Le fichier n\'est pas une image');
+                } else {
+                    $errors['file'] = 'Le fichier n\'a pas été uploadé';
+                }
+            } else {
+                $errors['file'] = 'Le fichier doit être une image';
+            }
         }
         return ['fileName' => $fileName ?? null, 'errors' => $errors];
+    }
+
+    public static function deleteImage($destinationPath, $fileName)
+    {
+        if ($fileName) {
+            unlink(_ROOTPATH_ . $destinationPath . $fileName);
+        }
     }
 }

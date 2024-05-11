@@ -100,7 +100,9 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
 
         </div>
     </div>
-
+    <div class="container pt-5">
+        <a href="index.php?controller=page&action=home"><i class="bi bi-skip-backward"></i> Retour</a>
+    </div>
 </main>
 
 

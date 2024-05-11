@@ -85,6 +85,9 @@ class HabitatController extends Controller
                 } else throw new \Exception("Le formulaire contient des erreurs");
             }
             if (isset($_POST['deleteHabitat'])) {
+                //On supprime l'image de l'habitat
+                FileTools::deleteImage(_IMAGE_HABITAT_, $habitat->getImage());
+                //On supprime l'habitat
                 $habitatRepository = new HabitatRepository();
                 $habitatRepository->delete($habitat);
                 header('Location: index.php?controller=habitat&action=list');
@@ -129,6 +132,12 @@ class HabitatController extends Controller
             $habitat = new Habitat();
             //Si le formulaire est soumis on ajoute un habitat
             if (isset($_POST['saveHabitat'])) {
+                $file = $_FILES['image'];
+                // On vérifie si une image a été uploadée
+                if ($file['error'] === 0) {
+                    $oldFileName = $habitat->getImage();
+                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file, $oldFileName);
+                } else throw new \Exception("Aucune image n'a été uploadée");
                 $habitat->hydrate($_POST);
                 $habitatValidator = new HabitatValidator();
                 $errors = $habitatValidator->validateHabitat($habitat);
@@ -137,7 +146,13 @@ class HabitatController extends Controller
                     $habitatRepository = new HabitatRepository();
                     $habitatRepository->insert($habitat);
                     header('Location: index.php?controller=habitat&action=list');
-                } else throw new \Exception("Le formulaire contient des erreurs");
+                } else {
+                    $this->render('habitat/add', [
+                        'pageTitle' => 'Ajouter un habitat',
+                        'habitat' => $habitat,
+                        'errors' => $errors
+                    ]);
+                }
             } else {
                 $this->render('habitat/add', [
                     'pageTitle' => 'Ajouter un habitat',
@@ -159,13 +174,18 @@ class HabitatController extends Controller
             $errors = [];
             $habitatRepository = new HabitatRepository();
             $habitat = $habitatRepository->findOneById($_GET['id']);
+            //On récupère l'image de l'ancien habitat
+            $oldFileName = $habitat->getImage();
             //Si le formulaire est soumis on modifie l'habitat
             if (isset($_POST['saveHabitat'])) {
                 $file = $_FILES['image'];
                 // On vérifie si une image a été chargéee
                 if ($file['error'] === 0) {
-                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file);
+                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file, $oldFileName);
                     $habitat->setImage($file['fileName']);
+                    if ($oldFileName) {
+                        FileTools::deleteImage(_IMAGE_HABITAT_, $oldFileName);
+                    }
                 } else throw new \Exception("Aucune image n'a été chargée");
                 $habitat->hydrate($_POST);
                 $habitatValidator = new HabitatValidator();

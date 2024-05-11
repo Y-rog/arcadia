@@ -24,23 +24,24 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     <div class='invalid-feedback'>
                         L'email n'est pas valide.
                     </div>
-                    <div class=" mb-3 text-start">
-                        <label for="title">Titre du service</label>
-                        <input type="text" class='form-control' id="title" name="title" placeholder="Titre" value="">
-                        <div class='invalid-feedback'>
-                            Le titre est requis.
-                        </div>
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="title">Objet</label>
+                    <input type="text" class='form-control' id="title" name="title" placeholder="Titre" value="">
+                    <div class='invalid-feedback'>
+                        Le titre est requis.
                     </div>
-                    <div class="mb-3 text-start">
-                        <label for="message">Votre message</label>
-                        <textarea class='form-control' id="message" name="message" placeholder="Ecrivez votre remarque/question ici..." rows="10"></textarea>
-                        <div class='invalid-feedback'>
-                            Le message est requis.
-                        </div>
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="message">Votre message</label>
+                    <textarea class='form-control' id="message" name="message" placeholder="Ecrivez votre remarque/question ici..." rows="10"></textarea>
+                    <div class='invalid-feedback'>
+                        Le message est requis.
                     </div>
-                    <div class="row justify-content-center pt-2">
-                        <input type="submit" id="sendMail" name="sendMail" class="btn btn-success" value="Envoyer" disabled>
-                    </div>
+                </div>
+                <div class="row justify-content-center pt-2">
+                    <input type="submit" id="sendMail" name="sendMail" class="btn btn-success" value="Envoyer" disabled>
+                </div>
             </form>
         </div>
     </div>
