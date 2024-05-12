@@ -52,42 +52,10 @@ class DashboardController extends Controller
 
     protected function admin(): void
     {
-        if (!Security::isAdmin()) {
-            throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
-        }
-        // On récupère les animaux de la base de données mongo
-        $animalMongoRepository = new AnimalMongoRepository();
-        $animals = $animalMongoRepository->findAllAnimals();
-        // On convertit le format Bson en tableau
-        $animals = json_decode(json_encode($animals), true);
-        // On trie le tableau par nombre de vues
-        usort($animals, function ($a, $b) {
-            return $b['viewsCounter'] <=> $a['viewsCounter'];
-        });
+
         // On récupère les horaires du zoo
         $zooRepository = new ZooRepository();
         $zoo = $zooRepository->findZoo();
-
-        // On met à jour les horaires du zoo
-        try {
-            if (isset($_POST['editSchedules'])) {
-                $zoo = new Zoo();
-                $zoo->hydrate($_POST);
-                $zooRepository = new ZooRepository();
-                $zooValidator = new ZooValidator();
-                $errors = $zooValidator->validateZoo($zoo);
-                if (empty($errors)) {
-                    $zooRepository->updateSchedules($zoo);
-                    header('Location: index.php?controller=page&action=home');
-                } else throw new \Exception('Les horaires sont obligatoires');
-            }
-        } catch (\Exception $e) {
-            $this->render('errors/default', [
-                'error' => $e->getMessage(),
-                'pageTitle' => 'Erreur'
-            ]);
-        }
-
         //On récupère les commmentaires vétérinaires par habitat
         $commentHabitatRepository = new CommentHabitatRepository();
         $commentsHabitat = $commentHabitatRepository->findLastCommentsHabitat();
@@ -110,6 +78,49 @@ class DashboardController extends Controller
             $userRepository = new UserRepository();
             $user = $userRepository->findOneById($userId);
         }
+        // On récupère les animaux de la base de données mongo
+        try {
+            if (!isset($_ENV['MONGODB_URI'])) {
+                throw new \Exception('La variable d\'environnement MONGODB_URI n\'est pas définie');
+            } else {
+                $client = new Client($_ENV['MONGODB_URI']);
+            }
+            $animalMongoRepository = new AnimalMongoRepository($client);
+            $animals = $animalMongoRepository->findAllAnimals();
+            // On convertit le format Bson en tableau
+            $animals = json_decode(json_encode($animals), true);
+            // On trie le tableau par nombre de vues
+            usort($animals, function ($a, $b) {
+                return $b['viewsCounter'] <=> $a['viewsCounter'];
+            });
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+                'pageTitle' => 'Erreur'
+            ]);
+        }
+
+        // On met à jour les horaires du zoo
+        try {
+            if (isset($_POST['editSchedules'])) {
+                $zoo = new Zoo();
+                $zoo->hydrate($_POST);
+                $zooRepository = new ZooRepository();
+                $zooValidator = new ZooValidator();
+                $errors = $zooValidator->validateZoo($zoo);
+                if (empty($errors)) {
+                    $zooRepository->updateSchedules($zoo);
+                    header('Location: index.php?controller=page&action=home');
+                } else throw new \Exception('Les horaires sont obligatoires');
+            }
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+                'pageTitle' => 'Erreur'
+            ]);
+        }
+
+
         $this->render('dashboard/admin', [
             'pageTitle' => 'Administration',
             'animals' => $animals,
