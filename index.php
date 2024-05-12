@@ -1,8 +1,9 @@
 <?php
-ini_set('display_errors', 'on');
 require_once 'vendor/autoload.php';
 
 use App\Controller\Controller;
+
+var_dump($_SERVER);
 //Sécurise le cookie de session
 session_set_cookie_params([
     'lifetime' => 3600,

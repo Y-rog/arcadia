@@ -16,7 +16,6 @@ use App\Security\Security; ?>
 </head>
 
 <body>
-
     <header class="pb-2 px-4">
         <nav class="navbar navbar-expand-lg  border-bottom">
             <div class="container-fluid">
@@ -48,3 +47,4 @@ use App\Security\Security; ?>
             </div>
         </nav>
     </header>
+    <?= var_dump($_SERVER); ?>
