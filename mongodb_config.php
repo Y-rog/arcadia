@@ -4,7 +4,7 @@ require_once 'vendor/autoload.php';
 use Dotenv\Dotenv;
 
 
-// Load environment variables
+// si le fichier .env existe, on charge les variables d'environnement local
 if (file_exists(__DIR__ . '/.env')) {
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->load();
@@ -12,7 +12,8 @@ if (file_exists(__DIR__ . '/.env')) {
         'mongodb_uri' => $_ENV['MONGODB_URI']
     ];
 } else {
+    // sinon on charge les variables d'environnement de production sur heroku
     return [
-        'mongodb_uri' => getenv('MONGODB_URI'),
+        'mongodb_uri' => $_ENV['MONGODB_URI'],
     ];
 }
