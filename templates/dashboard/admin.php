@@ -1,6 +1,7 @@
 <?php require_once _ROOTPATH_ . '/templates/header.php'; ?>
 <script src="/assets/js/dashboard/schedules.js" defer></script>
-
+<script src="/node_modules/chart.js/dist/chart.umd.js" defer></script>
+<script src="/assets/js/dashboard/animalViews.js" defer></script>
 <script src="/assets/js/dashboard/reviewVeterinary.js" defer></script>
 <main class="container">
     <div class="text-center pb-3">
@@ -90,7 +91,9 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="col">
+                <div><canvas id="animalViews"></canvas></div>
+            </div>
         </div>
         <div class="row justify-content-around border border-light-subtle rounded mt-3 mx-1">
             <div class=" table-responsive">
