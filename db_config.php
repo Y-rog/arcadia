@@ -16,7 +16,7 @@ if (file_exists(__DIR__ . '/.env')) {
         'db_host' => $_ENV['DB_HOST'],
     ];
 } else {
-    //Sinon on charge les variables d'environnement de production sur heroku
+    //Sinon on charge les variables d'environnement de production sur heroku.
     return [
         'db_name' => $_ENV['DB_NAME'],
         'db_user' => $_ENV['DB_USER'],
