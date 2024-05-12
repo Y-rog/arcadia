@@ -6,7 +6,7 @@ use App\Db\MongoDB;
 
 class MongoRepository
 {
-    protected \MongoDB\Client $client;
+    protected $client;
 
     public function __construct()
     {

@@ -5,7 +5,7 @@ namespace App\Db;
 use Exception;
 use MongoDB\Client;
 
-class Mongodb
+class MongoDB
 {
     private $uri;
     private $client = null;
@@ -20,7 +20,7 @@ class Mongodb
     public static function getInstance(): self
     {
         if (is_null(self::$_instance)) {
-            self::$_instance = new Mongodb();
+            self::$_instance = new MongoDB();
         }
         return self::$_instance;
     }

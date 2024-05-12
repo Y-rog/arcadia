@@ -2,7 +2,7 @@
     "name": "grego/arcadia",
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\" : "src/"
         }
     },
     "authors": [
