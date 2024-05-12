@@ -12,7 +12,7 @@ if (file_exists(__DIR__ . '/.env')) {
         'mongodb_uri' => $_ENV['MONGODB_URI']
     ];
 } else {
-    // sinon on charge les variables d'environnement de production sur heroku
+    // sinon on charge les variables d'environnement de production (sur heroku)
     return [
         'mongodb_uri' => $_ENV['MONGODB_URI'],
     ];
