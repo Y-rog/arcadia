@@ -47,4 +47,3 @@ use App\Security\Security; ?>
             </div>
         </nav>
     </header>
-    <?= var_dump($_SERVER); ?>
