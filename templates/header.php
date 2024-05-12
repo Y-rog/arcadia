@@ -40,8 +40,7 @@ use App\Security\Security; ?>
                             <a class=" nav-link" href=" /index.php?controller=auth&action=logout">Déconnexion</a>
                         <?php } else { ?>
                             <a class="nav-link" id="login" href="/index.php?controller=auth&action=login">Espace administration <i class="bi bi-person-fill-lock"></i></a>
-                        <?php };
-                        phpinfo(); ?>
+                        <?php }; ?>
                     </div>
                 </div>
 
