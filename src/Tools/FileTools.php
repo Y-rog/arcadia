@@ -2,45 +2,53 @@
 
 namespace App\Tools;
 
+use Cloudinary\Cloudinary;
+
 class FileTools
 {
-    public static function uploadImage($destinationPath, $file, $oldFileName)
+
+    public static function uploadImage($file, $oldPublicId = null)
     {
         $errors = [];
-        $fileName = null;
 
         if (isset($file["tmp_name"]) && $file["tmp_name"] != '') {
             $checkImage = getimagesize($file["tmp_name"]);
             if ($checkImage !== false) {
-                // On récupère l'extension du fichier
-                $suffix = pathinfo($file["name"], PATHINFO_EXTENSION);
-                //On transforme le nom du fichier en slug pour éviter les problèmes de nom de fichier
-                $fileName = StringTools::slugify(basename($file["name"]), '.' . $suffix);
-                // On génère un nom de fichier unique
-                $fileName = uniqid() . '-' . $fileName;
-                // On déplace le fichier
-                if (move_uploaded_file($file["tmp_name"], _ROOTPATH_ . $destinationPath . $fileName)) {
-                    if (move_uploaded_file($file["tmp_name"], _ROOTPATH_ . $destinationPath . $fileName)) {
-                        if ($oldFileName) {
-                            unlink(_ROOTPATH_ . $destinationPath . $oldFileName);
-                        }
-                    } else {
-                        $errors[] = "Une erreur est survenue lors de l'upload de l'image";
-                    }
-                } else {
-                    $errors['file'] = 'Le fichier n\'a pas été uploadé';
+                $conf = require_once _ROOTPATH_ . '/cloudinary_config.php';
+                $cloudinary = new Cloudinary([
+                    'cloud' => [
+                        'cloud_name' => $conf['cloudinary_cloud_name'],
+                        'api_key' => $conf['cloudinary_api_key'],
+                        'api_secret' => $conf['cloudinary_api_secret'],
+                        'url' => $conf['cloudinary_url'],
+                        'secure' => true,
+                    ]
+                ]);
+                $publicId = $cloudinary->uploadApi()->upload($file['tmp_name'])['public_id'];
+                if ($oldPublicId) {
+                    $cloudinary->uploadApi()->destroy($oldPublicId);
                 }
             } else {
                 $errors['file'] = 'Le fichier doit être une image';
             }
+        } else {
+            $errors['file'] = 'L\'image n\'a pas été téléchargée';
         }
-        return ['fileName' => $fileName ?? null, 'errors' => $errors];
+        return ['public_id' => $publicId ?? null, 'errors' => $errors];
     }
 
-    public static function deleteImage($destinationPath, $fileName)
+    public static function deleteImage($publicId)
     {
-        if ($fileName) {
-            unlink(_ROOTPATH_ . $destinationPath . $fileName);
-        }
+        $conf = require_once _ROOTPATH_ . '/cloudinary_config.php';
+        $cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => $conf['cloudinary_cloud_name'],
+                'api_key' => $conf['cloudinary_api_key'],
+                'api_secret' => $conf['cloudinary_api_secret'],
+                'url' => $conf['cloudinary_url'],
+                'secure' => true,
+            ]
+        ]);
+        $cloudinary->uploadApi()->destroy($publicId);
     }
 }

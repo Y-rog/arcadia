@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Habitat;
 use App\Tools\FileTools;
 use APP\Security\Security;
+use Cloudinary\Cloudinary;
 use App\Entity\CommentHabitat;
 use App\Entity\ReviewVeterinary;
 use App\Security\HabitatValidator;
@@ -86,7 +87,7 @@ class HabitatController extends Controller
             }
             if (isset($_POST['deleteHabitat'])) {
                 //On supprime l'image de l'habitat
-                FileTools::deleteImage(_IMAGE_HABITAT_, $habitat->getImage());
+                FileTools::deleteImage($habitat->getImage());
                 //On supprime l'habitat
                 $habitatRepository = new HabitatRepository();
                 $habitatRepository->delete($habitat);
@@ -132,27 +133,33 @@ class HabitatController extends Controller
             $habitat = new Habitat();
             //Si le formulaire est soumis on ajoute un habitat
             if (isset($_POST['saveHabitat'])) {
-                $file = $_FILES['image'];
                 // On vérifie si une image a été uploadée
+                $file = $_FILES['image'];
                 if ($file['error'] === 0) {
-                    $oldFileName = $habitat->getImage();
-                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file, $oldFileName);
+                    //On upload l'image avec Cloudinary
+                    $image = FileTools::uploadImage($file);
+                    //On récupère l'url sécurisée de l'image
+                    $publicId = $image['public_id'];
+                    //On hydrate l'objet habitat
+                    $habitat->setName($_POST['name']);
+                    $habitat->setDescription($_POST['description']);
+                    $habitat->setImage($publicId);
+                    //On valide l'objet habitat
+                    $habitatValidator = new HabitatValidator();
+                    $errors = $habitatValidator->validateHabitat($habitat);
+                    //Si le formulaire est valide on ajoute l'habitat
+                    if (empty($errors)) {
+                        $habitatRepository = new HabitatRepository();
+                        $habitatRepository->insert($habitat);
+                        header('Location: index.php?controller=habitat&action=list');
+                    } else {
+                        $this->render('habitat/add', [
+                            'pageTitle' => 'Ajouter un habitat',
+                            'habitat' => $habitat,
+                            'errors' => $errors
+                        ]);
+                    }
                 } else throw new \Exception("Aucune image n'a été uploadée");
-                $habitat->hydrate($_POST);
-                $habitatValidator = new HabitatValidator();
-                $errors = $habitatValidator->validateHabitat($habitat);
-                //Si le formulaire est valide on ajoute l'habitat
-                if (empty($errors)) {
-                    $habitatRepository = new HabitatRepository();
-                    $habitatRepository->insert($habitat);
-                    header('Location: index.php?controller=habitat&action=list');
-                } else {
-                    $this->render('habitat/add', [
-                        'pageTitle' => 'Ajouter un habitat',
-                        'habitat' => $habitat,
-                        'errors' => $errors
-                    ]);
-                }
             } else {
                 $this->render('habitat/add', [
                     'pageTitle' => 'Ajouter un habitat',
@@ -174,33 +181,42 @@ class HabitatController extends Controller
             $errors = [];
             $habitatRepository = new HabitatRepository();
             $habitat = $habitatRepository->findOneById($_GET['id']);
-            //On récupère l'image de l'ancien habitat
-            $oldFileName = $habitat->getImage();
             //Si le formulaire est soumis on modifie l'habitat
             if (isset($_POST['saveHabitat'])) {
                 $file = $_FILES['image'];
                 // On vérifie si une image a été chargéee
                 if ($file['error'] === 0) {
-                    $file = FileTools::uploadImage(_IMAGE_HABITAT_, $file, $oldFileName);
-                    $habitat->setImage($file['fileName']);
-                    if ($oldFileName) {
-                        FileTools::deleteImage(_IMAGE_HABITAT_, $oldFileName);
+                    //On récupère l'ancien publicId de l'image
+                    $oldPublicId = $habitat->getImage();
+                    //On upload l'image avec Cloudinary et on supprime l'ancienne image
+                    $file = FileTools::uploadImage($file, $oldPublicId);
+                    //On récupère le publicId de la nouvelle image
+                    $publicId = $file['public_id'];
+                    //On hydrate l'objet habitat
+                    $habitat->hydrate($_POST);
+                    $habitat->setImage($publicId);
+                    //On valide l'objet habitat
+                    $habitatValidator = new HabitatValidator();
+                    $errors = $habitatValidator->validateHabitat($habitat);
+                    //Si le formulaire est valide on ajoute l'habitat
+                    //Si le formulaire est valide on modifie l'habitat
+                    if (empty($errors)) {
+                        $habitatRepository = new HabitatRepository();
+                        $habitatRepository->edit($habitat);
+                        header('Location: index.php?controller=habitat&action=list');
+                    } else {
+                        $this->render('habitat/edit', [
+                            'pageTitle' => 'Modifier un habitat',
+                            'habitat' => $habitat,
+                            'errors' => $errors
+                        ]);
                     }
-                } else throw new \Exception("Aucune image n'a été chargée");
-                $habitat->hydrate($_POST);
-                $habitatValidator = new HabitatValidator();
-                $errors = $habitatValidator->validateHabitat($habitat);
-                //Si le formulaire est valide on modifie l'habitat
-                if (empty($errors)) {
-                    $habitatRepository->edit($habitat);
-                    header('Location: index.php?controller=habitat&action=list');
-                } else throw new \Exception("Le formulaire contient des erreurs");
+                } else throw new \Exception("Aucune image n'a été uploadée");
             } else {
                 $this->render('habitat/edit', [
                     'pageTitle' => 'Modifier un habitat',
                     'habitat' => $habitat,
                     'errors' => $errors
-
                 ]);
             }
         } catch (\Exception $e) {
