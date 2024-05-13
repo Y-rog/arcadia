@@ -142,8 +142,8 @@ use App\Security\Security; ?>
     </div>
     <?php if (Security::isAdmin()) { ?>
         <div class="d-flex justify-content-evenly pb-3">
-            <a href="index.php?controller=animal&action=edit&id=<?= $animal->getId() ?>"><button class="btn btn-secondary">Modifier</button></a>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAnimal">Supprimer</button>
+            <a href="index.php?controller=animal&action=edit&id=<?= $animal->getId() ?>"><button class="btn btn-outline-secondary">Modifier</button></a>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAnimal">Supprimer</button>
         </div>
         <div class="modal fade" id="deleteAnimal" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

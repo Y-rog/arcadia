@@ -15,9 +15,9 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
         <h1 class="pb-4"><?= $pageTitle ?></h1>
     </div>
     <div class="row justify-content-center">
-        <div class="col-8 ">
+        <div class="col-10 ">
             <form method="POST">
-                <p class="col-8 text-secondary bold mb-3">Une remarque? une question? N'hésitez pas à nous écrire.</p>
+                <p class="col-10 text-secondary bold mb-3">Une remarque? une question? N'hésitez pas à nous écrire.</p>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="Email">

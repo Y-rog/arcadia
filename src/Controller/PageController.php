@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Zoo;
+
 use App\Entity\Review;
 use App\Repository\ZooRepository;
 use App\Security\ReviewValidator;
 use App\Security\ContactValidator;
 use App\Repository\ReviewRepository;
+use Mailgun\Mailgun;
 
 class PageController extends Controller
 {
@@ -82,12 +84,10 @@ class PageController extends Controller
             $contactValidator = new ContactValidator();
             $errors = $contactValidator->validateContact($contact);
             if (empty($errors)) {
-                $to = 'jose.arcadia2024@gmail.com';
-                $subject = $contact['title'];
-                $headers = 'From: ' . $contact['email'];
-                $headers .= 'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-                $headers .= 'Reply-To: ' . $contact['email'] . "\r\n";
+                //envoi du mail avec mailgun
+                $conf = require_once _ROOTPATH_ . '/mailgun_config.php';
+                $mgClient = Mailgun::create($conf['mailgun_api_key']);
+                $domain = $conf['mailgun_domain'];
                 $message = '<h1>Message envoyé depuis la page Contact d\'Arcadia</h1>' .
 
                     '<p>Email de l\'expéditeur : ' . $contact['email'] . '</p>' .
@@ -96,7 +96,14 @@ class PageController extends Controller
 
                     '<p>Message : ' . $contact['message'] . '</p>';
 
-                if (mail($to, $subject, $message, $headers)) {
+                $result = $mgClient->messages($message)->send($domain, array(
+                    'from'    => $contact['email'],
+                    'to'    =>  $conf['jose_arcadia_email'],
+                    'subject' => $contact['title'],
+                    'html'    => $message,
+                ));
+
+                if ($result) {
                     header('Location: index.php?controller=page&action=home');
                 } else throw new \Exception("L'envoi du mail a échoué");
             } else $this->render('page/contact', [
