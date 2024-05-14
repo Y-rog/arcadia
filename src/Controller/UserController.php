@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
 use App\Entity\User;
+use Mailgun\Mailgun;
 use App\Security\UserValidator;
+use App\Repository\UserRepository;
 
 
 
@@ -46,10 +47,9 @@ class UserController extends Controller
                 if (empty($errors)) {
                     $userRepository = new UserRepository();
                     $userRepository->insert($user);
-                    //On envoie le pseudo par mail
-                    $to = $user->getEmail();
-                    $subject = 'Inscription';
-                    $headers = 'From:jose.arcadia2024@gmail.com';
+                    $conf = require_once _ROOTPATH_ . '/mailgun_config.php';
+                    $mgClient = Mailgun::create($conf['mailgun_api_key']);
+                    $domain = $conf['mailgun_domain'];
                     $message = 'Bonjour ' . $user->getFirstName() . ',' . $user->getLastName() . ', 
 
 
@@ -62,7 +62,14 @@ class UserController extends Controller
                         A bientôt!
 
                    José, directeur d\'Arcadia';
-                    if (mail($to, $subject, $message, $headers)) {
+
+                    $result = $mgClient->messages($message)->send($domain, array(
+                        'from'    => $conf['jose_arcadia_email'],
+                        'to'    =>  $user->getEmail(),
+                        'subject' => 'Inscription Arcadia',
+                        'text'    => $message,
+                    ));
+                    if ($result) {
                         header('Location: index.php?controller=user&action=register');
                     } else {
                         $this->render('errors/default', [
