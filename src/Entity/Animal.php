@@ -136,7 +136,7 @@ class Animal extends Entity
 
     public function getImagePath(): string
     {
-        return _IMAGE_ANIMAL_ . $this->getImage();
+        return _IMAGE_UPLOAD_ . $this->getImage();
     }
 
     public function getHealthStatus(): string

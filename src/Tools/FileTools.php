@@ -7,7 +7,7 @@ use Cloudinary\Cloudinary;
 class FileTools
 {
 
-    public static function uploadImage($file, $oldPublicId = null)
+    public static function uploadImage($file, $oldPublicId)
     {
         $errors = [];
 

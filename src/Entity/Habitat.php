@@ -91,6 +91,6 @@ class Habitat extends Entity
 
     public function getImagePath()
     {
-        return _IMAGE_HABITAT_ . $this->image;
+        return _IMAGE_UPLOAD_ . $this->image;
     }
 }

@@ -65,11 +65,14 @@ class AnimalController extends Controller
                 $file = $_FILES['image'];
                 // On vérifie si une image a été uploadée
                 if ($file['error'] === 0) {
-                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file, null);
-                    $animal->setImage($file['fileName']);
+                    // On upload l'image avec Cloudinary
+                    $image = FileTools::uploadImage($file, null);
+                    // On récupère le public id de l'image
+                    $publicId = $image['public_id'];
                 } else throw new \Exception("Aucune image n'a été uploadée");
                 // On hydrate l'objet
                 $animal->hydrate($_POST);
+                $animal->setImage($publicId);
                 $animalValidator = new AnimalValidator();
                 $errors = $animalValidator->validateAnimal($animal);
                 // Si le formulaire est valide on ajoute l'animal
@@ -122,16 +125,16 @@ class AnimalController extends Controller
                 $file = $_FILES['image'];
                 // On vérifie si une image a été chargéee
                 if ($file['error'] === 0) {
-                    // On upload l'image
-                    $file = FileTools::uploadImage(_IMAGE_ANIMAL_, $file, $oldFileName);
-                    $animal->setImage($file['fileName']);
-                    // On supprime l'ancienne image
-                    if ($oldFileName) {
-                        FileTools::deleteImage(_IMAGE_ANIMAL_, $oldFileName);
-                    }
+                    // On upload l'image avec Cloudinary et on supprime l'ancienne image
+                    $image = FileTools::uploadImage($file, $oldFileName);
+                    $publicId = $image['public_id'];
                 } else throw new \Exception("Aucune image n'a été chargée");
+                // On hydrate l'objet   
                 $animal->hydrate($_POST);
-                $errors = (new AnimalValidator())->validateAnimal($animal);
+                $animal->setImage($publicId);
+                // On valide l'objet
+                $animalVadlidator = new AnimalValidator();
+                $errors = $animalVadlidator->validateAnimal($animal);
                 // Si le formulaire est valide on modifie l'animal
                 if (empty($errors)) {
                     // On modifie l'animal dans la base de données SQL
@@ -219,7 +222,7 @@ class AnimalController extends Controller
             //Si le formualire de suppression est soumis on supprime l'animal
             if (isset($_POST['deleteAnimal'])) {
                 //On supprime l'image de l'animal
-                FileTools::deleteImage(_IMAGE_ANIMAL_, $animal->getImage());
+                FileTools::deleteImage($animal->getImage());
                 // On supprime l'animal dans la base de données SQL
                 $animalRepository = new AnimalRepository();
                 $animalRepository->delete($animal);
