@@ -34,7 +34,6 @@ class AnimalMongoRepository extends MongoRepository
             'uuid' => $animal->getUuid(),
             'first_name' => $animal->getFirstname(),
             'race' => $animal->getRace(),
-            'image' => $animal->getImage(),
             'habitat_id' => $animal->getHabitatId(),
             //On initialise le compteur de vues à 0
             'viewsCounter' => 0
@@ -52,7 +51,6 @@ class AnimalMongoRepository extends MongoRepository
             'uuid' => $animal->getUuid(),
             'first_name' => $animal->getFirstname(),
             'race' => $animal->getRace(),
-            'image' => $animal->getImage(),
             'habitat_id' => $animal->getHabitatId()
         ];
         $collection->updateOne(['uuid' => $animal->getUuId()], ['$set' => $data]);
