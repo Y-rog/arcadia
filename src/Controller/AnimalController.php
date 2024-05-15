@@ -177,6 +177,13 @@ class AnimalController extends Controller
             if (!$animal) {
                 throw new \Exception("Cet animal n'existe pas");
             }
+            //On récupère l'animal dans la base de données MongoDB
+            $animalMongoRepository = new AnimalMongoRepository();
+            $data = $animalMongoRepository->findOneAnimalByUuid($_GET['uuid']);
+            //On incrémente le compteur de vues
+            $viewsCounter = $data['viewsCounter'];
+            $viewsCounter++;
+            $animalMongoRepository->updateViewsCounter($data);
             //On récupère le nom de l'habitat de l'animal
             $habitatRepository = new HabitatRepository();
             $habitat = $habitatRepository->findOneById($animal->getHabitatId());
@@ -232,24 +239,6 @@ class AnimalController extends Controller
                 header('Location: index.php?controller=habitat&action=show&id=' . $animal->getHabitatId());
                 exit();
             }
-
-            //On incrémente le compteur de vues
-            $animalMongoRepository = new AnimalMongoRepository();
-            $datas = $animalMongoRepository->findAllAnimals();
-            $data = $animalMongoRepository->findOneAnimalByUuid($_GET['uuid']);
-            $data = json_decode(json_encode($animalMongoRepository), true);
-            foreach ($datas as $key => $data) {
-                $datas[$key]['_id'] = $data['_id'];
-                $datas[$key]['uuid'] = $data['uuid'];
-                $datas[$key]['first_name'] = $data['first_name'];
-                $datas[$key]['race'] = $data['race'];
-                $datas[$key]['habitat_id'] = $data['habitat_id'];
-                $datas[$key]['viewsCounter'] = $data['viewsCounter'];
-            }
-            $viewsCounter = $data['viewsCounter'];
-            $viewsCounter++;
-            $animalMongoRepository->updateViewsCounter($data);
-
             $this->render('animal/show', [
                 'animal' => $animal,
                 'pageTitle' => 'Détail de l\'animal',
