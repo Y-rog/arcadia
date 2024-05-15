@@ -17,8 +17,7 @@
         "mailgun/mailgun-php": "^4.2",
         "nyholm/psr7": "^1.8",
         "symfony/http-client": "^7.0",
-        "cloudinary/cloudinary_php": "^2.14",
-        "phpmailer/phpmailer": "^6.9"
+        "cloudinary/cloudinary_php": "^2.14"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.1"

@@ -16,7 +16,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
             <h1><?= $pageTitle ?></h1>
         </div>
         <div class="row justify-content-center">
-            <div class="col-8 ">
+            <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
                         <label for="name">Nom de l'habitat</label>
@@ -27,7 +27,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="description">Description de l'habitat</label>
-                        <input type="text" class='form-control' id="description" name="description" value="">
+                        <textarea class='form-control' id="description" name="description" value=""></textarea>
                         <div class='invalid-feedback'>
                             La description de l'habitat est requise.
                         </div>
