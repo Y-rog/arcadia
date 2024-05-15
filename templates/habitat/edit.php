@@ -15,7 +15,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
             <h1> <?= $pageTitle ?>: <?= ucfirst($habitat->getName()) ?></h1>
         </div>
         <div class="row justify-content-center">
-            <div class="col-8 ">
+            <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
                     <div>
                         <input type="hidden" name="id" value="<?= $habitat->getId() ?>">
@@ -26,7 +26,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="description" class="form-label">Description de l'habitat</label>
-                        <input type="text" value="<?= $habitat->getDescription(); ?>" class='form-control' id="description" name="description">
+                        <textarea class='form-control' id="description" name="description"><?= $habitat->getDescription(); ?></textarea>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="image" class="form-label">Image de l'habitat</label>

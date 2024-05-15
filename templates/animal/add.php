@@ -13,7 +13,7 @@ use App\Security\Security; ?>
             <h1><?= $pageTitle ?></h1>
         </div>
         <div class="row justify-content-center">
-            <div class="col-8 ">
+            <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
                         <input type="hidden" name="uuid" value="<?= uniqid(more_entropy: true) ?>">
