@@ -1,10 +1,11 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
+use Dotenv\Dotenv;
 use Cloudinary\Cloudinary;
 
 if (file_exists(__DIR__ . '/.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->load();
     return [
         'cloudinary_cloud_name' => $_ENV['CLOUDINARY_CLOUD_NAME'],

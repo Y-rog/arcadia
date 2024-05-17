@@ -1,7 +1,15 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 
-require_once 'vendor/autoload.php';
+use Cloudinary\Cloudinary;
 
-define('_IMAGE_UPLOAD_', 'https://res.cloudinary.com/heov1rtqj/image/upload/');
+$conf = require_once 'cloudinary_config.php';
+$cloudinary = new Cloudinary([
+    'cloud' => [
+        'cloud_name' => $conf['cloudinary_cloud_name'],
+    ]
+]);
+
+define('_IMAGE_UPLOAD_', 'https://res.cloudinary.com/' . $conf['cloudinary_cloud_name'] . '/image/upload/');
 define('_ROOTPATH_', __DIR__);
 define('_TEMPLATESPATH_', _ROOTPATH_ . '/templates');

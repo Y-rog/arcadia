@@ -29,6 +29,9 @@ class DashboardController extends Controller
                     case 'admin':
                         $this->admin();
                         break;
+                    case 'animalViewList':
+                        $this->animalViewList();
+                        break;
                     case 'commentHabitatList':
                         $this->commentHabitatList();
                         break;
@@ -130,6 +133,37 @@ class DashboardController extends Controller
             'commentsHabitat' => $commentsHabitat,
             'habitat' => $habitat,
             'zoo' => $zoo
+        ]);
+    }
+
+    protected function animalViewList(): void
+    {
+        if (!Security::isAdmin()) {
+            throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
+        }
+
+        try {
+            if (!isset($_ENV['MONGODB_URI'])) {
+                throw new \Exception('La variable d\'environnement MONGODB_URI n\'est pas définie');
+            } else {
+                $client = new Client($_ENV['MONGODB_URI']);
+            }
+            $animalMongoRepository = new AnimalMongoRepository($client);
+            $animals = $animalMongoRepository->findAllAnimals();
+            $animals = json_decode(json_encode($animals), true);
+            usort($animals, function ($a, $b) {
+                return $b['viewsCounter'] <=> $a['viewsCounter'];
+            });
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+                'pageTitle' => 'Erreur'
+            ]);
+        }
+
+        $this->render('dashboard/animalViewList', [
+            'pageTitle' => 'Liste des animaux les plus vus',
+            'animals' => $animals
         ]);
     }
 

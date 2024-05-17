@@ -28,7 +28,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="description">Description du service</label>
-                        <textarea class='form-control' id="description" name="description" rows="3"></textarea>
+                        <textarea class='form-control' id="description" name="description" rows="6"></textarea>
                         <div class='invalid-feedback'>
                             La description du service est requise.
                         </div>

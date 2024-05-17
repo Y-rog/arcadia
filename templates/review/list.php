@@ -22,7 +22,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                                 <?php if ($review->getIsValidated() == 0) { ?>
                                     <input type="submit" class="btn btn-success" value="Valider" name="validateReview">
                                 <?php } else { ?>
-                                    <input type="submit" class="btn btn-outline-success" value="validé" name="unvalidateReview">
+                                    <input type="submit" class="btn btn-outline-success" value="Invalider" name="unvalidateReview">
                                 <?php } ?>
                             </form>
                             <?php if ($review->getIsValidated() == 1) { ?>

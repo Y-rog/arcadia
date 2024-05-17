@@ -94,6 +94,7 @@ if (Security::isAdmin()) { ?>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <a href="index.php?controller=dashboard&action=animalViewList" class="btn btn-outline-primary mb-3">Voir tous les animaux</a>
                 </div>
                 <div class="col">
                     <div><canvas id="animalViews"></canvas></div>
