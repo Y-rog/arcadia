@@ -50,24 +50,24 @@ class UserController extends Controller
                     $conf = require_once _ROOTPATH_ . '/mailgun_config.php';
                     $mgClient = Mailgun::create($conf['mailgun_api_key'], 'https://api.eu.mailgun.net');
                     $domain = $conf['mailgun_domain'];
-                    $message = 'Bonjour ' . $user->getFirstName() . ',' . $user->getLastName() . ', 
+                    $message = '<h1>Inscription Arcadia</h1>' .
 
+                        '<p>Bonjour ' . $user->getFirstName() . ' ' . $user->getLastName() . ',</p>' .
 
-                    Votre inscription a bien été prise en compte.
+                        '<p>Votre inscription a bien été prise en compte.</p>' .
 
-                             Votre pseudo est : ' . $user->getEmail() . '.
+                        '<p>Votre pseudo est : ' . $user->getEmail() . '.</p>' .
 
-                    Merci de vous rapprocher de la direction pour obtenir votre mot de passe.
+                        '<p>Merci de vous rapprocher de la direction pour obtenir votre mot de passe.</p>' .
 
-                        A bientôt!
+                        '<p>A bientôt!</p>' .
 
-                   José, directeur d\'Arcadia';
-
+                        '<p>José, directeur d\'Arcadia</p>';
                     $result = $mgClient->messages($message)->send($domain, array(
                         'from'    => $conf['jose_arcadia_email'],
                         'to'    =>  $user->getEmail(),
                         'subject' => 'Inscription Arcadia',
-                        'text'    => $message,
+                        'html'    => $message,
                     ));
                     if ($result) {
                         header('Location: index.php?controller=user&action=register');
