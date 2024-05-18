@@ -101,12 +101,20 @@ class ReviewRepository extends Repository
         return $query->execute();
     }
 
+    public function insertUserId(Review $review, $userId)
+    {
+        $query = $this->pdo->prepare('UPDATE review SET user_id = :user_id WHERE id = :id');
+        $query->bindValue(':user_id', $userId, $this->pdo::PARAM_INT);
+        $query->bindValue(':id', $review->getId(), $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
+
 
 
     public function delete(Review $review)
     {
         $query = $this->pdo->prepare('DELETE FROM review WHERE id = :id');
         $query->bindValue(':id', $review->getId(), $this->pdo::PARAM_INT);
-        $query->execute();
+        return $query->execute();
     }
 }

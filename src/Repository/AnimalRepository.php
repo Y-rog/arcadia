@@ -61,7 +61,7 @@ class AnimalRepository extends Repository
     public function delete(Animal $animal)
     {
         $query = $this->pdo->prepare('DELETE FROM animal WHERE uuid = :uuid');
-        $query->bindValue(':uuid', $animal->getUuid(), \PDO::PARAM_INT);
+        $query->bindValue(':uuid', $animal->getUuid(), \PDO::PARAM_STR);
         $query->execute();
     }
 }

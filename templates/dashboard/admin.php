@@ -32,6 +32,8 @@ if (Security::isAdmin()) { ?>
                             </div>
                             <div class="modal-body">
                                 <form method="POST">
+                                    <input type="hidden" name="id" value="<?= $zoo->getId(); ?>">
+                                    <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <div class=" mb-3 text-start">
                                         <label for="schedules" class="form-label">Horaires</label>
                                         <input type="text" class="form-control" id="schedules" name="schedules" value="<?= $zoo->getSchedules(); ?>">

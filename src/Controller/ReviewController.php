@@ -18,7 +18,6 @@ class ReviewController extends Controller
                         $this->isValidated();
                         $this->updateFavorite();
                         $this->list();
-                        $this->delete();
                         break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
@@ -55,6 +54,18 @@ class ReviewController extends Controller
             }
             //on récupère les articles par pages
             $reviews = $reviewRepository->showPageReviews($currentPage, $perPage);
+            //on vérifie si le bouton supprimer a été cliqué
+            if (isset($_POST['deleteReview'])) {
+                //on instancie la classe ReviewRepository
+                $reviewRepository = new ReviewRepository();
+                //on récupère l'avis par son id
+                $review = $reviewRepository->findOneById($_POST['id']);
+                //on supprime l'avis
+                $reviewRepository->delete($review);
+                //on redirige vers la page list
+                header('location: index.php?controller=review&action=list&page=' . $currentPage);
+                exit();
+            }
             //on affiche la vue
             $this->render('review/list', [
                 'reviews' => $reviews,
@@ -79,6 +90,8 @@ class ReviewController extends Controller
             $review = $reviewRepository->findOneById($_POST['id']);
             //on valide l'avis
             $reviewRepository->validateReview($review);
+            //On insert l'utilisateur qui a validé l'avis
+            $reviewRepository->insertUserId($review, $_POST['user_id']);
             //on redirige vers la page list
             $currentPage = (int) $_GET['page'];
             header("'location: index.php?controller=review&action=list&page='$currentPage");
@@ -86,6 +99,7 @@ class ReviewController extends Controller
             $reviewRepository = new ReviewRepository();
             $review = $reviewRepository->findOneById($_POST['id']);
             $reviewRepository->unvalidate($review);
+            $reviewRepository->insertUserId($review, $_POST['user_id']);
             $currentPage = (int) $_GET['page'];
             header("'location: index.php?controller=review&action=list&page='$currentPage");
         }
@@ -97,29 +111,16 @@ class ReviewController extends Controller
             $reviewRepository = new ReviewRepository();
             $review = $reviewRepository->findOneById($_POST['id']);
             $reviewRepository->favorite($review);
+            $reviewRepository->insertUserId($review, $_POST['user_id']);
             $currentPage = (int) $_GET['page'];
             header("'location: index.php?controller=review&action=list&page='$currentPage");
         } else if (isset($_POST['unfavoriteReview'])) {
             $reviewRepository = new ReviewRepository();
             $review = $reviewRepository->findOneById($_POST['id']);
             $reviewRepository->unfavorite($review);
+            $reviewRepository->insertUserId($review, $_POST['user_id']);
             $currentPage = (int) $_GET['page'];
             header("'location: index.php?controller=review&action=list&page='$currentPage");
-        }
-    }
-
-    protected function delete()
-    {
-        //on vérifie si le bouton supprimer a été cliqué
-        if (isset($_POST['deleteReview'])) {
-            //on instancie la classe ReviewRepository
-            $reviewRepository = new ReviewRepository();
-            //on récupère l'avis par son id
-            $review = $reviewRepository->findOneById($_POST['id']);
-            //on supprime l'avis
-            $reviewRepository->delete($review);
-            //on redirige vers la page list
-            header('location: index.php?controller=review&action=list');
         }
     }
 }

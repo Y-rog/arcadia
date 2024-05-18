@@ -5,7 +5,8 @@ namespace App\Entity;
 class Zoo extends Entity
 {
     protected ?int $id = null;
-    protected string $schedules = '';
+    protected ?string $schedules = '';
+    protected ?int $user_id = null;
 
     /**
      * Get the value of id
@@ -43,6 +44,26 @@ class Zoo extends Entity
     public function setSchedules($schedules): self
     {
         $this->schedules = $schedules;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of user_id
+     */
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return  self
+     */
+    public function setUserId($user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

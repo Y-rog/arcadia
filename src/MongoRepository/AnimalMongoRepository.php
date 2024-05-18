@@ -14,6 +14,18 @@ class AnimalMongoRepository extends MongoRepository
         return $document;
     }
 
+    public function findTenAnimalsWithHighestViewsCounter(): array
+    {
+        $client = $this->client;
+        $collection = $client->arcadia->animal;
+        $cursor = $collection->find([], ['sort' => ['viewsCounter' => -1], 'limit' => 10]);
+        $animals = [];
+        foreach ($cursor as $document) {
+            $animals[] = $document;
+        }
+        return $animals;
+    }
+
     public function findAllAnimals(): array
     {
         $client = $this->client;

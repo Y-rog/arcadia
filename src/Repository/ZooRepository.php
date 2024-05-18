@@ -14,6 +14,14 @@ class ZooRepository extends Repository
         return $this->pdo->lastInsertId();
     }
 
+    public function updateUser(Zoo $zoo)
+    {
+        $query = $this->pdo->prepare("UPDATE zoo SET user_id = :user_id WHERE id = 1");
+        $query->bindValue(':user_id', $zoo->getUserId(), $this->pdo::PARAM_INT);
+        $query->execute();
+        return $this->pdo->lastInsertId();
+    }
+
     public function findZoo()
     {
         $query = $this->pdo->prepare("SELECT * FROM zoo WHERE id = 1");

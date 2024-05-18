@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Db\MongoDB;
 use App\Entity\Zoo;
 use MongoDB\Client;
 use App\Entity\User;
@@ -82,26 +83,14 @@ class DashboardController extends Controller
             $user = $userRepository->findOneById($userId);
         }
         // On récupère les animaux de la base de données mongo
-        try {
-            if (!isset($_ENV['MONGODB_URI'])) {
-                throw new \Exception('La variable d\'environnement MONGODB_URI n\'est pas définie');
-            } else {
-                $client = new Client($_ENV['MONGODB_URI']);
-            }
-            $animalMongoRepository = new AnimalMongoRepository($client);
-            $animals = $animalMongoRepository->findAllAnimals();
-            // On convertit le format Bson en tableau
-            $animals = json_decode(json_encode($animals), true);
-            // On trie le tableau par nombre de vues
-            usort($animals, function ($a, $b) {
-                return $b['viewsCounter'] <=> $a['viewsCounter'];
-            });
-        } catch (\Exception $e) {
-            $this->render('errors/default', [
-                'error' => $e->getMessage(),
-                'pageTitle' => 'Erreur'
-            ]);
-        }
+        $animalMongoRepository = new AnimalMongoRepository();
+        $animals = $animalMongoRepository->findTenAnimalsWithHighestViewsCounter();
+        // On convertit le format Bson en tableau
+        $animals = json_decode(json_encode($animals), true);
+        // On trie le tableau par nombre de vues
+        usort($animals, function ($a, $b) {
+            return $b['viewsCounter'] <=> $a['viewsCounter'];
+        });
 
         // On met à jour les horaires du zoo
         try {
@@ -113,6 +102,7 @@ class DashboardController extends Controller
                 $errors = $zooValidator->validateZoo($zoo);
                 if (empty($errors)) {
                     $zooRepository->updateSchedules($zoo);
+                    $zooRepository->updateUser($zoo);
                     header('Location: index.php?controller=page&action=home');
                 } else throw new \Exception('Les horaires sont obligatoires');
             }
@@ -141,28 +131,13 @@ class DashboardController extends Controller
         if (!Security::isAdmin()) {
             throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
         }
-
-        try {
-            if (!isset($_ENV['MONGODB_URI'])) {
-                throw new \Exception('La variable d\'environnement MONGODB_URI n\'est pas définie');
-            } else {
-                $client = new Client($_ENV['MONGODB_URI']);
-            }
-            $animalMongoRepository = new AnimalMongoRepository($client);
-            $animals = $animalMongoRepository->findAllAnimals();
-            $animals = json_decode(json_encode($animals), true);
-            usort($animals, function ($a, $b) {
-                return $b['viewsCounter'] <=> $a['viewsCounter'];
-            });
-        } catch (\Exception $e) {
-            $this->render('errors/default', [
-                'error' => $e->getMessage(),
-                'pageTitle' => 'Erreur'
-            ]);
-        }
-
+        $animalMongoRepository = new AnimalMongoRepository();
+        $animals = $animalMongoRepository->findAllAnimals();
+        usort($animals, function ($a, $b) {
+            return $b['viewsCounter'] <=> $a['viewsCounter'];
+        });
         $this->render('dashboard/animalViewList', [
-            'pageTitle' => 'Liste des animaux les plus vus',
+            'pageTitle' => 'Liste des animaux par nombre de vues',
             'animals' => $animals
         ]);
     }

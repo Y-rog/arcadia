@@ -19,6 +19,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                         <div class="d-flex justify-content-between align-items-center">
                             <form method="POST" class="pb-2">
                                 <input type="hidden" name="id" value="<?= $review->getId() ?>">
+                                <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                 <?php if ($review->getIsValidated() == 0) { ?>
                                     <input type="submit" class="btn btn-success" value="Valider" name="validateReview">
                                 <?php } else { ?>
@@ -28,6 +29,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                             <?php if ($review->getIsValidated() == 1) { ?>
                                 <form method="POST" class="pb-2">
                                     <input type="hidden" name="id" value="<?= $review->getId() ?>">
+                                    <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <?php if ($review->getOnHomePage() == 0) { ?>
                                         <button type="submit" class="btn fs-3 bi bi-star" name="favoriteReview">
                                         </button>

@@ -13,6 +13,7 @@ class Review extends Entity
     protected ?DateTime $created_at = null;
     protected ?bool $is_validated = false;
     protected ?bool $on_home_page = false;
+    protected ?int $user_id = null;
 
     /**
      * Get the value of id
@@ -130,6 +131,26 @@ class Review extends Entity
     public function setOnHomePage($on_home_page): self
     {
         $this->on_home_page = $on_home_page;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of user_id
+     */
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return  self
+     */
+    public function setUserId($user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }
