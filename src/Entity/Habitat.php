@@ -89,8 +89,10 @@ class Habitat extends Entity
         return $this;
     }
 
-    public function getImagePath()
+    public function getImagePath(): string
     {
-        return _IMAGE_UPLOAD_ . $this->image;
+        $conf = require _ROOTPATH_ . '/cloudinary_config.php';
+
+        return 'https://res.cloudinary.com/' . $conf['cloudinary_cloud_name'] . '/image/upload/' . $this->getImage();
     }
 }

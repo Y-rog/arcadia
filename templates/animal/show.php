@@ -142,7 +142,7 @@ use App\Security\Security; ?>
     </div>
     <?php if (Security::isAdmin()) { ?>
         <div class="d-flex justify-content-evenly pb-3">
-            <a href="index.php?controller=animal&action=edit&id=<?= $animal->getId() ?>"><button class="btn btn-outline-secondary">Modifier</button></a>
+            <a href="index.php?controller=animal&action=edit&uuid=<?= $animal->getUuid() ?>"><button class="btn btn-outline-secondary">Modifier</button></a>
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAnimal">Supprimer</button>
         </div>
         <div class="modal fade" id="deleteAnimal" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
@@ -151,7 +151,7 @@ use App\Security\Security; ?>
                     <div class="modal-body">
                         <p>Etes-vous sûr de vouloir supprimer cet animal?</p>
                         <form method="POST" class="pb-2">
-                            <input type="hidden" name="id" value="<?= $animal->getId() ?>">
+                            <input type="hidden" name="id" value="<?= $animal->getUuid() ?>">
                             <input type="submit" class="btn btn-danger" value="Supprimer" name="deleteAnimal">
                         </form>
                     </div>

@@ -114,7 +114,7 @@ class AnimalController extends Controller
             $errors = [];
             // On récupère l'animal
             $animalRepository = new AnimalRepository();
-            $animal = $animalRepository->findOneById($_GET['id']);
+            $animal = $animalRepository->findOneByUuid($_GET['uuid']);
             // On récupère les habitats
             $habitatRepository = new HabitatRepository();
             $habitats = $habitatRepository->findAll();
@@ -139,7 +139,7 @@ class AnimalController extends Controller
                 if (empty($errors)) {
                     // On modifie l'animal dans la base de données SQL
                     $animalRepository = new AnimalRepository();
-                    $animalRepository->insert($animal);
+                    $animalRepository->update($animal);
                     // On modifie l'animal dans la base de données MongoDB
                     $animalMongoRepository = new AnimalMongoRepository();
                     $animalMongoRepository->update($animal);
@@ -177,6 +177,10 @@ class AnimalController extends Controller
             if (!$animal) {
                 throw new \Exception("Cet animal n'existe pas");
             }
+            //On récupère le nom de l'habitat de l'animal
+            $habitatRepository = new HabitatRepository();
+            $habitat = $habitatRepository->findOneById($animal->getHabitatId());
+            $habitat = $habitat->getName();
             //On récupère l'animal dans la base de données MongoDB
             $animalMongoRepository = new AnimalMongoRepository();
             $data = $animalMongoRepository->findOneAnimalByUuid($_GET['uuid']);
@@ -184,14 +188,10 @@ class AnimalController extends Controller
             $viewsCounter = $data['viewsCounter'];
             $viewsCounter++;
             $animalMongoRepository->updateViewsCounter($data);
-            //On récupère le nom de l'habitat de l'animal
-            $habitatRepository = new HabitatRepository();
-            $habitat = $habitatRepository->findOneById($animal->getHabitatId());
-            $habitat = $habitat->getName();
             // On récupère le dernier avis vétérinaire de l'animal
             $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
             $reviewVeterinary = $reviewVeterinaryRepository->findLastReviewVeterinaryByAnimal($animal->getUuid());
-            // On récupère les 10derniéres consommations de nourriture de l'animal
+            // On récupère la derniére consommations de nourriture de l'animal
             $foodConsumptionRepository = new FoodConsumptionRepository();
             $foodConsumption = $foodConsumptionRepository->findLastFoodConsumptionByAnimal($animal->getUuid());
             // Si le formulaire d'ajout d'avis vétérinaire est soumis on ajoute un avis vétérinaire

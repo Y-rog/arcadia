@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "663ef96efa66bf7ede0f3372"
+  },
+  "uuid": "663ef9320dac30.21653825",
+  "first_name": "Simba",
+  "race": "lion",
+  "habitat_id": 1,
+  "viewsCounter": 14
+},
+{
+  "_id": {
+    "$oid": "663ef9f3fa66bf7ede0f3373"
+  },
+  "uuid": "663ef9d91335a3.45312540",
+  "first_name": "Lana",
+  "race": "lion",
+  "habitat_id": 1,
+  "viewsCounter": 3
+},
+{
+  "_id": {
+    "$oid": "663efa18fa66bf7ede0f3374"
+  },
+  "uuid": "663efa013d3d74.01575144",
+  "first_name": "Claude",
+  "race": "hyène",
+  "habitat_id": 1,
+  "viewsCounter": 1
+},
+{
+  "_id": {
+    "$oid": "663efb2afa66bf7ede0f3376"
+  },
+  "uuid": "663efb194106c9.20884668",
+  "first_name": "Roger",
+  "race": "éléphant",
+  "habitat_id": 1,
+  "viewsCounter": 2
+},
+{
+  "_id": {
+    "$oid": "663efef1fa66bf7ede0f3379"
+  },
+  "uuid": "663efeda7f6038.95647728",
+  "first_name": "Léon",
+  "race": "tigre",
+  "habitat_id": 3,
+  "viewsCounter": 2
+},
+{
+  "_id": {
+    "$oid": "663f0c13fa66bf7ede0f337b"
+  },
+  "uuid": "663f0bd2875224.92416536",
+  "first_name": "Lucie",
+  "race": "flament rose",
+  "habitat_id": 2,
+  "viewsCounter": 0
+},
+{
+  "_id": {
+    "$oid": "663f0c28fa66bf7ede0f337c"
+  },
+  "uuid": "663f0c16bfbb05.97553541",
+  "first_name": "Marguerite",
+  "race": "oie sauvage",
+  "habitat_id": 2,
+  "viewsCounter": 19
+},
+{
+  "_id": {
+    "$oid": "66434a40db8a3a999a070073"
+  },
+  "uuid": "66434a30720415.28500410",
+  "first_name": "Julie",
+  "race": "girafe",
+  "habitat_id": 1,
+  "viewsCounter": 35
+}]

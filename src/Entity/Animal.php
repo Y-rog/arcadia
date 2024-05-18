@@ -6,32 +6,11 @@ use App\Repository\ReviewVeterinaryRepository;
 
 class Animal extends Entity
 {
-    protected ?int $id = null;
     protected ?string $uuid = '';
     protected ?string $first_name = '';
     protected ?string $race = '';
     protected ?string $image = '';
     protected ?int $habitatId = 0;
-
-    /**
-     * Get the value of id
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */
-    public function setId($id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     /**
      * Get the value of uuid
@@ -136,7 +115,9 @@ class Animal extends Entity
 
     public function getImagePath(): string
     {
-        return _IMAGE_UPLOAD_ . $this->getImage();
+        $conf = require _ROOTPATH_ . '/cloudinary_config.php';
+
+        return 'https://res.cloudinary.com/' . $conf['cloudinary_cloud_name'] . '/image/upload/' . $this->getImage();
     }
 
     public function getHealthStatus(): string

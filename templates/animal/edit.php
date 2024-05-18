@@ -16,7 +16,7 @@ use App\Security\Security; ?>
             <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
-                        <input type="hidden" class='form-control' id="id" name="id" value="<?= $animal->getId() ?>">
+                        <input type="hidden" class='form-control' id="uuid" name="uuid" value="<?= $animal->getUuid() ?>">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="first_name">Prénom de l'animal</label>
