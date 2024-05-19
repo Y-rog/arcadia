@@ -13347,7 +13347,7 @@ textarea.form-control-lg {
 }
 :root {
   --primary: #4CAF7A;
-  --secondary: #585B5E;
+  --secondary: #6C757D;
   --tertiary: #DEE2E6;
   --black: #292222;
   --white: #fff;
@@ -13356,11 +13356,6 @@ textarea.form-control-lg {
   --bs--primary: var(--primary);
   --bs-heading-color: var(--primary);
   --bs-link-color: var(--primary);
-  --bs-pagination-active-bg: var(--primary);
-  --bs-pagination-active-color: var(--white);
-  --bs-pagination-active-border-color: var(--primary);
-  --bs-pagination-hover-color: var(--primary);
-  --bs-pagination-focus-color: var(--primary);
 }
 
 .btn-primary {
@@ -13411,48 +13406,6 @@ textarea.form-control-lg {
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: var(--primary);
   --bs-gradient: none;
-}
-
-.nav-link {
-  color: var(--primary);
-}
-.nav-link:hover {
-  color: var(--white);
-  background: var(--primary);
-  border-radius: 5px;
-}
-
-a {
-  color: var(--primary);
-  text-decoration: none;
-  z-index: 5;
-}
-a:hover {
-  color: var(--secondary);
-}
-
-.bi-star-fill,
-.bi-star {
-  cursor: pointer;
-  -webkit-transition: color 0.3s;
-  transition: color 0.3s;
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-  color: #FFC107;
-  border: none;
-}
-.bi-star-fill:hover,
-.bi-star:hover {
-  color: #FFD700;
-}
-.bi-star-fill.active,
-.bi-star.active {
-  color: #FFD700;
-}
-.bi-star-fill.focus,
-.bi-star.focus {
-  color: #FFD700;
-  border: none;
 }
 
 html {
@@ -13535,4 +13488,46 @@ textarea {
 .bi-caret-up-fill,
 .bi-caret-down-fill {
   cursor: pointer;
+}
+
+.nav-link {
+  color: var(--primary);
+}
+.nav-link:hover {
+  color: var(--white);
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  z-index: 5;
+}
+a:hover {
+  color: var(--secondary);
+}
+
+.bi-star-fill,
+.bi-star {
+  cursor: pointer;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  color: #FFC107;
+  border: none;
+}
+.bi-star-fill:hover,
+.bi-star:hover {
+  color: #FFD700;
+}
+.bi-star-fill.active,
+.bi-star.active {
+  color: #FFD700;
+}
+.bi-star-fill.focus,
+.bi-star.focus {
+  color: #FFD700;
+  border: none;
 }/*# sourceMappingURL=index.css.map */

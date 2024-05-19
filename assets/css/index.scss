@@ -86,3 +86,47 @@ textarea {
 .bi-caret-down-fill {
     cursor: pointer;
 }
+
+.nav-link {
+    color: var(--primary);
+
+    &:hover {
+        color: var(--white);
+        background: var(--primary);
+        border-radius: 5px;
+    }
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    z-index: 5;
+
+    &:hover {
+        color: var(--secondary);
+    }
+
+}
+
+
+.bi-star-fill,
+.bi-star {
+    cursor: pointer;
+    transition: color 0.3s;
+    transform: scale(1.2);
+    color: #FFC107;
+    border: none;
+
+    &:hover {
+        color: #FFD700;
+    }
+
+    &.active {
+        color: #FFD700;
+    }
+
+    &.focus {
+        color: #FFD700;
+        border: none;
+    }
+}

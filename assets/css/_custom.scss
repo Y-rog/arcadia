@@ -3,7 +3,7 @@
 
 :root {
     --primary: #4CAF7A;
-    --secondary: #585B5E;
+    --secondary: #6C757D;
     --tertiary: #DEE2E6;
     --black: #292222;
     --white: #fff;
@@ -15,11 +15,6 @@
     --bs-heading-color: var(--primary);
 
     --bs-link-color: var(--primary);
-    --bs-pagination-active-bg: var(--primary);
-    --bs-pagination-active-color: var(--white);
-    --bs-pagination-active-border-color: var(--primary);
-    --bs-pagination-hover-color: var(--primary);
-    --bs-pagination-focus-color: var(--primary);
 
 }
 
@@ -74,49 +69,4 @@
     --bs-btn-disabled-border-color: var(--primary);
     --bs-gradient: none;
 
-}
-
-
-.nav-link {
-    color: var(--primary);
-
-    &:hover {
-        color: var(--white);
-        background: var(--primary);
-        border-radius: 5px;
-    }
-}
-
-a {
-    color: var(--primary);
-    text-decoration: none;
-    z-index: 5;
-
-    &:hover {
-        color: var(--secondary);
-    }
-
-}
-
-
-.bi-star-fill,
-.bi-star {
-    cursor: pointer;
-    transition: color 0.3s;
-    transform: scale(1.2);
-    color: #FFC107;
-    border: none;
-
-    &:hover {
-        color: #FFD700;
-    }
-
-    &.active {
-        color: #FFD700;
-    }
-
-    &.focus {
-        color: #FFD700;
-        border: none;
-    }
 }

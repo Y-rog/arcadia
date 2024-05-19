@@ -48,7 +48,7 @@ class UserController extends Controller
                     $userRepository = new UserRepository();
                     $userRepository->insert($user);
                     $conf = require_once _ROOTPATH_ . '/mailgun_config.php';
-                    $mgClient = Mailgun::create($conf['mailgun_api_key'], 'https://api.eu.mailgun.net');
+                    $mgClient = Mailgun::create($conf['mailgun_api_key'], $conf['mailgun_country']);
                     $domain = $conf['mailgun_domain'];
                     $message = '<h1>Inscription Arcadia</h1>' .
 

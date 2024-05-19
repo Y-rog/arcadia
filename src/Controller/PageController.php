@@ -86,7 +86,7 @@ class PageController extends Controller
             if (empty($errors)) {
                 //envoi du mail avec mailgun
                 $conf = require_once _ROOTPATH_ . '/mailgun_config.php';
-                $mgClient = Mailgun::create($conf['mailgun_api_key'], 'https://api.eu.mailgun.net');
+                $mgClient = Mailgun::create($conf['mailgun_api_key'], $conf['mailgun_country']);
                 $domain = $conf['mailgun_domain'];
                 $message = '<h1>Message envoyé depuis la page Contact d\'Arcadia</h1>' .
 
