@@ -16,6 +16,8 @@ employé: avec un role plus restreint modfication des services..
 
 veterinare: peut laisser des avis sur habitats et animaux.
 
+Le manuel d'utilisation est disponible dans le dossier "pdf".
+
 ## Pré-requis
 
 Ce projet nécessite php 8.2.12., composer 2.7.1, node v20.11.0 et un serveur local Apache avec [XAMPP](https://www.apachefriends.org/fr/).
