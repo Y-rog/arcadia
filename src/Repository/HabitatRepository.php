@@ -34,6 +34,8 @@ class HabitatRepository extends Repository
             foreach ($habitats as $key => $habitat) {
                 $habitatsEntities[] = Habitat::createAndHydrate($habitat);
             }
+        } else {
+            $habitatsEntities = [];
         }
         return $habitatsEntities;
     }

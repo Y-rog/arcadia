@@ -56,7 +56,14 @@ class DashboardController extends Controller
 
     protected function admin(): void
     {
-
+        //On initialise les variables
+        $animalSql = null;
+        $user = null;
+        $habitat = null;
+        $zoo = null;
+        $reviewsVeterinary = null;
+        $commentsHabitat = null;
+        $animals = null;
         // On récupère les horaires du zoo
         $zooRepository = new ZooRepository();
         $zoo = $zooRepository->findZoo();
@@ -131,6 +138,7 @@ class DashboardController extends Controller
         if (!Security::isAdmin()) {
             throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
         }
+        $animals = null;
         $animalMongoRepository = new AnimalMongoRepository();
         $animals = $animalMongoRepository->findAllAnimals();
         usort($animals, function ($a, $b) {
@@ -147,7 +155,8 @@ class DashboardController extends Controller
         if (!Security::isAdmin()) {
             throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
         }
-
+        $animalSql = null;
+        $user = null;
         $reviewVeterinaryRepository = new ReviewVeterinaryRepository();
         $reviewsVeterinary = $reviewVeterinaryRepository->findAll();
         foreach ($reviewsVeterinary as $reviewVeterinary) {
@@ -171,7 +180,8 @@ class DashboardController extends Controller
         if (!Security::isAdmin()) {
             throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page');
         }
-
+        $habitat = null;
+        $user = null;
         $commentHabitatRepository = new CommentHabitatRepository();
         $commentsHabitat = $commentHabitatRepository->findAll();
         foreach ($commentsHabitat as $commentHabitat) {
