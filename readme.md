@@ -134,15 +134,9 @@ npm  install  chart.js
 
 ```
 
-Ensuite 2 solutions:
-
-1.  Vous voulez utiliser des tables avec des données:
-    Créer votre bdd Maria DB en local et importer le fichier bdd-arcadia-maria-db.sql disponible dans le dossier "bdd".
-    Sur mongoDB Compass créer une bdd "arcadia" et une collection "animal" puis ajouter les données importer le fichier arcadia.animal.json.
-    Puis une fois l'application lancé modifier les images des habitats et animaux sur l'application (en utilisant le compte admin) pour que les images se transfère sur votre compte Cloudinary. ( Vous pouvez charger celle disponible dans le dossier "uploads").
-2.  Vous préférez démarrer un projet vierge:
-    Créer sa bdd Maria DB en local et importer le fichier bdd-aracadia-maria-db-void.sql disponible dans le dossier "bdd".
-    Créer dans MongoDB compass une bdd "arcadia" et une collection "animal".
+Créer votre bdd MariaDB en local en important le fichier "bdd-arcadia-maria-db.sql" dans le dossier bdd.
+Sur mongoDB Compass créer une bdd "arcadia" et une collection "animal" puis importer le fichier arcadia.animal.json.
+Puis une fois l'application lancé modifier les images des habitats et animaux sur l'application (en utilisant le compte admin) pour que les images se transfère sur votre compte Cloudinary. ( Vous pouvez charger celles disponibles dans le dossier "uploads").
 
 ```bash
 
