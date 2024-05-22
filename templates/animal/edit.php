@@ -16,15 +16,15 @@ use App\Security\Security; ?>
             <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3 text-start">
-                        <input type="hidden" class='form-control' id="uuid" name="uuid" value="<?= $animal->getUuid() ?>">
+                        <input type="hidden" class='form-control' id="uuid" name="uuid" value="<?= htmlspecialchars($animal->getUuid()); ?>">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="first_name">Prénom de l'animal</label>
-                        <input type="text" class='form-control' id="first_name" name="first_name" value="<?= $animal->getFirstName() ?>">
+                        <input type="text" class='form-control' id="first_name" name="first_name" value="<?= htmlspecialchars($animal->getFirstName()); ?>">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="race">Race de l'animal</label>
-                        <input type="text" class='form-control' id="race" name="race" value="<?= $animal->getRace() ?>">
+                        <input type="text" class='form-control' id="race" name="race" value="<?= htmlspecialchars($animal->getRace()); ?>">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="image">Image de l'animal</label>
@@ -35,7 +35,7 @@ use App\Security\Security; ?>
                         <select name="habitat_id" id="habitat_id" class="form-control">
                             <option value="">Choisir un habitat</option>
                             <?php foreach ($habitats as $habitat) : ?>
-                                <option value="<?= $habitat->getId() ?>"><?= $habitat->getName() ?></option>
+                                <option value="<?= $habitat->getId() ?>"><?= htmlspecialchars($habitat->getName()); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

@@ -20,10 +20,10 @@ use App\Security\Security; ?>
                         <?php if ($foodConsumptions) {
                             foreach ($foodConsumptions as $foodConsumption) { ?>
                                 <tr>
-                                    <td><?= $foodConsumption->getFoodGiven() ?></td>
-                                    <td><?= $foodConsumption->getFoodQuantity() ?></td>
-                                    <td><?= $foodConsumption->getGiveAt()->format('d-m-Y H:i') ?></td>
-                                    <td><?= $foodConsumption->getUserLastName() . ' ' .  $foodConsumption->getUserFirstName() ?></td>
+                                    <td><?= htmlspecialchars($foodConsumption->getFoodName()) ?></td>
+                                    <td><?= htmlspecialchars($foodConsumption->getFoodQuantity()) ?></td>
+                                    <td><?= htmlspecialchars($foodConsumption->getGiveAt()->format('d-m-Y H:i')) ?></td>
+                                    <td><?= htmlspecialchars($foodConsumption->getUserLastName())  . ' ' .  htmlspecialchars($foodConsumption->getUserFirstName()) ?></td>
                                 </tr>
                         <?php };
                         }; ?>

@@ -7,7 +7,7 @@
         <h1 class="bg-white rounded">Bienvenue à Arcadia</h1>
     </div>
     <div class="container schedules text-center rounded pt-2 pb-2">
-        <span class="lead"> <?= $zoo->getSchedules(); ?> </span>
+        <span class="lead"> <?= htmlspecialchars($zoo->getSchedules()) ?> </span>
     </div>
 
     <hr class="featurette-divider">
@@ -104,8 +104,8 @@
         </div>
         <?php foreach ($reviews as $review) { ?>
             <div class="border rounded pt-2 mb-3 fst-italic col-10">
-                <p><?= $review->getContent() ?></p>
-                <div class="blockquote-footer"><?= $review->getUsername(); ?>, le <?= ($review->getCreatedAt())->format('d/m/Y'); ?></div>
+                <p><?= htmlspecialchars($review->getContent()) ?></p>
+                <div class="blockquote-footer"><?= htmlspecialchars($review->getUsername()) ?>, le <?= htmlspecialchars(($review->getCreatedAt())->format('d/m/Y')) ?></div>
             </div>
         <?php } ?>
         <a href="index.php?controller=review&action=list&page=1">Voir plus</a>

@@ -45,14 +45,14 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     <tbody id="reviewVeterinaryTableBody">
                         <?php foreach ($reviewsVeterinary as $reviewVeterinary) : ?>
                             <tr>
-                                <td class="text-center"><?= $reviewVeterinary->getpassingDate()->format('d/m/Y') ?></td>
-                                <td class="text-center"><?= $reviewVeterinary->getAnimalFirstName() ?></td>
-                                <td class="text-center"><?= $reviewVeterinary->getAnimalRace(); ?></td>
-                                <td class="text-center"><?= $reviewVeterinary->getHealthStatus(); ?></td>
-                                <td class="text-center"><?= $reviewVeterinary->getFood(); ?></td>
-                                <td class="text-center"><?= $reviewVeterinary->getFoodQuantity(); ?></td>
-                                <td class="text-center"> <?= $reviewVeterinary->getUserLastName() . ' ' . $reviewVeterinary->getUserFistName() ?></td>
-                                <td class="text-center"><?= $reviewVeterinary->getHealthStatusDetails(); ?></td>
+                                <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getpassingDate()->format('d/m/Y')) ?></td>
+                                <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getAnimalFirstName()) ?></td>
+                                <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getAnimalRace()); ?></td>
+                                <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getHealthStatus()); ?></td>
+                                <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getFood()); ?></td>
+                                <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getFoodQuantity()); ?></td>
+                                <td class="text-center"> <?= htmlspecialchars($reviewVeterinary->getUserLastName()) . ' ' . htmlspecialchars($reviewVeterinary->getUserFistName()) ?></td>
+                                <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getHealthStatusDetails()); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

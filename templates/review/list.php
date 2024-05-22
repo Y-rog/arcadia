@@ -13,12 +13,12 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
             <?php if (Security::isEmployee() | Security::isAdmin()) {
                 foreach ($reviews as $review) { ?>
                     <div class="border rounded pt-2 mb-3 fst-italic col-10">
-                        <p><?= $review->getContent() ?></p>
-                        <div class="blockquote-footer"><?= $review->getUsername(); ?>, le <?= ($review->getCreatedAt())->format('d/m/Y'); ?></div>
+                        <p><?= htmlspecialchars($review->getContent()) ?></p>
+                        <div class="blockquote-footer"><?= htmlspecialchars($review->getUsername()); ?>, le <?= htmlspecialchars(($review->getCreatedAt())->format('d/m/Y')) ?></div>
                         <!-- Si l'utilisateur est connecté et est un employé ou un admin, on affiche les boutons de validation, de mise en avant et de suppression -->
                         <div class="d-flex justify-content-between align-items-center">
                             <form method="POST" class="pb-2">
-                                <input type="hidden" name="id" value="<?= $review->getId() ?>">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($review->getId()) ?>">
                                 <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                 <?php if ($review->getIsValidated() == 0) { ?>
                                     <input type="submit" class="btn btn-success" value="Valider" name="validateReview">
@@ -28,7 +28,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                             </form>
                             <?php if ($review->getIsValidated() == 1) { ?>
                                 <form method="POST" class="pb-2">
-                                    <input type="hidden" name="id" value="<?= $review->getId() ?>">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($review->getId()) ?>">
                                     <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <?php if ($review->getOnHomePage() == 0) { ?>
                                         <button type="submit" class="btn fs-3 bi bi-star" name="favoriteReview">
@@ -50,7 +50,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                                         <div class="modal-body">
                                             <p>Etes-vous sûr de vouloir supprimer cet avis?</p>
                                             <form method="POST" class="pb-2">
-                                                <input type="hidden" name="id" value="<?= $review->getId() ?>">
+                                                <input type="hidden" name="id" value="<?= htmlspecialchars($review->getId()) ?>">
                                                 <input type="submit" class="btn btn-danger" value="Supprimer" name="deleteReview">
                                             </form>
                                         </div>
@@ -64,8 +64,8 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
             } else {
                 foreach ($reviews as $review) { ?>
                     <div class="border rounded pt-2 mb-3 fst-italic col-10">
-                        <p><?= $review->getContent() ?></p>
-                        <div class="blockquote-footer"><?= $review->getUsername(); ?>, le <?= ($review->getCreatedAt())->format('d/m/Y'); ?></div>
+                        <p><?= htmlspecialchars($review->getContent()) ?></p>
+                        <div class="blockquote-footer"><?= htmlspecialchars($review->getUsername()) ?>, le <?= htmlspecialchars(($review->getCreatedAt())->format('d/m/Y')) ?></div>
                     </div>
             <?php }
             }

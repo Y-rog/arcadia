@@ -32,11 +32,11 @@ if (Security::isAdmin()) { ?>
                             </div>
                             <div class="modal-body">
                                 <form method="POST">
-                                    <input type="hidden" name="id" value="<?= $zoo->getId(); ?>">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($zoo->getId()); ?>">
                                     <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <div class=" mb-3 text-start">
                                         <label for="schedules" class="form-label">Horaires</label>
-                                        <input type="text" class="form-control" id="schedules" name="schedules" value="<?= $zoo->getSchedules(); ?>">
+                                        <input type="text" class="form-control" id="schedules" name="schedules" value="<?= htmlspecialchars($zoo->getSchedules()) ?>">
                                     </div>
                                     <div class="row d-flex justify-content-center pt-2">
                                         <input type="submit" name="editSchedules" id="editSchedules" class="btn btn-success" value="Modifier" disabled>
@@ -85,11 +85,11 @@ if (Security::isAdmin()) { ?>
                         </thead>
                         <tbody>
                             <?php foreach ($animals as $key => $animal) : ?>
-                                <a href="index.php?controller=animal&action=show&uuid=<?= $animals[$key]['uuid']  ?>">
+                                <a href="index.php?controller=animal&action=show&uuid=<?= htmlspecialchars($animals[$key]['uuid'])  ?>">
                                     <tr>
-                                        <td class="text-center"><?= $animals[$key]['first_name']; ?> </td>
-                                        <td class="text-center"><?= $animals[$key]['race'] ?></td>
-                                        <td class="text-center"><?= $animals[$key]['viewsCounter']; ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($animals[$key]['first_name']) ?> </td>
+                                        <td class="text-center"><?= htmlspecialchars($animals[$key]['race']) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($animals[$key]['viewsCounter']) ?></td>
 
                                     </tr>
                                 </a>
@@ -119,11 +119,11 @@ if (Security::isAdmin()) { ?>
                         <tbody>
                             <?php foreach ($commentsHabitat as $commentHabitat) : ?>
                                 <tr>
-                                    <td class="text-center"><?= $commentHabitat->getPassingDate()->format('d/m/Y'); ?></td>
-                                    <td class="text-center"><?= $commentHabitat->getHabitatName() ?></td>
-                                    <td class="text-center"><?= $commentHabitat->getContent(); ?></td>
-                                    <td class="text-center"> <?= $commentHabitat->getUserLastName() . ' ' .
-                                                                    $commentHabitat->getUserFistName() ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($commentHabitat->getPassingDate()->format('d/m/Y')) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($commentHabitat->getHabitatName()) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($commentHabitat->getContent()) ?></td>
+                                    <td class="text-center"> <?= htmlspecialchars($commentHabitat->getUserLastName()) . ' ' .
+                                                                    htmlspecialchars($commentHabitat->getUserFistName()) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -152,14 +152,14 @@ if (Security::isAdmin()) { ?>
                         <tbody id="reviewVeterinaryTableBody">
                             <?php foreach ($reviewsVeterinary as $reviewVeterinary) : ?>
                                 <tr>
-                                    <td class="text-center"><?= $reviewVeterinary->getPassingDate()->format('d/m/Y'); ?></td>
-                                    <td class="text-center"><?= $reviewVeterinary->getAnimalFirstName() ?></td>
-                                    <td class="text-center"><?= $reviewVeterinary->getAnimalRace(); ?></td>
-                                    <td class="text-center"><?= $reviewVeterinary->getHealthStatus(); ?></td>
-                                    <td class="text-center"><?= $reviewVeterinary->getFood(); ?></td>
-                                    <td class="text-center"><?= $reviewVeterinary->getFoodQuantity(); ?></td>
-                                    <td class="text-center"> <?= $reviewVeterinary->getUserLastName() . ' ' . $reviewVeterinary->getUserFistName() ?></td>
-                                    <td class="text-center"><?= $reviewVeterinary->getHealthStatusDetails(); ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getPassingDate()->format('d/m/Y')) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getAnimalFirstName()) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getAnimalRace()) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getHealthStatus()) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getFood()) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getFoodQuantity()) ?></td>
+                                    <td class="text-center"> <?= htmlspecialchars($reviewVeterinary->getUserLastName()) . ' ' . htmlspecialchars($reviewVeterinary->getUserFistName()) ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($reviewVeterinary->getHealthStatusDetails()) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

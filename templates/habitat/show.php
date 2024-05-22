@@ -8,10 +8,10 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
     <script src="/assets/js/habitat/commentHabitat.js" defer></script>
 <?php } ?>
 <main class="container">
-    <h1 class="text-center"><?= ucfirst($habitat->getName()) ?></h1>
+    <h1 class="text-center"><?= htmlspecialchars(ucfirst($habitat->getName())) ?></h1>
     <div class="row">
-        <div><img class="rounded" width="100%" height="auto" src='<?= $habitat->getImagePath() ?>' alt="<?= $habitat->getName() ?>"></div>
-        <p><?= $habitat->getDescription() ?></p>
+        <div><img class="rounded" width="100%" height="auto" src='<?= htmlspecialchars($habitat->getImagePath()) ?>' alt="<?= htmlspecialchars($habitat->getName()) ?>"></div>
+        <p><?= htmlspecialchars($habitat->getDescription()) ?></p>
     </div>
     <?php if (Security::isVeterinary()) { ?>
         <div class="d-flex justify-content-center mb-3">
@@ -35,9 +35,9 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                                     </div>
                                     <div class="mb-3 text-start">
                                         <label for="passing_date" class="form-label">Date de passage</label>
-                                        <input type="date" class="form-control" id="passing_date" name="passing_date" value="<?= date('Y-m-d') ?>">
+                                        <input type="date" class="form-control" id="passing_date" name="passing_date" value="<?= htmlspecialchars(date('Y-m-d')) ?>">
                                     </div>
-                                    <input type="hidden" class="form-control" id="habitat_id" name="habitat_id" value="<?= $habitat->getId(); ?>">
+                                    <input type="hidden" class="form-control" id="habitat_id" name="habitat_id" value="<?= htmlspecialchars($habitat->getId()) ?>">
                                     <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <div class="row d-flex justify-content-center pt-2">
                                         <input type="submit" name="saveCommentHabitat" id="saveCommentHabitat" class="btn btn-success" value="Ajouter" disabled>
@@ -52,7 +52,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
     <?php } ?>
     <?php if (Security::isAdmin()) { ?>
         <div class="d-flex justify-content-evenly pb-3">
-            <a href="index.php?controller=habitat&action=edit&id=<?= $habitat->getId() ?>"><button class="btn btn-outline-secondary">Modifier</button></a>
+            <a href="index.php?controller=habitat&action=edit&id=<?= htmlspecialchars($habitat->getId()) ?>"><button class="btn btn-outline-secondary">Modifier</button></a>
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteHabitat">Supprimer</button>
         </div>
         <div class="modal fade" id="deleteHabitat" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
@@ -61,7 +61,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     <div class="modal-body">
                         <p>Etes-vous sûr de vouloir supprimer cet habitat?</p>
                         <form method="POST" class="pb-2">
-                            <input type="hidden" name="id" value="<?= $habitat->getId() ?>">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($habitat->getId()) ?>">
                             <input type="submit" class="btn btn-danger" value="Supprimer" name="deleteHabitat">
                         </form>
                     </div>
@@ -83,15 +83,15 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
     <div class="row justify-content-center">
         <?php foreach ($animals as $animal) : ?>
             <div class="col d-flex justify-content-center p-3">
-                <a href="index.php?controller=animal&action=show&uuid=<?= $animal->getUuid() ?>">
+                <a href="index.php?controller=animal&action=show&uuid=<?= htmlspecialchars($animal->getUuid()) ?>">
                     <div class="card card-animal-list">
-                        <img class="rounded-top" src=<?= $animal->getImagePath() ?> alt="<?= $animal->getFirstName() ?>, <?= $animal->getRace() ?> ">
+                        <img class="rounded-top" src=<?= htmlspecialchars($animal->getImagePath()) ?> alt="<?= htmlspecialchars($animal->getFirstName()) ?>, <?= htmlspecialchars($animal->getRace()) ?> ">
                         <ul class="list-group list-group">
-                            <li class="list-group-item" hidden>Id: <?= $animal->getUuid() ?></li>
-                            <li class="list-group-item">Prénom: <?= ucwords($animal->getFirstname()) ?></li>
-                            <li class="list-group-item">Race: <?= $animal->getRace() ?></li>
-                            <li class="list-group-item">Habitat: <?= $habitat->getName() ?></li>
-                            <li class="healthStatus list-group-item">Etat: <?= $animal->getHealthStatus() ?></li>
+                            <li class="list-group-item" hidden>Id: <?= htmlspecialchars($animal->getUuid()) ?></li>
+                            <li class="list-group-item">Prénom: <?= htmlspecialchars(ucwords($animal->getFirstname())) ?></li>
+                            <li class="list-group-item">Race: <?= htmlspecialchars($animal->getRace()) ?></li>
+                            <li class="list-group-item">Habitat: <?= htmlspecialchars($habitat->getName()) ?></li>
+                            <li class="healthStatus list-group-item">Etat: <?= htmlspecialchars($animal->getHealthStatus()) ?></li>
                         </ul>
                     </div>
                 </a>

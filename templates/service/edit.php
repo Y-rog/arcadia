@@ -18,18 +18,18 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
         <div class="row justify-content-center">
             <div class="col-8 ">
                 <form method="POST">
-                    <input type="hidden" name="id" value="<?= $service->getId() ?>">
-                    <input type="hidden" name="user_id" value="<?= $service->getUserId() ?>">
+                    <input type="hidden" name="id" value="<?= htmlspecialchars($service->getId()) ?>">
+                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($service->getUserId()) ?>">
                     <div class=" mb-3 text-start">
                         <label for="title">Titre du service</label>
-                        <input type="text" class='form-control' id="title" name="title" value="<?= $service->getTitle() ?>">
+                        <input type="text" class='form-control' id="title" name="title" value="<?= htmlspecialchars($service->getTitle()) ?>">
                         <div class='invalid-feedback'>
                             Le titre du service est requis.
                         </div>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="description">Description du service</label>
-                        <textarea class='form-control' id="description" name="description" rows="6"><?= $service->getDescription() ?></textarea>
+                        <textarea class='form-control' id="description" name="description" rows="6"><?= htmlspecialchars($service->getDescription()) ?></textarea>
                         <div class='invalid-feedback'>
                             La description du service est requise.
                         </div>

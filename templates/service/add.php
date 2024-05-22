@@ -15,7 +15,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
         <div class="text-center pb-3">
             <h1><?= $pageTitle ?></h1>
         </div>
-        <input type="hidden" name="user_id" value="<?= $service->getUserId() ?>">
+        <input type="hidden" name="user_id" value="<?= htmlspecialchars($service->getUserId()) ?>">
         <div class="row justify-content-center">
             <div class="col-8 ">
                 <form method="POST">

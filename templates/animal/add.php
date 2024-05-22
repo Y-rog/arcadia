@@ -35,7 +35,7 @@ use App\Security\Security; ?>
                         <select name="habitat_id" id="habitat_id" class="form-control">
                             <option value="">Choisir un habitat</option>
                             <?php foreach ($habitats as $habitat) : ?>
-                                <option value="<?= $habitat->getId() ?>"><?= $habitat->getName() ?></option>
+                                <option value="<?= htmlspecialchars($habitat->getId()); ?>"><?= htmlspecialchars($habitat->getName()); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

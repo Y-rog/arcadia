@@ -15,11 +15,11 @@
             </thead>
             <tbody>
                 <?php foreach ($animals as $key => $animal) : ?>
-                    <a href="index.php?controller=animal&action=show&uuid=<?= $animals[$key]['uuid']  ?>">
+                    <a href="index.php?controller=animal&action=show&uuid=<?= htmlspecialchars($animals[$key]['uuid'])  ?>">
                         <tr>
-                            <td class="text-center"><?= $animals[$key]['first_name']; ?> </td>
-                            <td class="text-center"><?= $animals[$key]['race'] ?></td>
-                            <td class="text-center"><?= $animals[$key]['viewsCounter']; ?></td>
+                            <td class="text-center"><?= htmlspecialchars($animals[$key]['first_name']) ?> </td>
+                            <td class="text-center"><?= htmlspecialchars($animals[$key]['race']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($animals[$key]['viewsCounter']) ?></td>
 
                         </tr>
                     </a>
