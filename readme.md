@@ -7,6 +7,8 @@ Cette application a été conçue pour un zoo.
 Cette apllication présente le zoo, permet aux visisteur de laisser des avis et aux utilisateurs de créer et modifier les différents habitats, animaux et services du zoo.
 
 Ce projet a été deployé sur Heroku https://arcadia-app-2be7264ec06b.herokuapp.com/
+https://www.arcadia.gregoryfulgueiras.com/
+https://arcadia.gregoryfulgueiras.com/
 
 Trois types d'utilisateurs sont définis:
 
