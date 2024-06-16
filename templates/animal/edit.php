@@ -15,6 +15,7 @@ use App\Security\Security; ?>
         <div class="row justify-content-center">
             <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                     <div class="mb-3 text-start">
                         <input type="hidden" class='form-control' id="uuid" name="uuid" value="<?= htmlspecialchars($animal->getUuid()); ?>">
                     </div>

@@ -59,6 +59,7 @@ use App\Security\Security; ?>
                         </div>
                         <div class="modal-body">
                             <form method="POST">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                                 <div class=" mb-3 text-start">
                                     <label for="health_status" class="form-label">Etat</label>
                                     <select class="form-select" id="health_status" name="health_status">
@@ -112,6 +113,7 @@ use App\Security\Security; ?>
                         </div>
                         <div class="modal-body">
                             <form method="POST">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                                 <div class="mb-3 text-start">
                                     <label for="food_given" class="form-label">Nourriture</label>
                                     <input type="text" class="form-control" id="food_given" name="food_given">
@@ -151,6 +153,7 @@ use App\Security\Security; ?>
                     <div class="modal-body">
                         <p>Etes-vous sûr de vouloir supprimer cet animal?</p>
                         <form method="POST" class="pb-2">
+                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($animal->getUuid()) ?>">
                             <input type="submit" class="btn btn-danger" value="Supprimer" name="deleteAnimal">
                         </form>
