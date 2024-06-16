@@ -19,6 +19,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
         <div class="row justify-content-center">
             <div class="col-8 ">
                 <form method="POST">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                     <div class=" mb-3 text-start">
                         <label for="title">Titre du service</label>
                         <input type="text" class='form-control' id="title" name="title" value="">

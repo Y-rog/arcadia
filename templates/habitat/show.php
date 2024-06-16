@@ -28,6 +28,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                         </div>
                         <div class="modal-body">
                             <form method="POST">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                                 <div class=" mb-3">
                                     <div class="mb-3 text-start">
                                         <label for="content" class="form-label">Commentaire</label>
@@ -61,6 +62,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     <div class="modal-body">
                         <p>Etes-vous sûr de vouloir supprimer cet habitat?</p>
                         <form method="POST" class="pb-2">
+                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($habitat->getId()) ?>">
                             <input type="submit" class="btn btn-danger" value="Supprimer" name="deleteHabitat">
                         </form>

@@ -44,8 +44,11 @@ class AuthController extends Controller
             $user = $userRepository->findOneByEmail($_POST['email']);
 
             if ($user && password_verify($_POST['password'], $user->getPassword())) {
-                // Regénère l'id session pour éviter la fixation de session
+                //Regénère l'identifiant de session pour éviter les attaques de fixation de session
                 session_regenerate_id(true);
+                //Génère un token pour éviter les attaques CSRF
+                $_SESSION['token'] = bin2hex(random_bytes(32));
+                $_SESSION['token-expire'] = time() + 3600;
                 // Stocke les données de l'utilisateur dans la session
                 $_SESSION['user'] = [
                     'id' => $user->getId(),
@@ -72,6 +75,7 @@ class AuthController extends Controller
         session_destroy();
         //Supprime les données du tableau $_SESSION
         unset($_SESSION);
+        //Redirige vers la page de connexion
         header('location: index.php?controller=auth&action=login');
     }
 }

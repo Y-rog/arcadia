@@ -18,6 +18,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                         <!-- Si l'utilisateur est connecté et est un employé ou un admin, on affiche les boutons de validation, de mise en avant et de suppression -->
                         <div class="d-flex justify-content-between align-items-center">
                             <form method="POST" class="pb-2">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                                 <input type="hidden" name="id" value="<?= htmlspecialchars($review->getId()) ?>">
                                 <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                 <?php if ($review->getIsValidated() == 0) { ?>
@@ -28,6 +29,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                             </form>
                             <?php if ($review->getIsValidated() == 1) { ?>
                                 <form method="POST" class="pb-2">
+                                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($review->getId()) ?>">
                                     <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <?php if ($review->getOnHomePage() == 0) { ?>
@@ -50,6 +52,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                                         <div class="modal-body">
                                             <p>Etes-vous sûr de vouloir supprimer cet avis?</p>
                                             <form method="POST" class="pb-2">
+                                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                                                 <input type="hidden" name="id" value="<?= htmlspecialchars($review->getId()) ?>">
                                                 <input type="submit" class="btn btn-danger" value="Supprimer" name="deleteReview">
                                             </form>

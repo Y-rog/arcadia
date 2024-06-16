@@ -62,6 +62,13 @@ class AnimalController extends Controller
             $habitats = $habitatRepository->findAll();
             // Si le formulaire est soumis on ajoute l'animal
             if (isset($_POST['saveAnimal'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 $file = $_FILES['image'];
                 // On vérifie si une image a été uploadée
                 if ($file['error'] === 0) {
@@ -122,6 +129,13 @@ class AnimalController extends Controller
             $oldFileName = $animal->getImage();
             // Si le formulaire est soumis on modifie l'animal
             if (isset($_POST['saveAnimal'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 $file = $_FILES['image'];
                 // On vérifie si une image a été chargéee
                 if ($file['error'] === 0) {
@@ -196,6 +210,13 @@ class AnimalController extends Controller
             $foodConsumption = $foodConsumptionRepository->findLastFoodConsumptionByAnimal($animal->getUuid());
             // Si le formulaire d'ajout d'avis vétérinaire est soumis on ajoute un avis vétérinaire
             if (isset($_POST['addReviewVeterinary'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 // On hydrate l'objet
                 $reviewVeterinary = new ReviewVeterinary();
                 $reviewVeterinary->hydrate($_POST);
@@ -213,6 +234,13 @@ class AnimalController extends Controller
             }
             // Si le formulaire de consommation de nourriture est soumis on ajoute une consommation de nourriture
             if (isset($_POST['saveFoodConsumption'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 $foodConsumption = new FoodConsumption();
                 $foodConsumption->hydrate($_POST);
                 $foodConsumptionValidator = new FoodConsumptionValidator();
@@ -228,6 +256,13 @@ class AnimalController extends Controller
             }
             //Si le formualire de suppression est soumis on supprime l'animal
             if (isset($_POST['deleteAnimal'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 //On supprime l'image de l'animal
                 FileTools::deleteImage($animal->getImage());
                 // On supprime l'animal dans la base de données SQL

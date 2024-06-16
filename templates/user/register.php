@@ -15,6 +15,7 @@ if (Security::isAdmin()) {  ?>
             </div>
             <div class="col-8">
                 <form method="POST">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                     <div class="mb-3">
                         <label for="last_name" class="form-label">Nom</label>
                         <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">

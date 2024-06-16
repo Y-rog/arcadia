@@ -32,6 +32,7 @@ if (Security::isAdmin()) { ?>
                             </div>
                             <div class="modal-body">
                                 <form method="POST">
+                                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($zoo->getId()); ?>">
                                     <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
                                     <div class=" mb-3 text-start">

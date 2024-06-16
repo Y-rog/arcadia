@@ -56,6 +56,13 @@ class ReviewController extends Controller
             $reviews = $reviewRepository->showPageReviews($currentPage, $perPage);
             //on vérifie si le bouton supprimer a été cliqué
             if (isset($_POST['deleteReview'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 //on instancie la classe ReviewRepository
                 $reviewRepository = new ReviewRepository();
                 //on récupère l'avis par son id
@@ -84,6 +91,13 @@ class ReviewController extends Controller
     {
         //on vérifie si le bouton valider a été cliqué
         if (isset($_POST['validateReview'])) {
+            // On vérifie si le jeton de session est valide
+            if ($_SESSION['token'] !== $_POST['token']) {
+                throw new \Exception("Jeton de session invalide");
+            }
+            if ($_SESSION['token-expire'] < time()) {
+                throw new \Exception("Le jeton de session a expiré");
+            }
             //on instancie la classe ReviewRepository
             $reviewRepository = new ReviewRepository();
             //on récupère l'avis par son id
@@ -96,6 +110,13 @@ class ReviewController extends Controller
             $currentPage = (int) $_GET['page'];
             header("'location: index.php?controller=review&action=list&page='$currentPage");
         } else if (isset($_POST['unvalidateReview'])) {
+            // On vérifie si le jeton de session est valide
+            if ($_SESSION['token'] !== $_POST['token']) {
+                throw new \Exception("Jeton de session invalide");
+            }
+            if ($_SESSION['token-expire'] < time()) {
+                throw new \Exception("Le jeton de session a expiré");
+            }
             $reviewRepository = new ReviewRepository();
             $review = $reviewRepository->findOneById($_POST['id']);
             $reviewRepository->unvalidate($review);
@@ -108,6 +129,13 @@ class ReviewController extends Controller
     protected function updateFavorite()
     {
         if (isset($_POST['favoriteReview'])) {
+            // On vérifie si le jeton de session est valide
+            if ($_SESSION['token'] !== $_POST['token']) {
+                throw new \Exception("Jeton de session invalide");
+            }
+            if ($_SESSION['token-expire'] < time()) {
+                throw new \Exception("Le jeton de session a expiré");
+            }
             $reviewRepository = new ReviewRepository();
             $review = $reviewRepository->findOneById($_POST['id']);
             $reviewRepository->favorite($review);
@@ -115,6 +143,13 @@ class ReviewController extends Controller
             $currentPage = (int) $_GET['page'];
             header("'location: index.php?controller=review&action=list&page='$currentPage");
         } else if (isset($_POST['unfavoriteReview'])) {
+            // On vérifie si le jeton de session est valide
+            if ($_SESSION['token'] !== $_POST['token']) {
+                throw new \Exception("Jeton de session invalide");
+            }
+            if ($_SESSION['token-expire'] < time()) {
+                throw new \Exception("Le jeton de session a expiré");
+            }
             $reviewRepository = new ReviewRepository();
             $review = $reviewRepository->findOneById($_POST['id']);
             $reviewRepository->unfavorite($review);

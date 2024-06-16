@@ -41,6 +41,13 @@ class UserController extends Controller
             $user = new User();
 
             if (isset($_POST['saveUser'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 $user->hydrate($_POST);
                 $userValidator = new UserValidator();
                 $errors = $userValidator->validateUser($user);

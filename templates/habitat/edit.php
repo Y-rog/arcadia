@@ -17,6 +17,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
         <div class="row justify-content-center">
             <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                     <div>
                         <input type="hidden" name="id" value="<?= htmlspecialchars($habitat->getId()) ?>">
                     </div>

@@ -48,6 +48,13 @@ class ServiceController extends Controller
         //on récupère les services
         $services = $serviceRepository->findAll();
         if (isset($_POST['deleteService'])) {
+            // On vérifie si le jeton de session est valide
+            if ($_SESSION['token'] !== $_POST['token']) {
+                throw new \Exception("Jeton de session invalide");
+            }
+            if ($_SESSION['token-expire'] < time()) {
+                throw new \Exception("Le jeton de session a expiré");
+            }
             //on instancie la classe Service
             $service = new Service();
             //on hydrate l'objet
@@ -82,6 +89,13 @@ class ServiceController extends Controller
                 $service->setUserId(Security::getCurrentUserId());
                 //on vérifie si le formulaire a été soumis
                 if (isset($_POST['saveService'])) {
+                    // On vérifie si le jeton de session est valide
+                    if ($_SESSION['token'] !== $_POST['token']) {
+                        throw new \Exception("Jeton de session invalide");
+                    }
+                    if ($_SESSION['token-expire'] < time()) {
+                        throw new \Exception("Le jeton de session a expiré");
+                    }
                     //on instancie la classe Service
                     $service = new Service();
                     //on hydrate l'objet
@@ -140,6 +154,13 @@ class ServiceController extends Controller
                 $service->setUserId(Security::getCurrentUserId());
                 //on vérifie si le formulaire a été soumis
                 if (isset($_POST['saveService'])) {
+                    // On vérifie si le jeton de session est valide
+                    if ($_SESSION['token'] !== $_POST['token']) {
+                        throw new \Exception("Jeton de session invalide");
+                    }
+                    if ($_SESSION['token-expire'] < time()) {
+                        throw new \Exception("Le jeton de session a expiré");
+                    }
                     //on hydrate l'objet
                     $service->hydrate($_POST);
                     //on instancie la classe ServiceValidator

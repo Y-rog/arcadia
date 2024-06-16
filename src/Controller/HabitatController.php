@@ -75,6 +75,13 @@ class HabitatController extends Controller
                 throw new \Exception("Cet habitat n'existe pas");
             }
             if (isset($_POST['saveCommentHabitat'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 $commentHabitat = new CommentHabitat();
                 $commentHabitat->hydrate($_POST);
                 $commentHabitatValidator = new CommentHabitatValidator();
@@ -86,6 +93,13 @@ class HabitatController extends Controller
                 } else throw new \Exception("Le formulaire contient des erreurs");
             }
             if (isset($_POST['deleteHabitat'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 //On supprime l'image de l'habitat
                 FileTools::deleteImage($habitat->getImage());
                 //On supprime l'habitat
@@ -134,6 +148,13 @@ class HabitatController extends Controller
             $habitat = new Habitat();
             //Si le formulaire est soumis on ajoute un habitat
             if (isset($_POST['saveHabitat'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 // On vérifie si une image a été uploadée
                 $file = $_FILES['image'];
                 if ($file['error'] === 0) {
@@ -184,6 +205,13 @@ class HabitatController extends Controller
             $habitat = $habitatRepository->findOneById($_GET['id']);
             //Si le formulaire est soumis on modifie l'habitat
             if (isset($_POST['saveHabitat'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 $file = $_FILES['image'];
                 // On vérifie si une image a été chargéee
                 if ($file['error'] === 0) {

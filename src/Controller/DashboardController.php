@@ -102,6 +102,13 @@ class DashboardController extends Controller
         // On met à jour les horaires du zoo
         try {
             if (isset($_POST['editSchedules'])) {
+                // On vérifie si le jeton de session est valide
+                if ($_SESSION['token'] !== $_POST['token']) {
+                    throw new \Exception("Jeton de session invalide");
+                }
+                if ($_SESSION['token-expire'] < time()) {
+                    throw new \Exception("Le jeton de session a expiré");
+                }
                 $zoo = new Zoo();
                 $zoo->hydrate($_POST);
                 $zooRepository = new ZooRepository();
