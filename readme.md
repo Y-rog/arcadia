@@ -140,21 +140,7 @@ Créer votre bdd MariaDB en local en important le fichier "bdd-arcadia-maria-db.
 Sur mongoDB Compass créer une bdd "arcadia" et une collection "animal" puis importer le fichier arcadia.animal.json.
 Puis une fois l'application lancé modifier les images des habitats et animaux sur l'application (en utilisant le compte admin) pour que les images se transfère sur votre compte Cloudinary. ( Vous pouvez charger celles disponibles dans le dossier "uploads").
 
-```bash
-
-php  -S  localhost:8000
-
-```
-
-Lancer le serveur
-
-```bash
-
-php  -S  localhost:8000
-
-```
-
-Lancer le serveur
+Lancer le serveur local
 
 ```bash
 
