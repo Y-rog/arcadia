@@ -10,7 +10,7 @@ use App\Security\Security; ?>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope=" col">Nourriture</th>
+                            <th scope="col">Nourriture</th>
                             <th scope="col">Quantité</th>
                             <th scope="col">Date de distribution</th>
                             <th scope="col">Distribué par</th>
@@ -20,12 +20,12 @@ use App\Security\Security; ?>
                         <?php if ($foodConsumptions) {
                             foreach ($foodConsumptions as $foodConsumption) { ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($foodConsumption->getFoodName()) ?></td>
+                                    <td><?= htmlspecialchars($foodConsumption->getFoodGiven()) ?></td>
                                     <td><?= htmlspecialchars($foodConsumption->getFoodQuantity()) ?></td>
                                     <td><?= htmlspecialchars($foodConsumption->getGiveAt()->format('d-m-Y H:i')) ?></td>
                                     <td><?= htmlspecialchars($foodConsumption->getUserLastName())  . ' ' .  htmlspecialchars($foodConsumption->getUserFirstName()) ?></td>
                                 </tr>
-                        <?php };
+                        <?php }
                         }; ?>
                     </tbody>
                 </table>
