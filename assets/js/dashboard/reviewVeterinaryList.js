@@ -74,6 +74,17 @@ ${rows.join('')}
 
 /* les fonctions de filtre*/
 
+let firstDate = inputFirstDate.value;
+let lastDate = inputFirstDate.value;
+
+//Fonction pour convertir une chaine de caractères 'dd/mm/yyyy' en objet Date au format 'yyyy-mm-dd'
+function convertDate(date) {
+    let dateArray = date.split('/');
+    let newDate = new Date(dateArray[2], dateArray[1] - 1, dateArray[0]);
+    return newDate;
+}
+
+
 //Fonction pour filtrer les données par prénom de l'animal
 function filterFirstName() {
     let data = getData();
@@ -85,19 +96,39 @@ function filterFirstName() {
 //Fonction pour filtrer les données par date de l'avis
 function filterDate() {
     let data = getData();
-    let firstDate = new Date(inputFirstDate.value);
-    let lastDate = new Date(inputLastDate.value);
+    //On converti les dates au format ("dd/mm/yyyy") au format (yyyy-mm-dd) pour pouvoir les comparer
+    data.forEach((item) => {
+        let date = item.date.split('/');
+        item.date = `${date[2]}-${date[1]}-${date[0]}`;
+    });
+    firstDate = convertDate(inputFirstDate.value);
+    lastDate = convertDate(inputLastDate.value);
     data = data.filter((item) => new Date(item.date) >= firstDate && new Date(item.date) <= lastDate);
+    //On reconverti les dates au format (yyyy-mm-dd) au format ("dd/mm/yyyy") pour les afficher
+    data.forEach((item) => {
+        let date = item.date.split('-');
+        item.date = `${date[2]}/${date[1]}/${date[0]}`;
+    });
     return data;
 }
 
 //Fonction pour filtrer les données par prénom de l'animal et date de l'avis
 function filterFirstNameAndDate() {
     let data = getData();
+    //On converti les dates au format ("dd/mm/yyyy") au format (yyyy-mm-dd) pour pouvoir les comparer
+    data.forEach((item) => {
+        let date = item.date.split('/');
+        item.date = `${date[2]}-${date[1]}-${date[0]}`;
+    });
+    firstDate = convertDate(inputFirstDate.value);
+    lastDate = convertDate(inputLastDate.value);
     let filter = inputAnimalFirstName.value.toUpperCase();
-    let firstDate = new Date(inputFirstDate.value);
-    let lastDate = new Date(inputLastDate.value);
     data = data.filter((item) => item.firstName.toUpperCase().includes(filter) && new Date(item.date) >= firstDate && new Date(item.date) <= lastDate);
+    //On reconverti les dates au format (yyyy-mm-dd) au format ("dd/mm/yyyy") pour les afficher
+    data.forEach((item) => {
+        let date = item.date.split('-');
+        item.date = `${date[2]}/${date[1]}/${date[0]}`;
+    });
     return data;
 }
 
