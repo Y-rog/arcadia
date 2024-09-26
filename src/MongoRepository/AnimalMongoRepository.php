@@ -18,9 +18,9 @@ class AnimalMongoRepository extends MongoRepository
     {
         $client = $this->client;
         $collection = $client->arcadia->animal;
-        $cursor = $collection->find([], ['sort' => ['viewsCounter' => -1], 'limit' => 10]);
+        $documents = $collection->find([], ['sort' => ['viewsCounter' => -1], 'limit' => 10]);
         $animals = [];
-        foreach ($cursor as $document) {
+        foreach ($documents as $document) {
             $animals[] = $document;
         }
         return $animals;
@@ -30,9 +30,9 @@ class AnimalMongoRepository extends MongoRepository
     {
         $client = $this->client;
         $collection = $client->arcadia->animal;
-        $cursor = $collection->find();
+        $documents = $collection->find();
         $animals = [];
-        foreach ($cursor as $document) {
+        foreach ($documents as $document) {
             $animals[] = $document;
         }
         return $animals;
@@ -73,9 +73,7 @@ class AnimalMongoRepository extends MongoRepository
     {
         $client = $this->client;
         $collection = $client->arcadia->animal;
-        $viewsCounter = $data['viewsCounter'];
-        $viewsCounter++;
-        $collection->updateOne(['uuid' => $data['uuid']], ['$set' => ['viewsCounter' => $viewsCounter]]);
+        $collection->updateOne(['uuid' => $data['uuid']], ['$inc' => ['viewsCounter' => 1]]);
     }
 
     public function delete($animal)

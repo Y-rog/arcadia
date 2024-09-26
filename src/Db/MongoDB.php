@@ -2,7 +2,6 @@
 
 namespace App\Db;
 
-use Exception;
 use MongoDB\Client;
 
 class MongoDB

@@ -3,8 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Db\Mysql;
-use App\Tools\StringTools;
+
 
 class UserRepository extends Repository
 {
@@ -38,7 +37,7 @@ class UserRepository extends Repository
     public function insert(User $user)
     {
         if ($user->getId() === null) {
-            $query = $this->pdo->prepare("INSERT INTO user (email, password, first_name, last_name, role) VALUES (:email, :password, :first_name, :last_name, :role)");
+            $query = $this->pdo->prepare("INSERT INTO user SET email = :email, password = :password, first_name = :first_name, last_name = :last_name, role = :role");
             $query->bindValue(':email', $user->getEmail(), $this->pdo::PARAM_STR);
             $query->bindValue(':password', password_hash($user->getPassword(), PASSWORD_DEFAULT), $this->pdo::PARAM_STR);
             $query->bindValue(':first_name', $user->getFirstName(), $this->pdo::PARAM_STR);

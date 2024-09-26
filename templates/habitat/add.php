@@ -37,7 +37,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                         <label for="image">Image de l'habitat</label>
                         <input type="file" class="form-control" id="image" name="image" value="">
                         <div class='invalid-feedback'>
-                            L'image de l'habitat est requise.
+                            Le format de l'image n'est pas valide, formats acceptés : .jpg, .jpeg, .png, .gif .
                         </div>
                     </div>
                     <div class="row justify-content-center pt-2">

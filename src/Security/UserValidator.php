@@ -24,7 +24,8 @@ class UserValidator extends Security
         if (empty($user->getPassword())) {
             $errors['password'] = 'Le champ mot de passe ne doit pas être vide';
         } else if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$/', $user->getPassword())) {
-            $errors['password'] = 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial';
+            $errors['password'] = 'Le mot de passe doit contenir au moins 8 caractères, 
+            une majuscule, une minuscule, un chiffre et un caractère spécial';
         }
         return $errors;
     }

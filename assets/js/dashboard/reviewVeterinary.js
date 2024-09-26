@@ -75,17 +75,34 @@ showHtml(rows);
 Fonction pour trier les données par date de l'avis dans l'order croissant*/
 function dataDateAsc() {
     data = getData();
-    data.sort((a, b) => new Date(a.date) - new Date(b.date));
-    return data;  
-     
+    //On converti les dates au format ("dd/mm/yyyy") au format (yyyy-mm-dd) pour pouvoir les comparer
+    data.forEach((item) => {
+        let date = item.date.split('/');
+        item.date = `${date[2]}-${date[1]}-${date[0]}`;
+    });
+    data.sort((a, b) => new Date(a.date)- new Date(b.date));
+    //On reconverti les dates au format (yyyy-mm-dd) au format ("dd/mm/yyyy") pour les afficher
+    data.forEach((item) => {
+        let date = item.date.split('-');
+        item.date = `${date[2]}/${date[1]}/${date[0]}`;
+    });
+    return data;
 }
-
-
 
 //Fonction pour trier les données par date de l'avis dans l'ordre décroissant
 function dataDateDesc() {
     data = getData();
+    //On converti les dates au format ("dd/mm/yyyy") au format (yyyy-mm-dd) pour pouvoir les comparer
+    data.forEach((item) => {
+        let date = item.date.split('/');
+        item.date = `${date[2]}-${date[1]}-${date[0]}`;
+    });
     data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    //On reconverti les dates au format (yyyy-mm-dd) au format ("dd/mm/yyyy") pour les afficher
+    data.forEach((item) => {
+        let date = item.date.split('-');
+        item.date = `${date[2]}/${date[1]}/${date[0]}`;
+    });
     return data;
 }
 

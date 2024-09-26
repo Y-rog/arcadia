@@ -2,9 +2,6 @@
 
 namespace App\Security;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
-
 
 class Security
 {

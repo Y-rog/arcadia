@@ -198,9 +198,7 @@ class AnimalController extends Controller
             //On récupère l'animal dans la base de données MongoDB
             $animalMongoRepository = new AnimalMongoRepository();
             $data = $animalMongoRepository->findOneAnimalByUuid($_GET['uuid']);
-            //On incrémente le compteur de vues
-            $viewsCounter = $data['viewsCounter'];
-            $viewsCounter++;
+            //On met à jour le compteur de vues
             $animalMongoRepository->updateViewsCounter($data);
             // On récupère le dernier avis vétérinaire de l'animal
             $reviewVeterinaryRepository = new ReviewVeterinaryRepository();

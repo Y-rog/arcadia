@@ -91,14 +91,8 @@ class DashboardController extends Controller
         }
         // On récupère les animaux de la base de données mongo
         $animalMongoRepository = new AnimalMongoRepository();
+        // On récupère les 10 animaux les plus vus
         $animals = $animalMongoRepository->findTenAnimalsWithHighestViewsCounter();
-        // On convertit le format Bson en tableau
-        $animals = json_decode(json_encode($animals), true);
-        // On trie le tableau par nombre de vues
-        usort($animals, function ($a, $b) {
-            return $b['viewsCounter'] <=> $a['viewsCounter'];
-        });
-
         // On met à jour les horaires du zoo
         try {
             if (isset($_POST['editSchedules'])) {
