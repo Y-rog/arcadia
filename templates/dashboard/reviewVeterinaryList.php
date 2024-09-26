@@ -16,11 +16,11 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                     </div>
                     <div class=" form-group mb-3 col-md-6">
                         <label for="firstDate" class="sr-only">Date de début</label>
-                        <input type="text" class="form-control" id="firstDate" placeholder="jj//mm/aaaa">
+                        <input type="text" class="form-control" id="firstDate" placeholder="jj/mm/aaaa">
                     </div>
                     <div class="form-group mb-3 col-md-6">
                         <label for=" lastDate" class="sr-only">Date de fin</label>
-                        <input type="text" class="form-control" id="lastDate" placeholder="jj//mm/aaaa">
+                        <input type="text" class="form-control" id="lastDate" placeholder="jj/mm/aaaa">
                     </div>
                     <div class="form-group mb-3 text-center col-sm-6">
                         <button type="button" class="btn btn-success" id="search">Rechercher</button>
