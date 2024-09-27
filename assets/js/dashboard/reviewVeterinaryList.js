@@ -36,9 +36,9 @@ getValues();
 
 
 //On crée un tableau data avec les valeurs de chaque colonne pour chaque ligne du tableau
-function getData(nbRows = reviewVeterinaryTable.rows.length) {
+function getData(nbRows = reviewVeterinaryTable.rows.length +100) {
 let data = [];
-for (let i = 0; i < firstName.length && i < nbRows; i++) {
+for (let i = 0; i < firstName.length && i <= nbRows; i++) {
     //Pour chaque ligne du tableau, on crée un objet data avec les valeurs de chaque colonne
     data.push({firstName:firstName[i], race:race[i], healthStatus:healthStatus[i], food:food[i], quantity:quantity[i], healthStatusDetails:healthStatusDetails[i], name:name[i], date:date[i]});
        
@@ -134,15 +134,15 @@ function filterFirstNameAndDate() {
 
 //Fonction pour afficher les données filtrées
 function showFilteredData() {
-    let data = [];
-    if (inputAnimalFirstName.value !== "" && inputFirstDate.value !== "" && inputLastDate.value !== "") {
-        data = filterFirstNameAndDate();
-    } else if (inputAnimalFirstName.value !== "") {
-        data = filterFirstName();
-    } else if (inputFirstDate.value !== "" && inputLastDate.value !== "") {
-        data = filterDate();
-    } else {
+    if (inputAnimalFirstName.value === '' && inputFirstDate.value === '' && inputLastDate.value === '') {
         data = getData();
+    } else if (inputAnimalFirstName.value !== '' && inputFirstDate.value === '' && inputLastDate.value === '') {
+        data = filterFirstName();
+    }
+    else if (inputAnimalFirstName.value === '' && inputFirstDate.value !== '' && inputLastDate.value !== '') {
+        data = filterDate();
+    } else if (inputAnimalFirstName.value !== '' && inputFirstDate.value !== '' && inputLastDate.value !== '') {
+        data = filterFirstNameAndDate();
     }
     rows = [];
     pushRows(data);
@@ -154,6 +154,7 @@ function showFilteredData() {
 Fonction pour trier les données par date de l'avis dans l'order croissant*/
 function dataDateAsc() {
     data = getData();
+    showFilteredData();
     //On converti les dates au format ("dd/mm/yyyy") au format (yyyy-mm-dd) pour pouvoir les comparer
     data.forEach((item) => {
         let date = item.date.split('/');
@@ -171,6 +172,7 @@ function dataDateAsc() {
 //Fonction pour trier les données par date de l'avis dans l'ordre décroissant
 function dataDateDesc() {
     data = getData();
+    showFilteredData();
     //On converti les dates au format ("dd/mm/yyyy") au format (yyyy-mm-dd) pour pouvoir les comparer
     data.forEach((item) => {
         let date = item.date.split('/');
@@ -190,6 +192,7 @@ function dataDateDesc() {
 //Fonction pour trier les données par prénom de l'animal dans l'ordre croissant
 function dataFirstNameAsc() {
     data = getData();
+    showFilteredData();
     data.sort((a, b) => (a.firstName).localeCompare(b.firstName));
     return data;
 }
@@ -197,6 +200,7 @@ function dataFirstNameAsc() {
 //Fonction pour trier les données par prénom de l'animal dans l'ordre décroissant
 function dataFirstNameDesc() {  
     data = getData();
+    showFilteredData();
     data.sort((a, b) => (b.firstName).localeCompare(a.firstName));
     return data;
 }
@@ -204,6 +208,7 @@ function dataFirstNameDesc() {
 //Fonction pour trier les données par race dans l'ordre croissant
 function dataRaceAsc() {
     data = getData();
+    showFilteredData();
     data.sort((a, b) => (a.race).localeCompare(b.race));
     return data;
 }
@@ -211,6 +216,7 @@ function dataRaceAsc() {
 //Fonction pour trier les données par race dans l'ordre décroissant
 function dataRaceDesc() {
     data = getData();
+    showFilteredData();
     data.sort((a, b) => (b.race).localeCompare(a.race));
     return data;
 }
@@ -274,7 +280,8 @@ function showFilteredAndSortedData() {
 }
 
 //On affiche les données filtrées et triées au clic sur le bouton "Filtrer"
-searchButton.addEventListener('click', showFilteredAndSortedData);
+searchButton.addEventListener('click', showFilteredAndSortedData);  
+    
 
 //On réaffiche les données initiales au clic sur le bouton "Réinitialiser"
 resetButton.addEventListener('click', function() {
