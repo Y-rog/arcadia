@@ -32,7 +32,7 @@ require_once _ROOTPATH_ . '/templates/header.php'; ?>
                 <table id="reviewVeterinaryTable" class="table">
                     <thead>
                         <tr>
-                            <th class="text-center px-3" scope="col">Date de l'avis<i id="dateCaret" class="bi bi-caret-up-fill"></i></th>
+                            <th class="text-center px-3" scope="col">Date de l'avis<i id="dateCaret" class="bi bi-caret-down-fill"></i></th>
                             <th class="text-center px-3" scope="col">Prénom de l'animal <i id="firstNameCaret" class="bi bi-caret-up-fill"></i></th>
                             <th class="text-center px-3" scope="col">Race <i id="raceCaret" class="bi bi-caret-up-fill"></i></th>
                             <th class="text-center px-3" scope="col">Status de santé</th>
