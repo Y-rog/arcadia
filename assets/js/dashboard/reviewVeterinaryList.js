@@ -103,6 +103,7 @@ function filterDate() {
     });
     firstDate = convertDate(inputFirstDate.value);
     lastDate = convertDate(inputLastDate.value);
+    lastDate.setDate(lastDate.getDate() + 1);
     data = data.filter((item) => new Date(item.date) >= firstDate && new Date(item.date) <= lastDate);
     //On reconverti les dates au format (yyyy-mm-dd) au format ("dd/mm/yyyy") pour les afficher
     data.forEach((item) => {
@@ -122,6 +123,7 @@ function filterFirstNameAndDate() {
     });
     firstDate = convertDate(inputFirstDate.value);
     lastDate = convertDate(inputLastDate.value);
+    lastDate.setDate(lastDate.getDate() + 1);
     let filter = inputAnimalFirstName.value.toUpperCase();
     data = data.filter((item) => item.firstName.toUpperCase().includes(filter) && new Date(item.date) >= firstDate && new Date(item.date) <= lastDate);
     //On reconverti les dates au format (yyyy-mm-dd) au format ("dd/mm/yyyy") pour les afficher
